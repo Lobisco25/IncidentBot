@@ -5,7 +5,7 @@ const client = new tmi.Client({
 	options: { debug: true },
 	identity: {
 		username: 'IncidentBot',
-		password: 'oauth:pfnbaclj55jbv3mk5e46dydxnw7h05'
+		password: process.env.TWITCH_OAUTH
 	},
 	channels: a.channels
 });
