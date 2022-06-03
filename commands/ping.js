@@ -22,5 +22,6 @@ exports.run = (client, args, channel, tags, message) => {
 module.exports.config = {
     name: 'ping',
     description: "Pinga o TMI e fala o uptime e o tanto de ram utilizada",
+    cooldown: 5000,
     aliases: ["pong"]
 }
