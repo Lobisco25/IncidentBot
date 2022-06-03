@@ -1,6 +1,7 @@
 require('dotenv').config({path: ".env"})
 const C = require('./channels.json');
 const tmi = require('tmi.js');
+
 const client = new tmi.Client({
 	options: { debug: true },
 	identity: {
