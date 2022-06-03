@@ -1,7 +1,7 @@
 exports.run = (client, args, channel, tags, message, user) => {
  
     const mongoose = require("mongoose")
-    const SuggestDB = require('../suggest_schema')
+    const SuggestDB = require('../models/suggest')
     mongoose.connect("mongodb+srv://IncidentAcess:BDgNU9uLTokgJ4Ry@cluster0.gpims.mongodb.net/?retryWrites=true&w=majority")
     
     

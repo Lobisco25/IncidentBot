@@ -1,17 +1,17 @@
-require('dotenv').config
+require('dotenv').config()
 const a = require('./channels.json');
 const tmi = require('tmi.js');
 const client = new tmi.Client({
 	options: { debug: true },
 	identity: {
 		username: 'IncidentBot',
-		password: process.env.TWITCH_OAUTH
+		password: "oauth:pfnbaclj55jbv3mk5e46dydxnw7h05"
 	},
 	channels: a.channels
 });
 
 module.exports = client
-require('./handler.js');
+require('./handlers/handler.js');
 client.connect();
 
 client.on("connected", (adress, port) => {
