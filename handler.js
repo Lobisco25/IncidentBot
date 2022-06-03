@@ -8,7 +8,7 @@ const canais = []
 
 client.commands = new Map();
 client.aliases = new Map();
-
+client.cooldown = new Map();
 
 fs.readdir('./commands', (err, files) => {
     if(err) console.log(err);
@@ -22,23 +22,25 @@ fs.readdir('./commands', (err, files) => {
         let pull = require(`./commands/${f}`);
         pull["cooldown_users"] = []
         client.commands.set(pull.config.name, pull);
+        client.cooldown.set(0, pull.config.cooldown)
         pull.config.aliases.forEach(alias => {
             client.aliases.set(alias, pull.config.name);
         })
     })
 })
 
-function setUserCooldown(cmdF, tags) {
+function setUserCooldown(cmdF, tags, cmd) {
 
     // Adiciona o usuário atual para a array de cooldowns
     cmdF.cooldown_users.push(tags["user-id"])
-
+    // let cooldown = client.commands.get(client.cooldowns.get(cmd))
+    let cooldown = client.cooldown.get(0)
     // Tira o usuário da array de cooldowns depois de 5 segundos
     setTimeout(() => {
         cmdF.cooldown_users = cmdF.cooldown_users.filter(i => {
             i !== tags['user-id']
         })
-    }, 5000);
+    }, cooldown);
 }
 
 client.on('message', async (channel, tags, message, self) => {
@@ -53,8 +55,7 @@ client.on('message', async (channel, tags, message, self) => {
         console.log("Cooldown ativo para esse usuário, ignorando")
         return
     }
-
-    setUserCooldown(cmdF, tags)
+    setUserCooldown(cmdF, tags, cmd)
 
     if(cmdF) {
         try {
