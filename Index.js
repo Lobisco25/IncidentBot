@@ -1,5 +1,5 @@
-require('dotenv').config
-const a = require('./channels.json');
+require('dotenv').config({path: ".env"})
+const C = require('./channels.json');
 const tmi = require('tmi.js');
 const client = new tmi.Client({
 	options: { debug: true },
@@ -7,7 +7,7 @@ const client = new tmi.Client({
 		username: 'IncidentBot',
 		password: process.env.TWITCH_OAUTH
 	},
-	channels: a.channels
+	channels: C.channels
 });
 
 module.exports = client
