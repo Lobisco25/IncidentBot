@@ -1,10 +1,6 @@
 const fs = require('fs')
-
 const client = require('./index.js')
-
 const prefix = "*"
-const canais = []
-
 
 client.commands = new Map();
 client.aliases = new Map();
