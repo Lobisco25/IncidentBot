@@ -14,7 +14,6 @@ const client = new tmi.Client({
 module.exports = client
 require('./handlers/handler');
 require('./handlers/7tv.js')
-require('./services/discord.js')
 
 client.connect();
 
