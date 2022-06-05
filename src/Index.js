@@ -15,8 +15,6 @@ module.exports = client
 require('./handlers/handler');
 require('./handlers/7tv.js')
 
-client.connect();
-
 client.on("connected", (adress, port) => {
     client.ping().then(function(data){
         let ping = Math.floor(Math.round(data*1000))
