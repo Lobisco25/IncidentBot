@@ -1,5 +1,4 @@
-require('dotenv').config({path: './.env'})
-// require('.././.env')
+require('dotenv').config({path: '../.env'})
 const C = require('./channels.json');
 const tmi = require('tmi.js');
 const client = new tmi.Client({
@@ -20,8 +19,7 @@ require('./services/discord.js')
 client.on("connected", (adress, port) => {
     client.ping().then(function(data){
         let ping = Math.floor(Math.round(data*1000))
-        // client.say("bytter_", `TrollDespair fui reinciado (${ping}ms)`)
-		console.log("Conectado " + ping)
+        client.say("bytter_", `TrollDespair fui reinciado (${ping}ms)`)
 		
     })
 })
