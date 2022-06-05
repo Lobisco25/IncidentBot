@@ -7,7 +7,7 @@ exports.run = (discord, args, message) => {
         return `${('0' + days).slice(-2)}:${('0' + hours).slice(-2)}:${('0' + minutes).slice(-2)}:${('0' + time).slice(-2)}`
     }
 
-        message.reply("pinging...").then((msg) => {
+        message.reply("Pinging...").then((msg) => {
         const ping = msg.createdTimestamp - message.createdTimestamp
         const uptime = Math.floor(process.uptime())
 
