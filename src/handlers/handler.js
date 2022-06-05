@@ -1,5 +1,5 @@
 const fs = require('fs')
-const client = require('../index.js')
+const client = require('./index.js')
 const prefix = "*"
 
 client.commands = new Map();
