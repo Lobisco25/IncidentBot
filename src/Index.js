@@ -1,7 +1,7 @@
-require('dotenv').config({path: '../.env'})
+require('dotenv').config({path: './.env'})
+// require('.././.env')
 const C = require('./channels.json');
 const tmi = require('tmi.js');
-
 const client = new tmi.Client({
 	options: { debug: true },
 	identity: {
@@ -12,14 +12,16 @@ const client = new tmi.Client({
 });
 
 module.exports = client
-require('./handlers/tmi');
-require('./handlers/7tv.js')
+require('./handlers/tmi'); // twitch handler
+require('./handlers/7tv.js') // 7tv
+require('./handlers/discord') // discord handler
 require('./services/discord.js')
 
 client.on("connected", (adress, port) => {
     client.ping().then(function(data){
         let ping = Math.floor(Math.round(data*1000))
-        client.say("bytter_", `TrollDespair fui reinciado (${ping}ms)`)
+        // client.say("bytter_", `TrollDespair fui reinciado (${ping}ms)`)
+		console.log("Conectado " + ping)
 		
     })
 })

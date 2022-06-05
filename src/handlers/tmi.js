@@ -8,7 +8,7 @@ client.commands = new Map();
 client.aliases = new Map();
 client.cooldown = new Map();
 
-fs.readdir('./commands', (err, files) => {
+fs.readdir('./src/commands', (err, files) => {
     if(err) console.log(err);
 
     const jsfile = files.filter(f => f.split('.').pop() == 'js');
@@ -53,7 +53,7 @@ client.on('message', async (channel, tags, message, self) => {
         console.log("Cooldown ativo para esse usuário, ignorando")
         return
     }
-    setUserCooldown(cmdF, tags, cmd)
+    setUserCooldown(cmdF, tags)
 
     if(cmdF) {
         try {
