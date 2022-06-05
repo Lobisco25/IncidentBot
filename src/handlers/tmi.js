@@ -1,6 +1,7 @@
 const fs = require('fs')
 const client = require('../Index.js')
 const prefix = "*"
+const discClient = require('../services/discord.js')
 
 client.connect();
 client.commands = new Map();
@@ -58,7 +59,7 @@ client.on('message', async (channel, tags, message, self) => {
         try {
             cmdF.run(client, args, channel, tags, message);
         } catch (err) {
-            console.log("Erro ao rodar comando xDD: " + err)
+            
         }
     }
 })

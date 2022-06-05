@@ -12,8 +12,9 @@ const client = new tmi.Client({
 });
 
 module.exports = client
-require('./handlers/handler');
+require('./handlers/tmi');
 require('./handlers/7tv.js')
+require('./services/discord.js')
 
 client.on("connected", (adress, port) => {
     client.ping().then(function(data){
