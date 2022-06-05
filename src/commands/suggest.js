@@ -1,8 +1,8 @@
 exports.run = (client, args, channel, tags, message, user) => {
- 
+    require('dotenv').config({path: '.../.env'})
     const mongoose = require("mongoose")
-    const SuggestDB = require('../models/suggest')
-    mongoose.connect("mongodb+srv://IncidentAcess:BDgNU9uLTokgJ4Ry@cluster0.gpims.mongodb.net/?retryWrites=true&w=majority")
+    const SuggestDB = require('../models/suggest.js')
+    mongoose.connect(process.env.MONGODB_PASSWORD)
     
     
     async function suggesting() {
@@ -21,5 +21,6 @@ exports.run = (client, args, channel, tags, message, user) => {
     module.exports.config = {
     name: 'suggest',
     description: 'Manda uma sugestão para o bot',
+    cooldown: 5000,
     aliases: ['sg']
     }
