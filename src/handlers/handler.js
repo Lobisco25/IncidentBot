@@ -2,6 +2,7 @@ const fs = require('fs')
 const client = require('../Index.js')
 const prefix = "*"
 
+client.connect();
 client.commands = new Map();
 client.aliases = new Map();
 client.cooldown = new Map();
