@@ -4,7 +4,7 @@ const prefix = "*"
 
 discord.commands = new Map()
 
-fs.readdir("./src/commands/discord", (err, files) => {
+fs.readdir("./commands/discord", (err, files) => {
     if (err) console.log(err)
     // console.log(files)
 
