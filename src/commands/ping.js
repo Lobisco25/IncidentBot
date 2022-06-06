@@ -8,8 +8,6 @@ exports.run = (client, args, channel, tags, message) => {
     }
 
     var uptime = Math.floor(process.uptime())
-    // console.log(uptime)
-    // format(80)
     const used = process.memoryUsage().heapUsed / 1024 / 1024
     const memoria = Math.round(used * 100) / 100
 
