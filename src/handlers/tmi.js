@@ -25,7 +25,7 @@ fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
     })
 })
 
-function setUserCooldown(cmdF, tags, cmd) {
+function setUserCooldown(cmdF, tags) {
     // Adiciona o usuário atual para a array de cooldowns
     cmdF.cooldown_users.push(tags["user-id"])
     // let cooldown = client.commands.get(client.cooldowns.get(cmd))

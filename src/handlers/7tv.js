@@ -1,4 +1,4 @@
-const client = require('../index.js')
+const client = require('../services/tmi')
 const EventSource = require("eventsource");
 const source = new EventSource('https://events.7tv.app/v1/channel-emotes?channel=bytter_&channel=lobisco25&channel=feridinha&channel=nnuura');
 source.addEventListener("update", (e) => {
