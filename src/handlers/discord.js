@@ -1,6 +1,6 @@
 const fs = require("fs")
 const discord = require("../services/discord")
-const prefix = "*"
+const prefix = "-"
 
 discord.commands = new Map()
 

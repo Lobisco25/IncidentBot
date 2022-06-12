@@ -1,6 +1,6 @@
 const fs = require("fs")
 const client = require("../services/tmi")
-const prefix = "*"
+const prefix = "-"
 
 client.commands = new Map()
 client.aliases = new Map()
