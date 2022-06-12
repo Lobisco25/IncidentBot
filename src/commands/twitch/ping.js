@@ -4,9 +4,9 @@ exports.run = (client, args, channel, tags, message) => {
         let hours = Math.floor(time / 3600)
         let minutes = Math.floor(time / 60)
 
-        return `${("0" + days).slice(-2)}:${("0" + hours).slice(-2)}:${(
+        return `${("0" + days).slice(-2)}d ${("0" + hours).slice(-2)}h ${(
             "0" + minutes
-        ).slice(-2)}:${("0" + time).slice(-2)}`
+        ).slice(-2)}m ${("0" + time).slice(-2)}s`
     }
 
     var uptime = Math.floor(process.uptime())
