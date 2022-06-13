@@ -1,17 +1,54 @@
-const client = require('../services/tmi')
-const EventSource = require("eventsource");
-const source = new EventSource('https://events.7tv.app/v1/channel-emotes?channel=bytter_&channel=lobisco25&channel=feridinha&channel=nnuura');
-source.addEventListener("update", (e) => {
-    let data = JSON.parse(e.data)
-    if(data.action == "ADD" ){
-        client.say(data.channel, `@${data.actor} adicionou ${data.name} no 7TV`)
-    }
-    if(data.action == "REMOVE"){
-        client.say(data.channel, `${data.actor} removeu o ${data.name} na 7TV`)
-    }
-    if(data.action == "UPDATE"){
-        client.say(data.channel, `${data.actor} mudou o nome de ${data.emote.name} para ${data.name} na 7TV`)
-        
-    }
-}, false);
+const client = require("../services/tmi")
+const EventSource = require("eventsource")
+const ChannelModel = require("../models/Channel")
+const baseUrl = `https://events.7tv.app/v1/channel-emotes?channel=${
+    process.env.MAIN_CHANNEL || "bytter_"
+}`
 
+var source = null
+
+const createEventSource = async () => {
+    var channels = await ChannelModel.find({})
+    const url = `${baseUrl}&channel=${channels
+        .map((c) => c.twitch_name)
+        .join("&channel=")}`
+    source = new EventSource(url)
+}
+
+const handleEvent = (e) => {
+    const data = JSON.parse(e.data)
+    switch (data.action) {
+        case "ADD":
+            client.say(
+                data.channel,
+                `${data.actor} adicionou ${data.name} no 7TV`
+            )
+            break
+        case "REMOVE":
+            client.say(
+                data.channel,
+                `${data.actor} removeu o ${data.name} na 7TV`
+            )
+            break
+        case "UPDATE":
+            client.say(
+                data.channel,
+                `${data.actor} mudou o nome de ${data.emote.name} para ${data.name} na 7TV`
+            )
+            break
+    }
+}
+
+const addListener = () => {
+    source.addEventListener("update", handleEvent, false)
+}
+
+const initialize = async () => {
+    await createEventSource().then(() => {
+        addListener()
+    })
+}
+
+module.exports = {
+    initialize,
+}
