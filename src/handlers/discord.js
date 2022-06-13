@@ -14,7 +14,6 @@ fs.readdir("./src/commands/discord", (err, files) => {
 
     jsFile.forEach((f, i) => {
         let pull = require(`../commands/discord/${f}`)
-        console.log(pull)
         discord.commands.set(pull.config.name, pull)
     })
 })
