@@ -1,8 +1,12 @@
-exports.run = (client, args, channel, tags, message, user) => {
+exports.run = async (client, args, channel, tags, message, user) => {
     if (!(tags.username == "bytter_" ||tags.username == "lobisco25" ||tags.username == "feridinha")) return
     
-    let evaled = eval(args.join(" "))
-    client.say(channel, evaled)
+    try {
+        const evaled = eval(args.join(" "))
+        await client.say(channel, evaled.toString())
+    } catch (err) {
+        await client.say(channel, "Erro: " + err.message)
+    }
 }
 module.exports.config = {
     name: "eval",
