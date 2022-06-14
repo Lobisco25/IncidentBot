@@ -1,6 +1,7 @@
 const fs = require("fs")
 const client = require("../services/tmi")
-const prefix = "-"
+const ChannelModel = require("../models/Channel")
+const defaultPrefix = "-"
 
 client.commands = new Map()
 client.aliases = new Map()
@@ -25,6 +26,13 @@ fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
     })
 })
 
+async function getCustomPrefix(channel){
+    const result = await ChannelModel.findOne({twitch_name: channel}).catch(err => {
+        console.error("Ocorreu um erro ao buscar prefixo do canal: ", err)
+    })
+    return result?.customPrefix
+}
+
 function setUserCooldown(cmdF, tags) {
     // Adiciona o usuário atual para a array de cooldowns
     cmdF.cooldown_users.push(tags["user-id"])
@@ -40,6 +48,9 @@ function setUserCooldown(cmdF, tags) {
 
 client.on("message", async (channel, tags, message, self) => {
     if (self) return
+    channel = channel.replace("#", "") // Remove o padrão dos canais começarem com #
+    const prefix = await getCustomPrefix(channel) || defaultPrefix
+    
     let args = message.slice(prefix.length).trim().split(/ +/g)
     let cmd = args.shift().toLowerCase()
     let cmdF =
@@ -47,15 +58,15 @@ client.on("message", async (channel, tags, message, self) => {
 
     if (!message.startsWith(prefix)) return
 
-    if (cmdF.cooldown_users.includes(tags["user-id"])) {
-        console.log("Cooldown ativo para esse usuário, ignorando")
-        return
-    }
+    if (cmdF.cooldown_users.includes(tags["user-id"])) return
+
     setUserCooldown(cmdF, tags)
 
     if (cmdF) {
         try {
             cmdF.run(client, args, channel, tags, message)
-        } catch (err) {}
+        } catch (err) {
+            console.error(`Ocorreu um erro ao rodar um comando: ${err}`)
+        }
     }
 })

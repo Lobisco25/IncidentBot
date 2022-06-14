@@ -12,6 +12,7 @@ exports.run = async (client, args, channel, tags, message) => {
 
     await ChannelModel.create({
         twitch_name: channelTarget,
+        customPrefix : args[1] // Caso args[1] seja undefined, ele não insere no banco de dados
     })
 
     await client.say(
