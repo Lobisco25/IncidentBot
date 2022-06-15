@@ -3,7 +3,7 @@ const ChannelModel = require("../models/Channel")
 const mainChannel = process.env.MAIN_CHANNEL || "bytter_"
 
 const client = new tmi.Client({
-    options: { debug: true },
+    options: { debug: Boolean(process.env.TMI_DEBUG) },
     identity: {
         username: "IncidentBot",
         password: process.env.TMI_TOKEN,

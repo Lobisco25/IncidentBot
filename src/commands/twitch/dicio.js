@@ -22,6 +22,6 @@ exports.run = (client, args, channel, tags, message, user) => {
 }
 module.exports.config = {
     name: "dicio",
-    description: "command",
+    description: "Puxa uma palavra especifica do Dicio.com.br",
     aliases: ["dicionario"],
 }
