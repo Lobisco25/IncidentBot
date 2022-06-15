@@ -53,20 +53,16 @@ client.on("message", async (channel, tags, message, self) => {
     
     let args = message.slice(prefix.length).trim().split(/ +/g)
     let cmd = args.shift().toLowerCase()
-    let cmdF =
-        client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
+    let cmdF = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
 
-    if (!message.startsWith(prefix)) return
+   
 
-    if (cmdF.cooldown_users.includes(tags["user-id"])) return
-
-    setUserCooldown(cmdF, tags)
-
-    if (cmdF) {
-        try {
-            cmdF.run(client, args, channel, tags, message)
-        } catch (err) {
-            console.error(`Ocorreu um erro ao rodar um comando: ${err}`)
-        }
+    if (!cmdF || !message.startsWith(prefix) || cmdF.cooldown_users.includes(tags["user-id"])) return
+     try {
+        cmdF.run(client, args, channel, tags, message)
+        setUserCooldown(cmdF, tags)
+    } catch (err) {
+         console.error(`Ocorreu um erro ao rodar um comando: ${err}`)
     }
+    
 })
