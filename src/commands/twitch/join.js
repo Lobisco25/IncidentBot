@@ -23,7 +23,7 @@ exports.run = async (client, args, channel, tags, message) => {
 
 module.exports.config = {
     name: "join",
-    description: "Join channels",
+    description: "Entra no canal especificado.",
     cooldown: 5000,
     aliases: [],
 }

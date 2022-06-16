@@ -10,6 +10,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
 }
 module.exports.config = {
     name: "eval",
-    description: "run a js command",
+    description: "Roda um comando JavaScript",
     aliases: ["js"],
 }
