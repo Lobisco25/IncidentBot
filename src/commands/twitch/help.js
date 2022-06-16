@@ -13,6 +13,6 @@ exports.run = (client, args, channel, tags, message, user) => {
 }
 module.exports.config = {
     name: "help",
-    description: "Show all commands",
+    description: "Mostra todos os comandos do bot",
     aliases: ["commands"],
 }
