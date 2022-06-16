@@ -1,6 +1,5 @@
 exports.run = (client, args, channel, tags, message, user) => {
-    const fs = require("fs")
-    .readdir("./src/commands/twitch", (err, files) => {
+    require("fs").readdir("./src/commands/twitch", (err, files) => {
         if (err) return
         const cmdNames = files
             .toString()

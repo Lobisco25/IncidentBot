@@ -1,4 +1,5 @@
 const { Client, Intents } = require("discord.js")
+const log = require("../handlers/logger")
 const discClient = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 })
@@ -6,9 +7,9 @@ const discClient = new Client({
 module.exports = discClient
 
 discClient.once("ready", () => {
-    console.log("Ready!")
+    log.debug("Discord ready")
 })
 
 discClient.login(process.env.DISCORD_TOKEN).catch((err) => {
-    console.error("Não foi possível criar client do discord:", err.message)
+    log.error("Não foi possível criar client do discord:", err.message)
 })

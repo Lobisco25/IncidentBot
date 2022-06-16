@@ -1,6 +1,7 @@
 const fs = require("fs")
 const client = require("../services/tmi")
 const ChannelModel = require("../models/Channel")
+const log = require("./logger")
 const defaultPrefix = "-"
 
 client.commands = new Map()
@@ -8,11 +9,12 @@ client.aliases = new Map()
 client.cooldown = new Map()
 
 fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
-    if (err) console.log(err)
+    if (err) return log.error(err)
 
     const jsfile = files.filter((f) => f.split(".").pop() == "js")
     if (!jsfile) {
-        console.log("Não foram encontrados comandos!")
+        log.warn("Não foram encontrados comandos!")
+        return
     }
 
     jsfile.forEach((f, i) => {
@@ -26,10 +28,12 @@ fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
     })
 })
 
-async function getCustomPrefix(channel){
-    const result = await ChannelModel.findOne({twitch_name: channel}).catch(err => {
-        console.error("Ocorreu um erro ao buscar prefixo do canal: ", err)
-    })
+async function getCustomPrefix(channel) {
+    const result = await ChannelModel.findOne({ twitch_name: channel }).catch(
+        (err) => {
+            log.error("Ocorreu um erro ao buscar prefixo do canal: " + err)
+        }
+    )
     return result?.customPrefix
 }
 
@@ -49,20 +53,23 @@ function setUserCooldown(cmdF, tags) {
 client.on("message", async (channel, tags, message, self) => {
     if (self) return
     channel = channel.replace("#", "") // Remove o padrão dos canais começarem com #
-    const prefix = await getCustomPrefix(channel) || defaultPrefix
-    
+    const prefix = (await getCustomPrefix(channel)) || defaultPrefix
+
     let args = message.slice(prefix.length).trim().split(/ +/g)
     let cmd = args.shift().toLowerCase()
-    let cmdF = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
+    let cmdF =
+        client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd))
 
-   
-
-    if (!cmdF || !message.startsWith(prefix) || cmdF.cooldown_users.includes(tags["user-id"])) return
-     try {
+    if (
+        !cmdF ||
+        !message.startsWith(prefix) ||
+        cmdF.cooldown_users.includes(tags["user-id"])
+    )
+        return
+    try {
         cmdF.run(client, args, channel, tags, message)
         setUserCooldown(cmdF, tags)
     } catch (err) {
-         console.error(`Ocorreu um erro ao rodar um comando: ${err}`)
+        log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
     }
-    
 })
