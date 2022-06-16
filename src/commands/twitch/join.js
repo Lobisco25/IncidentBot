@@ -1,7 +1,6 @@
 const ChannelModel = require("../../models/Channel")
 
 exports.run = async (client, args, channel, tags, message) => {
-    if (!["bytter_", "lobisco25", "feridinha"].includes(tags.username)) return
     if (!args[0]) return
     const channelTarget = args[0].toLowerCase()
 
@@ -26,4 +25,5 @@ module.exports.config = {
     description: "Entra no canal especificado.",
     cooldown: 5000,
     aliases: [],
+    adminOnly: true,
 }
