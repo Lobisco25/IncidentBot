@@ -58,7 +58,6 @@ client.on("message", async (channel, tags, message, self) => {
     let args = message.slice(prefix.length).trim().split(/ +/g)
     let cmd = args.shift().toLowerCase()
     let cmdF = client.commands[cmd] || client.commands[client.aliases.get(cmd)] 
-    
 
     if (
         !cmdF ||
