@@ -5,26 +5,15 @@ const log = require("./logger")
 const defaultPrefix = "-"
 
 client.commands = {}
-client.aliases = new Map()
-client.cooldown = new Map()
 
 fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
     if (err) return log.error(err)
 
     const jsfile = files.filter((f) => f.split(".").pop() == "js")
-    if (!jsfile) {
-        log.warn("Não foram encontrados comandos!")
-        return
-    }
-
     jsfile.forEach((f, i) => {
-        let pull = require(`../commands/twitch/${f}`)
-        pull["cooldown_users"] = []
+        var pull = require(`../commands/twitch/${f}`)
+        pull.cooldownUsers = []
         client.commands[pull.config.name] = pull
-        client.cooldown.set(0, pull.config.cooldown)
-        pull.config.aliases.forEach((alias) => {
-            client.aliases.set(alias, pull.config.name)
-        })
     })
 })
 
@@ -37,17 +26,13 @@ async function getCustomPrefix(channel) {
     return result?.customPrefix
 }
 
-function setUserCooldown(cmdF, tags) {
-    // Adiciona o usuário atual para a array de cooldowns
-    cmdF.cooldown_users.push(tags["user-id"])
-    // let cooldown = client.commands.get(client.cooldowns.get(cmd))
-    let cooldown = client.cooldown.get(0)
-    // Tira o usuário da array de cooldowns depois de 5 segundos
+function setUserCooldown(c, tags) {
+    client.commands[c.config.name].cooldownUsers.push(tags["user-id"])
     setTimeout(() => {
-        cmdF.cooldown_users = cmdF.cooldown_users.filter((i) => {
-            i !== tags["user-id"]
-        })
-    }, cooldown)
+        client.commands[c.config.name].cooldownUsers = client.commands[
+            c.config.name
+        ].cooldownUsers.filter((i) => i !== tags["user-id"])
+    }, c.config.cooldown)
 }
 
 client.on("message", async (channel, tags, message, self) => {
@@ -56,20 +41,23 @@ client.on("message", async (channel, tags, message, self) => {
     const prefix = (await getCustomPrefix(channel)) || defaultPrefix
 
     let args = message.slice(prefix.length).trim().split(/ +/g)
-    let cmd = args.shift().toLowerCase()
-    let cmdF = client.commands[cmd] || client.commands[client.aliases.get(cmd)] 
+    var cmd = args.shift().toLowerCase()
+    var command =
+        client.commands[cmd] || client.commands[client.aliases.get(cmd)]
 
+    if (!command || !message.startsWith(prefix)) return
+    if (command.cooldownUsers.includes(tags["user-id"])) return
     if (
-        !cmdF ||
-        !message.startsWith(prefix) ||
-        cmdF.cooldown_users.includes(tags["user-id"])
+        command.config.adminOnly &&
+        !["feridinha", "bytter_", "lobisco25"].includes(tags.username)
     )
         return
-    if(cmdF.config.adminOnly && !(tags.username == "bytter_" ||tags.username == "lobisco25" ||tags.username == "feridinha")) return
+
     try {
-        cmdF.run(client, args, channel, tags, message)
-        setUserCooldown(cmdF, tags)
+        command.run(client, args, channel, tags, message)
     } catch (err) {
         log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
     }
+
+    setUserCooldown(command, tags)
 })
