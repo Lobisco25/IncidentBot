@@ -15,14 +15,14 @@ exports.run = async (client, args, channel, tags, message, user) => {
         : await twurple.users.getUserById(args[0])
 
     if (!search) {
-        return client.say(channel, "Não achei esse usuário")
+        return client.say(channel, "pajaM Não achei esse usuário")
     }
 
     const creationDate = getUserDate(search)
 
     client.say(
         channel,
-        `@${search.displayName} | ${search.id} | Criado em: ${creationDate} | Bio: ${search.description} | Foto de Perfil: ${search.profilePictureUrl}`
+        `pajaDank @${search.displayName} | ${search.id} | Criado em: ${creationDate} | Bio: ${search.description} | Foto de Perfil: ${search.profilePictureUrl}`
     )
 }
 module.exports.config = {

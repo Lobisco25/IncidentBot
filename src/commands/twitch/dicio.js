@@ -15,7 +15,7 @@ exports.run = (client, args, channel, tags, message, user) => {
         } else {
             client.say(
                 channel,
-                `${tags.username}, 1: ${res.data[0].meanings[0]} | 2: ${res.data[0].meanings[1]}`
+                `${tags.username}, pajaM 1: ${res.data[0].meanings[0]} | 2: ${res.data[0].meanings[1]}`
             )
         }
     })

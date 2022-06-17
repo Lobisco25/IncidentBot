@@ -6,7 +6,7 @@ exports.run = (client, args, channel, tags, message, user) => {
             result.push(client.commands[cmdName].config.name)
         }
     })
-    client.say(channel, `Os comandos são: ${result.join(", ")} :)`)
+    client.say(channel, `pajaCool Os comandos são: ${result.join(", ")} :)`)
 }
 module.exports.config = {
     name: "help",

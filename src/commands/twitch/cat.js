@@ -17,10 +17,10 @@ exports.run = async (client, args, channel, tags, message, user) => {
                 },
             })
             .then( async (response) => {
-                await client.say(channel, `@${tags.username}, ${response.data.message}`)
+                await client.say(channel, `pajaH @${tags.username}, ${response.data.message}`)
             })
             .catch(async (error) => {
-                await client.say(channel, `@${tags.username}, ocorreu um erro...`)
+                await client.say(channel, `FeelsBadMan @${tags.username}, ocorreu um erro...`)
                 console.log(error)
             })
     }

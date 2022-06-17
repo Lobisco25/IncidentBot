@@ -11,7 +11,7 @@ exports.run = (client, args, channel, tags, message, user) => {
     }).then(async (res) => {
         await client.say(
             channel,
-            `@${tags.username}, ${res.data.fact}`
+            `@${tags.username}, pajaScoots ${res.data.fact}`
         )
     })
 }

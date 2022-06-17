@@ -6,7 +6,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
         author_name: tags.username,
         message: args.join(" "),
     }).catch(err => { log.error("Erro ao criar uma sugestão ", err) })
-    client.say(channel, `A sua sugestão foi anotada!`)
+    client.say(channel, `pajaH A sua sugestão foi anotada!`)
 }
 
 module.exports.config = {
