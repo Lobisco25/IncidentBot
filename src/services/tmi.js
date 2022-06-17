@@ -16,10 +16,10 @@ const joinChannels = async () => {
     const result = await ChannelModel.find({})
     result
         .map((c) => c.twitch_name)
-        .forEach((channel) => {
-            client
+        .forEach(async (channel) => {
+            await client
                 .join(channel)
-                .catch(() => log.error(`Erro ao entrar no canal ${channel}.`))
+                .catch((err) => log.error(`Erro ao entrar no canal ${channel} ${err}`))
         })
     log.info(`Bot escutando em ${result.length} canais.`)
 }
