@@ -4,7 +4,7 @@
 
 ## ℹ️ Sobre
 
-Um bot da twitch criado por Lobisco25 e Bytter_
+Um bot da twitch criado por Lobisco25, Bytter_ e Feridinha
 
 ## 💻 Tecnologias
 
