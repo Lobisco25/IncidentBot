@@ -35,6 +35,18 @@ function setUserCooldown(c, tags) {
     }, c.config.cooldown)
 }
 
+function getCommandByAlias(alias) {
+    var result = null
+    Object.keys(client.commands).every((c) => {
+        if (client.commands[c].config.aliases.includes(alias)) {
+            result = client.commands[c]
+            return false
+        }
+        return true
+    })
+    return result
+}
+
 client.on("message", async (channel, tags, message, self) => {
     if (self) return
     channel = channel.replace("#", "") // Remove o padrão dos canais começarem com #
@@ -42,8 +54,7 @@ client.on("message", async (channel, tags, message, self) => {
 
     let args = message.slice(prefix.length).trim().split(/ +/g)
     var cmd = args.shift().toLowerCase()
-    var command =
-        client.commands[cmd] || client.commands[client.aliases.get(cmd)]
+    var command = client.commands[cmd] || getCommandByAlias(cmd)
 
     if (!command || !message.startsWith(prefix)) return
     if (command.cooldownUsers.includes(tags["user-id"])) return
