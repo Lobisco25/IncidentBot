@@ -19,7 +19,7 @@ const joinChannels = async () => {
         .forEach(async (channel) => {
             await client
                 .join(channel)
-                .catch((err) => log.error(`Erro ao entrar no canal ${channel} ${err}`))
+                .catch((err) => log.error(`Erro ao entrar no canal ${channel}`, err))
         })
     log.info(`Bot escutando em ${result.length} canais.`)
 }
@@ -27,7 +27,7 @@ const joinChannels = async () => {
 client
     .connect()
     .catch((err) => {
-        log.error("Não foi possível criar client do tmi")
+        log.critical("Não foi possível criar client do tmi")
     })
     .then(() => {
         joinChannels()

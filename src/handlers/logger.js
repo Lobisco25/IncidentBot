@@ -1,26 +1,30 @@
 require("colors")
 const log = console.log
 
-const info = (message) => {
-    log(`[INFO]`.white, message || "")
+const info = (...args) => {
+    log(`[INFO]`.white, args.join(" "))
 }
 
-const debug = (message) => {
-    log(`[DEBUG]`.grey, message || "")
+const debug = (...args) => {
+    log(`[DEBUG]`.grey, args.join(" "))
 }
 
-const warn = (message) => {
-    log(`[WARN]`.yellow, message || "")
+const warn = (...args) => {
+    log(`[WARN]`.yellow, args.join(" "))
 }
 
-const error = (message) => {
-    log(`[ERROR]`.red.bold, message || "")
+const error = (...args) => {
+    log(`[ERROR]`.red.bold, args.join(" "))
 }
 
+const critical = (... args) => {
+    log(`[CRITICAL]`.red.bgYellow.bold, args.join(" "))
+}
 
 module.exports = {
     info,
     debug,
     warn,
     error,
+    critical
 }
