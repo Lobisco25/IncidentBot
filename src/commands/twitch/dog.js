@@ -9,14 +9,14 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
     async function upload (file) {
         var formData = new FormData()
-        formData.append("file", file, "cat_incidentbot.jpg")
+        formData.append("file", file, "dog_incidentbot.jpg")
         await axios
             .post("https://feridinha.com/upload", formData, {
                 headers: {
                     "Content-Type": `multipart/form-data; bondary=${formData._bondary}`,
                 },
             })
-            .then(async (response) => {
+            .then( async (response) => {
                 await client.say(channel, `pajaH @${tags.username}, ${response.data.message}`)
             })
             .catch(async (error) => {
@@ -25,15 +25,15 @@ exports.run = async (client, args, channel, tags, message, user) => {
             })
     }
 
-    const imageTarget = await fetchImage("https://cataas.com/cat")
+    const imageTarget = await fetchImage("https://source.unsplash.com/random/?dog")
     await upload(imageTarget)
 }
 
 
 
 module.exports.config = {
-    name: "cat",
-    description: "Manda a foto de um gato aleatório",
-    aliases: ["cataas", "randomcat", "rcat"],
+    name: "dog",
+    description: "Manda a foto de um cachorro aleatório",
+    aliases: ["randomdog", "rdog"],
     cooldown: 6000
 }
