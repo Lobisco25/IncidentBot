@@ -25,3 +25,4 @@ Um bot da twitch criado por Lobisco25, Bytter_ e Feridinha
 - MAIN_CHANNEL= O canal principal de logs do bot
 - TMI_DEBUG= Se existir, mostra as mensagens de debug do tmi.js
 - WEATHER_TOKEN= Token do [**Weatherapi**](https://www.weatherapi.com/)
+- NEWS_TOKEN= Token do [**Newsdata**](https://newsdata.io/)
