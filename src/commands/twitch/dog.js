@@ -2,7 +2,7 @@ const axios = require("axios")
 const FormData = require("form-data")
 
 exports.run = async (client, args, channel, tags, message, user) => {
-    async function fetchImage(url, image_path) {
+    async function fetchImage(url) {
         const result = await axios({ url, responseType: "stream", })
         return result.data
     }
