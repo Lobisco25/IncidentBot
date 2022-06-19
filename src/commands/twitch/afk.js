@@ -8,19 +8,19 @@ async function setAFKStatus(message, tags) {
 }
 exports.run = async (client, args, channel, tags, message, user) => {
     const alias = this.config.aliases
-    const a = args[0] === undefined ? "(Sem mensagem)" : `${args.join(" ")}`
+    const msg = args[0] === undefined ? "(Sem mensagem)" : `${args.join(" ")}`
     if(alias.includes("afk") === true) {
         await setAFKStatus("(sem mensagem)", tags)
         await client.say(
             channel,
-            `${tags.username} agora está AFK: ${a}`
+            `${tags.username} agora está AFK: ${msg}`
         )
     } else if(alias.includes("gn") === true) {
         await setAFKStatus(args.join(" "), tags)
-        await client.say(channel, `${tags.username} foi dormir: ${a}`)
+        await client.say(channel, `${tags.username} foi dormir: ${msg}`)
     } else if(alias.includes("code") === true) {
-        await setAFKStatus(args.join(" "), tags)
-        await client.say(channel, `${tags.username} foi programar: ${a}`)
+        await setAFKStatus(`${msg}`, tags)
+        await client.say(channel, `${tags.username} foi programar: ${msg}`)
     }
 }
 module.exports.config = {
