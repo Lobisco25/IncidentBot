@@ -4,15 +4,12 @@ const UserSchema = new mongoose.Schema({
     twitch_name: String,
     twitch_id: String,
     city: String,
-    isafk: {
-        type: Boolean,
+    afk: {
+        message: String,
+        time: Date,
+        _type: String,
         required: false
     },
-    afkmessage: {
-        type: String,
-        required: false
-    },
-    afktime: Date,
 })
 
 module.exports = mongoose.model("User", UserSchema)

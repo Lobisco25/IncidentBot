@@ -54,6 +54,7 @@ client.on("message", async (channel, tags, message, self) => {
 
     let args = message.slice(prefix.length).trim().split(/ +/g)
     var cmd = args.shift().toLowerCase()
+    tags.source = cmd
     var command = client.commands[cmd] || getCommandByAlias(cmd)
 
     if (!command || !message.startsWith(prefix)) return
