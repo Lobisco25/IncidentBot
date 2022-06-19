@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
     afkmessage: {
         type: String,
         required: false
-    }
+    },
+    afktime: Date,
 })
 
 module.exports = mongoose.model("User", UserSchema)
