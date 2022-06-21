@@ -8,8 +8,15 @@ const UserSchema = new mongoose.Schema({
         message: String,
         time: Date,
         _type: String,
-        required: false
+        required: false,
     },
+    remind: [
+        {
+            message: String,
+            from: String,
+            to: String,
+        },
+    ],
 })
 
 module.exports = mongoose.model("User", UserSchema)
