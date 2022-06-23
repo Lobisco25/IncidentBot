@@ -4,7 +4,6 @@ const UserModel = require("../models/User")
 client.on("message", async (channel, tags, message, self) => {
     try {
         const user = await UserModel.findOne({ to: tags["username"] })
-        // console.log(user.remind[0].to., tags["username"])
         if (user.remind[0].to.toLowerCase() == tags["username"]) {
             await client.say(
                 channel,
