@@ -13,7 +13,7 @@ exports.run = (client, args, channel, tags, message, user) => {
 }
 module.exports.config = {
     name: "dogfact",
-    description: "Retorna um fato aleatório sobre cahorros",
+    description: "Retorna um fato aleatório sobre cachorros",
     aliases: ["df"],
     cooldown: 5000,
 }
