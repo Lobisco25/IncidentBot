@@ -14,7 +14,6 @@ const UserSchema = new mongoose.Schema({
         {
             message: String,
             from: String,
-            to: String,
         },
     ],
 })

@@ -8,10 +8,9 @@ exports.run = async (client, args, channel, tags, message, user) => {
         remind: {
             message: args.slice(1).join(" ").toString(),
             from: tags["username"],
-            to: args[0],
         },
     }
-    await UserModel.findOneAndUpdate({ to: args[0] }, query, {
+    await UserModel.findOneAndUpdate({ twitch_name: args[0] }, query,  {
         upsert: false,
         new: true,
         setDefaultsOnInsert: true,

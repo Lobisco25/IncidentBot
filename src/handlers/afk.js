@@ -1,6 +1,6 @@
 const client = require("../services/tmi")
 const UserModel = require("../models/User")
-const ms = require("ms")
+const prettyMilliseconds = require("pretty-ms")
 
 client.on("message", async (channel, tags, message, self) => {
     const user = await UserModel.findOne({twitch_id: tags["user-id"]})
@@ -8,7 +8,7 @@ client.on("message", async (channel, tags, message, self) => {
     if(!user.afk?.time) return
 
 
-    const time = ms(Date.now() - user.afk.time)
+    const time = prettyMilliseconds(Date.now() - user.afk.time)
     
     var output = null
     switch (user.afk._type) {
