@@ -4,6 +4,10 @@ const discordClient = require("../../services/discord")
 const log = require("../../handlers/logger")
 
 exports.run = async (client, args, channel, tags, message, user) => {
+    if (!args[0]) {
+        await client.say(channel, "Você esqueceu a sugestão pajaDank")
+        return
+    }
     await SuggestModel.create(
         {
             author_name: tags.username,
@@ -24,7 +28,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
         }
     )
 }
-
 
 module.exports.config = {
     name: "suggest",
