@@ -8,9 +8,9 @@ exports.run = (discord, args, message) => {
         const ping = msg.createdTimestamp - message.createdTimestamp
         const uptime = Math.floor(process.uptime() * 1000)
         tmiClient.ping().then((data) => {
-            let ping = Math.floor(Math.round(data * 1000))
+            let Ping = Math.floor(Math.round(data * 1000))
             msg.edit(
-                `ping do discord: ${ping}ms | ping do tmi: ${ping} uptime: ${prettyMilliseconds(
+                `ping do discord: ${ping}ms | ping do tmi: ${Ping} uptime: ${prettyMilliseconds(
                     uptime
                 )}`
             )
