@@ -9,7 +9,11 @@ exports.run = (client, args, channel, tags, message) => {
 
         client.say(
             channel,
-            `@${tags.username} PONG! pajaDink Ping: ${ping}ms | Uptime: ${prettyMilliseconds(uptime)} | Memória: ${memoria}MB`
+            `@${
+                tags.username
+            } PONG! pajaDink Ping: ${ping}ms | Uptime: ${prettyMilliseconds(
+                uptime
+            )} | Memória: ${memoria}MB`
         )
     })
 }
