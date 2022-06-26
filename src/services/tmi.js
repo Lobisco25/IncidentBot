@@ -36,9 +36,11 @@ client
 client.on("connected", (adress, port) => {
     client.ping().then(function (data) {
         let ping = Math.floor(Math.round(data * 1000))
-        client.say(mainChannel, `TrollDespair fui reinciado (${ping}ms)`)
+        client.say(mainChannel, `pajaDespair fui reinciado (${ping}ms)`)
         log.info(`Bot conectado ao tmi ${ping}ms`)
     })
 })
 
 module.exports = client
+
+

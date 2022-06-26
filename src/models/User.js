@@ -10,12 +10,5 @@ const UserSchema = new mongoose.Schema({
         _type: String,
         required: false,
     },
-    remind: [
-        {
-            message: String,
-            from: String,
-        },
-    ],
 })
-
 module.exports = mongoose.model("User", UserSchema)
