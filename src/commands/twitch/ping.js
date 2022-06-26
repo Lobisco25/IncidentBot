@@ -4,7 +4,7 @@ exports.run = (client, args, channel, tags, message) => {
     const used = process.memoryUsage().heapUsed / 1024 / 1024
     const memoria = Math.round(used * 100) / 100
 
-    client.ping().then(function (data) {
+    client.ping().then((data) => {
         let ping = Math.floor(Math.round(data * 1000))
 
         client.say(
