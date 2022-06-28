@@ -13,7 +13,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
             author_name: tags.username,
             message: args.join(" "),
         },
-        function (err, i) {
+        ((err, i) => {
             if (err) log.error("Erro ao criar uma sugestão", err)
             client.say(channel, "pajaH A sua sugestão foi anotada!")
 
@@ -25,7 +25,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
             discordClient.channels.cache
                 .get("983065628984369244")
                 .send({ embeds: [embed] })
-        }
+        })
     )
 }
 
