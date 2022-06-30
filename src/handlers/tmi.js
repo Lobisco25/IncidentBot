@@ -64,6 +64,7 @@ client.on("message", async (channel, tags, message, self) => {
         !["feridinha", "bytter_", "lobisco25"].includes(tags.username)
     )
         return
+    if (command.config.streamerOnly && ![tags["user-id"]].includes(tags["room-id"])) return
 
     try {
         command.run(client, args, channel, tags, message)
