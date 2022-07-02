@@ -8,7 +8,7 @@ const baseUrl = `https://events.7tv.app/v1/channel-emotes?channel=${
 var source = null
 
 const createEventSource = async () => {
-    var channels = await ChannelModel.find({SevenTV_Events: {$not: {$eq: false}}})
+    var channels = await ChannelModel.find({SevenTV_Events: {$eq: true}})
         const url = `${baseUrl}&channel=${channels
             .map((c) => c.twitch_name)
             .join("&channel=")}`
@@ -21,13 +21,13 @@ const handleEvent = (e) => {
         case "ADD":
             client.say(
                 data.channel,
-                `${data.actor} adicionou ${data.name} no 7TV`
+                `${data.actor} adicionou ${data.name} na 7TV`
             )
             break
         case "REMOVE":
             client.say(
                 data.channel,
-                `${data.actor} removeu o ${data.name} na 7TV`
+                `${data.actor} removeu ${data.name} na 7TV`
             )
             break
         case "UPDATE":

@@ -60,11 +60,12 @@ client.on("message", async (channel, tags, message, self) => {
     if (!command || !message.startsWith(prefix)) return
     if (command.cooldownUsers.includes(tags["user-id"])) return
     if (
-        command.config.adminOnly &&
-        !["feridinha", "bytter_", "lobisco25"].includes(tags.username)
+        (command.config.adminOnly &&
+            !["feridinha", "bytter_", "lobisco25"].includes(tags.username)) ||
+        (command.config.streamerOnly &&
+            ![tags["user-id"]].includes(tags["room-id"]))
     )
         return
-    if (command.config.streamerOnly && ![tags["user-id"]].includes(tags["room-id"])) return
 
     try {
         command.run(client, args, channel, tags, message)
