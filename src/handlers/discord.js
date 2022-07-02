@@ -6,7 +6,6 @@ discord.commands = new Map()
 
 fs.readdir("./src/commands/discord", (err, files) => {
     if (err) console.log(err)
-    // console.log(files)
 
     const jsFile = files.filter((f) => f.split(".").pop("js"))
 
