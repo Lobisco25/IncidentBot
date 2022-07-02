@@ -5,7 +5,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
     const channelTarget = channel.toLowerCase()
     await ChannelModel.findOneAndUpdate( 
         { twitch_name: channelTarget },
-        { customPrefix: args[0] }
+        { customPrefix: args[0] },
         )
     client.say(
         channel,
@@ -18,5 +18,8 @@ module.exports.config = {
     name: "prefix",
     description: "Muda o prefixo do canal (streamer)",
     aliases: [""],
-    streamerOnly: true
+    permission: {
+        adminOnly: true,
+        streamerOnly: true
+    }
 }
