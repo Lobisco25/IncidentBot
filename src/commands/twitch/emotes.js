@@ -50,5 +50,8 @@ module.exports.config = {
     name: "emotes",
     description: "ativa ou desativa os alertas de emote da 7tv",
     aliases: ["7tv", "7tvemotes"],
-    streamerOnly: true,
+    permissions: {
+        adminOnly: true,
+        streamerOnly: true
+    }
 }
