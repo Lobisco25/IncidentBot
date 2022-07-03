@@ -8,8 +8,8 @@ const baseUrl = `https://events.7tv.app/v1/channel-emotes?channel=${
 var source = null
 
 const createEventSource = async () => {
-    var channels = await ChannelModel.find({SevenTV_Events: {$eq: true}})  
-    const url = `${baseUrl}&channel=${channels
+    var channels = await ChannelModel.find({SevenTV_Events: {$eq: true}})
+        const url = `${baseUrl}&channel=${channels
             .map((c) => c.twitch_name)
             .join("&channel=")}`
             source = new EventSource(url)
