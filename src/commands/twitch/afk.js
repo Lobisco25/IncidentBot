@@ -60,6 +60,6 @@ module.exports.config = {
     name: "afk",
     description:
         "Avisa ao chat que você vai ficar longe ou algo desse tipo eu n sei como as pessoa realmente usam o afk",
-    aliases: ["gn", "study", "code", "workout"],
+    aliases: ["gn", "study", "code", "workout", "shower", "brb", "work", "read", "food", "fuck"],
     cooldown: 2000
 }
