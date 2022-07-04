@@ -25,7 +25,26 @@ client.on("message", async (channel, tags, message, self) => {
             output = `${tags.username} acordou: ${user.afk.message} (${time})`
             break
         case "workout":
-            output = `${tags.username} acabou de malhar: ${user.afk.message} (${time})` 
+            output = `${tags.username} acabou de malhar: ${user.afk.message} (${time})`
+            break 
+        case "shower":
+            output = `${tags.username} acaba de se banhar: ${user.afk.message} (${time})`
+            break
+        case "brb":
+            output = `${tags.username} voltou: ${user.afk.message} (${time})`
+            break
+        case "work":
+            output = `${tags.username} voltou do trabalho: ${user.afk.message} (${time})`
+            break
+        case "read":
+            output = `${tags.username} terminou de ler: ${user.afk.message} (${time})`
+            break
+        case "food":
+            output = `${tags.username} está com a barriga cheia: ${user.afk.message} (${time})`
+            break
+        case "fuck":
+            output = `${tags.username} terminou a sua foda: ${user.afk.message} (${time})`
+            break
     }
     await client.say(channel, output)
 

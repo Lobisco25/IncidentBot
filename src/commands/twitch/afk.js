@@ -34,6 +34,24 @@ exports.run = async (client, args, channel, tags, message, user) => {
         case "workout":
             output = `${tags.username} foi malhar: ${msg}`
             break
+        case "shower": 
+            output = `${tags.username} foi tomar banho: ${msg}`
+            break
+        case "brb":
+            output = `${tags.username} volta já: ${msg}`
+            break
+        case "work":
+            output = `${tags.username} foi trabalhar: ${msg}`
+            break
+        case "read":
+            output = `${tags.username} foi ler: ${msg}`
+            break
+        case "food": 
+            output = `${tags.username} foi comer: ${msg}`
+            break
+        case "fuck":
+            output = `${tags.username} foi foder: ${msg}`
+            break
     }
     await client.say(channel, output)
 }
