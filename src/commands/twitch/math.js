@@ -1,10 +1,13 @@
 exports.run = (client, args, channel, tags, message) => {
-    if(!args[0]) {
+    const input = args.join(" ")
+    const result = eval(input.replace(/[^0-9\+\-\*\/]/g, ""))
+
+    if (!args[0] || result === undefined) {
         client.say(channel, "Algo deu errado! pajaDank")
         return
     }
-    const calc = args.join(" ")
-    // client.say(channel, `${eval(calc)}`)
+
+    client.say(channel, `${tags.username}, ${result}`)
 }
 
 module.exports.config = {
