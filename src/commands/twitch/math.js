@@ -4,7 +4,7 @@ exports.run = (client, args, channel, tags, message) => {
         return
     }
     const calc = args.join(" ")
-    client.say(channel, `${eval(calc)}`)
+    // client.say(channel, `${eval(calc)}`)
 }
 
 module.exports.config = {
