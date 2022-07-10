@@ -50,4 +50,7 @@ client.on("message", async (channel, tags, message, self) => {
 
     user.afk = undefined
     user.save()
+}).catch((err) => {
+    const pushId = process.env.AFK_UPTIME
+    axios.get(`${process.env.UPTIME_ENDPOINT}/${pushId}?status=up&msg=${err}&ping=${ping}`)
 })

@@ -26,3 +26,8 @@ Um bot da twitch criado por Lobisco25, Bytter_ e Feridinha
 - TMI_DEBUG= Se existir, mostra as mensagens de debug do tmi.js
 - WEATHER_TOKEN= Token do [**Weatherapi**](https://www.weatherapi.com/)
 - NEWS_TOKEN= Token do [**Newsdata**](https://newsdata.io/)
+- UPTIME_ENDPOINT= Endpoint do serviço dse uptime
+- AFK_UPTIME= Id do push para a api do uptime do afk 
+- DISCORD_UPTIME= Id do push para a api do uptime do discord.js
+- TMI_UPTIME= Id do push para a api do uptime do tmi.js
+- BOT_UPTIME= Id do push para a api do uptime do bot inteiro

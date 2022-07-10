@@ -71,6 +71,8 @@ client.on("message", async (channel, tags, message, self) => {
         command.run(client, args, channel, tags, message)
     } catch (err) {
         log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
+        const pushId = process.env.TMI_UPTIME
+        axios.get(`${process.env.UPTIME_ENDPOINT}/${pushId}?status=up&msg=${err}&ping=${ping}`)
     }
 
     setUserCooldown(command, tags)
