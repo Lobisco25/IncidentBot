@@ -31,8 +31,6 @@ discord.on("message", (message) => {
             cmdFile.run(discord, args, message)
         } catch (err) {
             if (err) console.log("Erroooooooooooooos: " + err)
-            const pushId = process.env.DISCORD_UPTIME
-            axios.get(`${process.env.UPTIME_ENDPOINT}/${pushId}?status=up&msg=${err}&ping=${ping}`)
         }
     }
 })
