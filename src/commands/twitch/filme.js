@@ -1,7 +1,8 @@
 const axios = require("axios")
 const cheerio = require("cheerio")
+const translate = require("translate-google")
 
-exports.run = (client, args, channel, tags, message, user) => {
+exports.run = async (client, args, channel, tags, message, user) => {
         axios({
             method: "GET",
             url: "https://www.bestrandoms.com/random-movie-generator"
@@ -15,18 +16,19 @@ exports.run = (client, args, channel, tags, message, user) => {
                 const description = $($(e).children()[3]).text()
 
                 return { name, description, rating }
-            })
+            }) 
 
-            const r = Math.floor(Math.random() * 6)
+            const translation =  await translate(movies[0].description, {from: 'en', to: 'pt'})
+
             await client.say(
                 channel,
-                `Nome: ${movies[r].name}, descrição: "${movies[r].description}", ${movies[r].rating}`
+                `Nome: ${movies[0].name}, descrição: "${translation}", ${movies[0].rating}`
             )
         })
 }
 module.exports.config = {
     name: "filme",
     description: "Retorna um filme aleatório",
-    aliases: ["rmovie", "randomfilme", "rfilme"],
+    aliases: ["rmovie", "randomfilme", "rfilme", "movie"],
     cooldown: 5000,
 }

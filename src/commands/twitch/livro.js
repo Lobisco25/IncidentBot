@@ -14,13 +14,12 @@ exports.run = (client, args, channel, tags, message, user) => {
             return { name, author }
         })
 
-        const r = Math.floor(Math.random() * 6)
-        client.say(channel, `Livro: ${movies[r].name} ${movies[r].author}`)
+        client.say(channel, `Livro: ${movies[0].name} ${movies[0].author}`)
     })
 }
 module.exports.config = {
     name: "livro",
     description: "Retorna um livro aleatório",
-    aliases: [],
+    aliases: ["book", "rlivro", "rbook", "randomlivro", "randombook"],
     cooldown: 5000,
 }

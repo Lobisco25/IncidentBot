@@ -1,19 +1,24 @@
 const axios = require("axios")
+const translate = require("translate-google")
 
-exports.run = (client, args, channel, tags, message, user) => {
-    axios({
+exports.run = async (client, args, channel, tags, message, user) => {
+    const response = await axios({
         method: "GET",
         url: "https://catfact.ninja/fact",
         headers: {
             accept: "application/json",
             "X-CSRF-TOKEN": "wm6xCeD2NhD8BJyZOB2u8tF4Ko2YPtkctS98A4Ag",
-        },
-    }).then(async (res) => {
-        await client.say(
-            channel,
-            `@${tags.username}, pajaScoots ${res.data.fact}`
-        )
+        }
     })
+
+    
+
+    const translation =  await translate(response.data.fact, {from: 'en', to: 'pt'})
+
+    await client.say(
+        channel,
+        `@${tags.username}, pajaScoots ${translation}`
+    )
 }
 module.exports.config = {
     name: "catfact",

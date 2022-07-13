@@ -1,15 +1,17 @@
 const axios = require("axios")
+const translate = require('translate-google')
 
-exports.run = (client, args, channel, tags, message, user) => {
-    axios({
-        method: "GET",
-        url: "https://dog-api.kinduff.com/api/facts",
-    }).then(async (res) => {
-        await client.say(
-            channel,
-            `@${tags.username}, pajaScoots ${res.data.facts}`
+exports.run = async (client, args, channel, tags, message, user) => {
+
+    const response = await axios.get("https://dog-api.kinduff.com/api/facts")
+
+    const translation =  await translate(response.data.facts, {from: 'en', to: 'pt'})
+
+    await client.say(
+        channel,
+        `@${tags.username}, pajaScoots ${translation}`
         )
-    })
+    
 }
 module.exports.config = {
     name: "dogfact",
