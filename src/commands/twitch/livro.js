@@ -20,7 +20,7 @@ exports.run = (client, args, channel, tags, message, user) => {
 }
 module.exports.config = {
     name: "livro",
-    description: "Retorna um filme aleatório",
-    aliases: ["rmovie", "randomfilme", "rfilme"],
+    description: "Retorna um livro aleatório",
+    aliases: [],
     cooldown: 5000,
 }
