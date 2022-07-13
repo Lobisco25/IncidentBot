@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js",
-    "server": "pm2 start ./src/index.js"
+    "server": "pm2 start ./src/index.js -n incidentbot"
   },
   "author": "",
   "license": "ISC",

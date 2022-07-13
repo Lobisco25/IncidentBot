@@ -11,7 +11,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
         channel,
         `@${tags.username}, pajaScoots ${translation}`
         )
-    
 }
 module.exports.config = {
     name: "dogfact",

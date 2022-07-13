@@ -10,9 +10,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
             "X-CSRF-TOKEN": "wm6xCeD2NhD8BJyZOB2u8tF4Ko2YPtkctS98A4Ag",
         }
     })
-
-    
-
     const translation =  await translate(response.data.fact, {from: 'en', to: 'pt'})
 
     await client.say(
