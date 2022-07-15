@@ -11,10 +11,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
     await axios
         .get(`https://api.7tv.app/v2/users/${channel}/emotes`)
         .then(async (res) => {
-            
-            const randomemote1 = getRandomEmote(res)
-            const randomemote2 = getRandomEmote(res)
-            const randomemote3 = getRandomEmote(res)
+            const emotes = [getRandomEmote(res), getRandomEmote(res), getRandomEmote(res)]
             const emotesLength = res.data.length
 
             if(emotesLength < 30) {
@@ -23,13 +20,14 @@ exports.run = async (client, args, channel, tags, message, user) => {
                     `${tags.username} para você poder usar a roleta, o chat precisa ter pelo menos 30 emotes na 7tv`
                 )
             }
+
             else {
                 await client.say(
                     channel,
-                    `[ ${randomemote1} ${randomemote2} ${randomemote3} ]`
+                    `[ ${emotes[0]} ${emotes[1]} ${emotes[2]} ]`
                 )
                 //ferida aqui vc coloca pra o usuario ganhar uma quantidade especifica de trauma
-                if(randomemote1 === randomemote2 && randomemote2 === randomemote3) {
+                if(emotes[0] === emotes[1] && emotes[1] === emotes[2]) {
                     await client.say(
                         channel, 
                         `${tags.username} pajaPog Você ganhou alguma coisa`
@@ -42,5 +40,5 @@ module.exports.config = {
     name: "roleta",
     description: "pega 3 emotes da 7tv",
     aliases: ["slots", "roleta7tv", "slots7tv"],
-    cooldown: 20000
+    cooldown: 15000
 }
