@@ -1,25 +1,27 @@
 const axios = require("axios")
 exports.run = async (client, args, channel, tags, message, user) => {
+    const r = Math.floor(Math.random() * 10)
+    const endpoints = [
+        `https://newsdata.io/api/1/news?apikey=${process.env.NEWS_TOKEN}&q=noticias&language=pt`,
+        `https://newsdata.io/api/1/news?apikey=${process.env.NEWS_TOKEN}&q=${args[0]}&language=pt `,
+    ]
+
     if (!args[0]) {
-        axios
-            .get (
-                `https://newsdata.io/api/1/news?apikey=${process.env.NEWS_TOKEN}&language=pt`
-            )
-            .then(async (res) => {
-                const random = Math.floor(Math.random() * 10)
-                let resul = res.data.results[random]
-                await client.say(channel, `${resul.description}, (categoria: ${resul.category}, fonte: ${resul.source_id})`)
-            })
+        const res = await axios.get(endpoints[0])
+        const resul = res.data.results[r]
+
+        await client.say(
+            channel,
+            `${resul.description}, (categoria: ${resul.category}, fonte: ${resul.source_id})`
+        )
     } else {
-        axios
-            .get (
-                `https://newsdata.io/api/1/news?apikey=${process.env.NEWS_TOKEN}&q=${args[0]}&language=pt `
-            )
-            .then(async (res) => {
-                const random = Math.floor(Math.random() * 10)
-                let resul = res.data.results[random]
-                await client.say(channel, `${resul.description}, (categoria: ${resul.category}, fonte: ${resul.source_id})`)
-            })
+        const res = await axios.get(endpoints[1])
+        const resul = res.data.results[r]
+
+        await client.say(
+            channel,
+            `${resul.description}, (categoria: ${resul.category}, fonte: ${resul.source_id})`
+        )
     }
 }
 module.exports.config = {
