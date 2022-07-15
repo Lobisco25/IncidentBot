@@ -10,12 +10,12 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
         .then(async (res) => {
             const $ = cheerio.load(res.data)
-            const movies = $(".content .list-unstyled").map((i, e) => {
+            const facts = $(".content .list-unstyled").map((i, e) => {
                 const fact = $($(e).children()[1]).text()
                 return { fact }
             }) 
 
-            const translation =  await translate(movies[0].fact.replace("[Amazing]", " "), {from: 'en', to: 'pt'})
+            const translation =  await translate(facts[0].fact.replace("[Amazing]", " "), {from: 'en', to: 'pt'})
             client.say(
                 channel,
                 `${translation.replace("[Incrível]", " ")}`
