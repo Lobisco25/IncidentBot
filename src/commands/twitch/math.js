@@ -14,6 +14,6 @@ exports.run = (client, args, channel, tags, message) => {
 module.exports.config = {
     name: "math",
     description: "Realiza operações matematicas",
-    cooldown: 5000,
     aliases: ["calculadora", "calc"],
+    cooldown: 5000,
 }

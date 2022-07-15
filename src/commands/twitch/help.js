@@ -12,4 +12,5 @@ module.exports.config = {
     name: "help",
     description: "Mostra todos os comandos do bot",
     aliases: ["commands"],
+    cooldown: 2000
 }

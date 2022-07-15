@@ -30,6 +30,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
 module.exports.config = {
     name: "savecity",
     description: "Salva asua cidade para ser usada no comando weather",
-    cooldown: 3000,
     aliases: ["city"],
+    cooldown: 3000,
 }

@@ -38,4 +38,5 @@ module.exports.config = {
     name: "weather",
     description: "Pega o clima de uma cidade",
     aliases: [""],
+    cooldown: 3000
 }

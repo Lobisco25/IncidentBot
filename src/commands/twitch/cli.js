@@ -29,4 +29,5 @@ module.exports.config = {
     name: "cli",
     description: "Pega as informações de um usuário da Twitch.",
     aliases: ["user"],
+    cooldown: 2000
 }

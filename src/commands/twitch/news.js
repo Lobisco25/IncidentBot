@@ -27,6 +27,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
 module.exports.config = {
     name: "news",
     description: "As noticias do mundo",
-    cooldown: 5000,
     aliases: ["noticias"],
+    cooldown: 5000,
 }

@@ -32,6 +32,6 @@ exports.run = async (client, args, channel, tags, message, user) => {
 module.exports.config = {
     name: "suggest",
     description: "Manda uma sugestão para o bot",
-    cooldown: 5000,
     aliases: ["sg"],
+    cooldown: 5000,
 }
