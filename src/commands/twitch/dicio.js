@@ -5,7 +5,7 @@ exports.run = (client, args, channel, tags, message, user) => {
         url: `https://significado.herokuapp.com/${args[0]}`,
         validateStatus: () => true,
     }).then((res) => {
-        if (res.status == 400) {
+        if (res.status == 400 || res.data[0].meanings[0] == undefined) {
             client.say(
                 channel,
                 `${tags.username}, essa palavra não está no dicionário FeelsDankMan`
