@@ -30,5 +30,5 @@ module.exports.config = {
     name: "choice",
     description: "Escolhe alguma coisa",
     aliases: ["escolha"],
-    // cooldown: 5000,
+    cooldown: 5000,
 }
