@@ -24,7 +24,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
             else {
                 await client.say(
                     channel,
-                    `[ ${emotes[0]} ${emotes[1]} ${emotes[2]} ]`
+                    `[ ${emotes[0]} ${emotes[1]} ${emotes[2]} meu dues funcioi ou ]`
                 )
                 //ferida aqui vc coloca pra o usuario ganhar uma quantidade especifica de trauma
                 if(emotes[0] === emotes[1] && emotes[1] === emotes[2]) {
