@@ -7,7 +7,7 @@ require("./handlers/afk.js")
 const axios = require("axios")
 const client = require("./services/tmi")
 
-    if(process.env.IS_PROD === true) {
+    if(Boolean(process.env.IS_PROD) === true) {
         setInterval(() => {
             axios.get(
                 `${process.env.UPTIME_ENDPOINT}${process.env.BOT_UPTIME}?status=up&msg=All%20Up`

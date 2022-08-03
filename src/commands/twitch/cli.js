@@ -1,10 +1,18 @@
 const twurple = require("../../services/twurple.js")
+const axios = require("axios")
+const FormData = require("form-data")
+
 
 const getUserDate = (search) => {
     creationDate = `${search.creationDate.getUTCDate()}/${
         search.creationDate.getUTCMonth() + 1
     }/${search.creationDate.getUTCFullYear()} as ${search.creationDate.getHours()}:${search.creationDate.getMinutes()}:${search.creationDate.getSeconds()}`
     return creationDate
+}
+
+async function fetchImage(url, image_path) {
+    const result = await axios({ url, responseType: "stream", })
+    return result.data
 }
 
 exports.run = async (client, args, channel, tags, message, user) => {
@@ -20,10 +28,32 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
     const creationDate = getUserDate(search)
 
-    client.say(
-        channel,
-        `pajaDank @${search.displayName} | ${search.id} | Criado em: ${creationDate} | Bio: ${search.description} | Foto de Perfil: ${search.profilePictureUrl}`
-    )
+    
+    async function upload (file) {
+        var formData = new FormData()
+        formData.append("file", file, "cli_twitch_profile_incidentbot.jpg")
+        await axios
+        .post("https://feridinha.com/upload", formData, {
+            headers: {
+                "Content-Type": `multipart/form-data; bondary=${formData._bondary}`,
+            },
+        })
+        .then(async (response) => {
+            client.say(
+                channel,
+                `pajaDank @${search.displayName} | ${search.id} | Criado em: ${creationDate} | Bio: ${search.description} | Foto de Perfil: ${response.data.message}`
+            )
+            })
+            .catch(async (error) => {
+                await client.say(channel, `FeelsBadMan @${tags.username}, ocorreu um erro...`)
+                console.log(error)
+            })
+    }
+
+    const imageTarget = await fetchImage(search.profilePictureUrl)
+    await upload(imageTarget)
+
+
 }
 module.exports.config = {
     name: "cli",
