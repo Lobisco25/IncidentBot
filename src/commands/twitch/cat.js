@@ -9,15 +9,16 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
     async function upload (file) {
         var formData = new FormData()
-        formData.append("file", file, "cat_incidentbot.jpg")
+        formData.append("image", file, "cat_incidentbot.jpg")
         await axios
-            .post("https://feridinha.com/upload", formData, {
+            .post("https://i.lobis.co/upload", formData, {
                 headers: {
                     "Content-Type": `multipart/form-data; bondary=${formData._bondary}`,
+                    auth: process.env.IMAGE_SERVICE_PASSWORD
                 },
             })
             .then(async (response) => {
-                await client.say(channel, `pajaH @${tags.username}, ${response.data.message}`)
+                await client.say(channel, `pajaH @${tags.username}, ${response.data}`)
             })
             .catch(async (error) => {
                 await client.say(channel, `FeelsBadMan @${tags.username}, ocorreu um erro...`)

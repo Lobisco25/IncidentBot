@@ -31,17 +31,18 @@ exports.run = async (client, args, channel, tags, message, user) => {
     
     async function upload (file) {
         var formData = new FormData()
-        formData.append("file", file, "cli_twitch_profile_incidentbot.jpg")
+        formData.append("image", file, "cli_twitch_profile_incidentbot.jpg")
         await axios
-        .post("https://feridinha.com/upload", formData, {
+        .post("https://i.lobis.co/upload", formData, {
             headers: {
                 "Content-Type": `multipart/form-data; bondary=${formData._bondary}`,
+                auth: process.env.IMAGE_SERVICE_PASSWORD
             },
         })
         .then(async (response) => {
             client.say(
                 channel,
-                `pajaDank @${search.displayName} | ${search.id} | Criado em: ${creationDate} | Bio: ${search.description} | Foto de Perfil: ${response.data.message}`
+                `pajaDank @${search.displayName} | ${search.id} | Criado em: ${creationDate} | Bio: ${search.description} | Foto de Perfil: ${response.data}`
             )
             })
             .catch(async (error) => {
@@ -56,8 +57,8 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
 }
 module.exports.config = {
-    name: "cli",
+    name: "user",
     description: "Pega as informações de um usuário da Twitch.",
-    aliases: ["user"],
+    aliases: ["uid"],
     cooldown: 2000
 }

@@ -29,3 +29,4 @@ Um bot da twitch criado por Lobisco25, Bytter_ e Feridinha
 - UPTIME_ENDPOINT= Endpoint do serviço dse uptime
 - BOT_UPTIME= Id do push para a api do uptime do bot inteiro
 - IS_PROD= Se estiver no server de produção, coloque como true, caso contrário, coloque como false
+- IMAGE_SERVICE_PASSWORD= Senha para upload de imagens no [**i.lobis.co**](https://github.com/lobisco25/i.lobis.co)
