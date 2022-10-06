@@ -5,83 +5,77 @@ exports.run = async (client, args, channel, tags, message, user) => {
         client.say(channel, "moeda invalida! pajaDank ")
         return
     }
-    const endpoints = [
-        "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd.json",
-        "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json",
-        "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/btc.json",
-        "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/gbp.json",
-    ]
+    const endpoints = ["usd", "eur", "btc", "gbp"]
+
+    const currency = async (endpoint) => {
+        const res = await axios.get(
+            `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${endpoint}.json`
+        )
+        return res
+    }
+
     switch (args[0]) {
         case "dolar":
-            axios.get(endpoints[0]).then(async (res) => {
+            currency(endpoints[0]).then((res) => {
                 if (!args[1]) {
-                    await client.say(
+                    client.say(
                         channel,
-                        `1 dolar é igual a R$${res.data.usd.brl
+                        `Um dolar é igual a R$${res.data.usd.brl
                             .toString()
-                            .slice(0, 4)}`
+                            .substring(0, 4)}`
                     )
                 } else if (Number(args[1])) {
-                    const math = res.data.usd.brl * args[1]
-                    await client.say(
-                        channel,
-                        `R$${math.toString().slice(0, 5)}`
-                    )
+                    const usd = res.data.usd.brl
+                    const math = usd * args[1]
+                    client.say(channel, "R$" + math.toString().substring(0, 5))
                 }
             })
+
             break
         case "euro":
-            axios.get(endpoints[1]).then(async (res) => {
+            currency(endpoints[1]).then((res) => {
                 if (!args[1]) {
-                    await client.say(
+                    client.say(
                         channel,
-                        `1 euro é igual a R$${res.data.eur.brl
+                        `Um euro é igual a R${res.data.eur.brl
                             .toString()
-                            .slice(0, 4)}`
+                            .substring(0, 4)}`
                     )
                 } else if (Number(args[1])) {
-                    const math = res.data.eur.brl * args[1]
-                    await client.say(
-                        channel,
-                        `R$${math.toString().slice(0, 5)}`
-                    )
+                    const euro = res.data.eur.brl
+                    const math = euro * args[1]
+                    client.say(channel, "R$" + math.toString().substring(0, 5))
                 }
             })
             break
         case "bitcoin":
         case "btc":
-            axios.get(endpoints[2]).then(async (res) => {
+            currency(endpoints[2]).then((res) => {
                 if (!args[1]) {
-                    await client.say(
+                    client.say(
                         channel,
-                        `1 bitcoin é igual a R$${res.data.btc.brl
-                            .toString()
-                            .slice(0, 6)}`
+                        `Um bitcoin é igual a R$${res.data.btc.brl}`
                     )
                 } else if (Number(args[1])) {
-                    const math = res.data.btc.brl * args[1]
-                    await client.say(
-                        channel,
-                        `R$${math.toString().slice(0, 5)}`
-                    )
+                    const btc = res.data.btc.brl
+                    const math = btc * args[1]
+                    client.say(channel, "R$" + math.toString().substring(0, 5))
                 }
             })
             break
         case "libra":
-            axios.get(endpoints[3]).then(async (res) => {
+            currency(endpoints[3]).then((res) => {
                 if (!args[1]) {
-                    await client.say(
+                    client.say(
                         channel,
-                        `1 libra é igual a R$${res.data.gbp.brl
+                        `Uma libra é igual a R$${res.data.gbp.brl
                             .toString()
-                            .slice(0, 4)}`
+                            .substring(0, 4)}`
                     )
                 } else if (Number(args[1])) {
-                    const math = res.data.gbp.brl * args[1]
-                    await client.say(
-                        channel,
-                        `R$${math.toString().slice(0, 5)}`
-                    )
+                    const gbp = res.data.gbp.brl
+                    const math = gbp * args[1]
+                    client.say(channel, "R$" + math.toString().substring(0, 5))
                 }
             })
             break
