@@ -5,7 +5,7 @@ exports.run = async (client, args, channel, tags, message, user) => {
     if (!args[0] || !args[1] || isnan) {
         client.say(
             channel,
-            "[DEV] Algo deu errado! Tente -currency dolar 1 pajaDank "
+            "Algo deu errado! Tente -currency dolar 1 pajaDank "
         )
         return
     }
