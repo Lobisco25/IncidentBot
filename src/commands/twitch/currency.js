@@ -1,10 +1,11 @@
 const axios = require("axios")
 
 exports.run = async (client, args, channel, tags, message, user) => {
-    if (!args[0] || !args[1]) {
+    const isnan = isNaN(Number(args[1]))
+    if (!args[0] || !args[1] || isnan) {
         client.say(
             channel,
-            "Algo deu errado! Tente -currency dolar 1 pajaDank "
+            "[DEV] Algo deu errado! Tente -currency dolar 1 pajaDank "
         )
         return
     }
@@ -19,7 +20,9 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
     async function getCurrency(endpoint, Currency) {
         const currency = currencyApi(endpoint).then((res) => {
-            if (Number(args[1])) {
+            if (isnan) {
+                return
+            } else {
                 const convertor = res.data[`${Currency}`].brl * args[1]
                 return convertor.toString().substring(0, 4)
             }
