@@ -8,13 +8,13 @@ exports.run = (client, args, channel, tags, message, user) => {
     }).then(async (res) => {
         const $ = await cheerio.load(res.data)
         const book = $(".content .list-unstyled .col-sm-6").map((i, e) => {
-            const name = $($(e).children()[0]).text()
-            const author = $($(e).children()[1]).text()
+            const name = $($(e).children()[1]).text()
+            const author = $($(e).children()[2]).text()
 
             return { name, author }
         })
 
-        client.say(channel, `Livro: ${book[0].name} ${book[0].author}`)
+        client.say(channel, `${book[4].name} by ${book[4].author}`)
     })
 }
 module.exports.config = {
