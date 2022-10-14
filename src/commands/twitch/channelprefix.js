@@ -9,10 +9,13 @@ exports.run = async (client, args, channel, tags, message, user) => {
         { customPrefix: args[1] }
     )
 
-    client.say(
-        channel,
-        `FeelsOkayMan 👍 Prefixo de ${channelTarget} mudado para ${args[1]}`
-    )
+    
+    let say = {    
+     pt: `FeelsOkayMan 👍 Prefixo de ${channelTarget} mudado para ${args[1]}`,
+     en: `FeelsOkayMan 👍 ${channelTarget}'s prefix set to ${args[1]}`
+
+    }
+    return say
 }
 module.exports.config = {
     name: "channelprefix",

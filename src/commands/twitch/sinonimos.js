@@ -1,24 +1,34 @@
-exports.run = (client, args, channel, tags, message, user) => {
+exports.run = async (client, args, channel, tags, message, user) => {
     const axios = require("axios")
-    axios({
-        method: "GET",
-        url: `https://significado.herokuapp.com/v2/sinonimos/${args[0]}`,
-        validateStatus: () => true,
-    }).then((res) => {
+
+    const enRes = "This command is not available in non-portuguese chats."
+
+   const res = await axios({
+    method: "GET",
+    url: `https://significado.herokuapp.com/v2/sinonimos/${args[0]}`,
+    validateStatus: () => true,
+})
+   
         if (res.status == 400 || res.data[0] == undefined) {
-            client.say(
-                channel,
-                `${tags.username}, essa palavra não está no dicionário FeelsDankMan`
-            )
+            let say = {
+                pt: `essa palavra não está no dicionário FeelsDankMan`,
+                en: enRes
+            }
+            return say
         } else if (res.data[0] == undefined) {
-            client.say(channel, `${tags.username}, ${res.data[0].meanings[0]} `)
+            let say = {
+                pt: `pajaM ${res.data[0]}`,
+                en: enRes
+            }
+            return say
         } else {
-            client.say(
-                channel,
-                `${tags.username}, pajaM 1: ${res.data[0]} | 2: ${res.data[1]}`
-            )
+            let say = {
+                pt: `pajaM 1: ${res.data[0]} | 2: ${res.data[1]}`,
+                en: enRes
+            }
+            return say
         }
-    })
+    
 }
 module.exports.config = {
     name: "sinonimos",

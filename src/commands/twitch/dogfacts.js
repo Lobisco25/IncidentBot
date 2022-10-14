@@ -5,12 +5,13 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
     const response = await axios.get("https://dog-api.kinduff.com/api/facts")
 
-    const translation =  await translate(response.data.facts, {from: 'en', to: 'pt'})
+    const translation = await translate(response.data.facts, { from: 'en', to: 'pt' })
 
-    await client.say(
-        channel,
-        `@${tags.username}, pajaScoots ${translation}`
-        )
+    let say = {
+        pt: `pajaScoots ${translation}`,
+        en: `pajaScoots ${response.data.facts}`
+    }
+    return say
 }
 module.exports.config = {
     name: "dogfact",

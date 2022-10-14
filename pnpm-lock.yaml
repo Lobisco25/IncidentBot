@@ -1,4 +1,4 @@
-lockfileVersion: 5.4
+lockfileVersion: 5.3
 
 specifiers:
   '@twurple/api': ^5.1.6
@@ -11,7 +11,7 @@ specifiers:
   dotenv: ^16.0.1
   eventsource: ^2.0.2
   form-data: ^4.0.0
-  howlongtobeat: ^1.5.1
+  howlongtobeat: ^1.6.0
   mathjs: ^10.6.4
   mongoose: ^6.3.5
   ms: ^2.1.3
@@ -30,7 +30,7 @@ dependencies:
   dotenv: 16.0.3
   eventsource: 2.0.2
   form-data: 4.0.0
-  howlongtobeat: 1.5.1
+  howlongtobeat: 1.6.0
   mathjs: 10.6.4
   mongoose: 6.6.3
   ms: 2.1.3
@@ -771,8 +771,8 @@ packages:
       function-bind: 1.1.1
     dev: false
 
-  /howlongtobeat/1.5.1:
-    resolution: {integrity: sha512-LQ5YbsBr6wgTza60F5tT0EDdidshfMgv0mdKryodCT4geDw3eFRRvI4JKy/V4H1B+SOtI3Pk2CM1IPJ30nR3+g==}
+  /howlongtobeat/1.6.0:
+    resolution: {integrity: sha512-X1Z26GmpqB8+5iL8flYKsvhKCknRlXb2k3mPU5DlL5DxsNTe6zHKfy4+xpMArFyuGqtn/B7koT458MzHyq1XSg==}
     dependencies:
       axios: 0.22.0
       cheerio: 1.0.0-rc.12

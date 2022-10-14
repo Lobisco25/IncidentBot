@@ -10,29 +10,46 @@ async function getUserCity(tags) {
 }
 
 exports.run = async (client, args, channel, tags, message, user) => {
+    try {
     var city = args.length < 1 ? await getUserCity(tags) : args.join(" ")
     if (!city) {
-        await client.say(channel, `${tags.username}, Informe uma cidade`)
-        return
+        let say = {
+            pt: "nenhum lugar mencionado",
+            en: "no place provided"
+        }
+        return say
     }
     city = city.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    await axios
-        .get(
-            `http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_TOKEN}&q=${city}`
-        )
-        .then(async (res) => {
-            await client.say(
-                channel,
-                `@${tags.username}, Agora faz ${res.data.current.temp_c}°C | Sensação térmica de ${res.data.current.feelslike_c}°C | Umidade de ${res.data.current.humidity}% | Ventos de ${res.data.current.wind_kph}km/h | Nuvens: ${res.data.current.cloud}%`
-            )
-        })
-        .catch(async (err) => {
+    const res = await axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHER_TOKEN}&q=${city}`)
+      
+            let clouds = res.data.current.cloud
+            let emoji = null
+            switch (true) {
+                case (clouds < 20):
+                    emoji = "☀"
+                    break
+                case (clouds < 50):
+                    emoji = "🌥"
+                    break
+                case (clouds < 100):
+                    emoji = "☁"
+                    break
+            }
+            let say = {
+                pt: `${emoji} ${city}: ${res.data.current.temp_c}°C (${res.data.current.temp_f}°F) | Sensação térmica de ${res.data.current.feelslike_c}°C (${res.data.current.feelslike_f}°F) | Umidade: ${res.data.current.humidity}% | Ventos: ${res.data.current.wind_kph}km/h | Nuvens: ${res.data.current.cloud}%`,
+                en: `${emoji} ${city}: ${res.data.current.temp_c}°C (${res.data.current.temp_f}°F) | Feels like ${res.data.current.feelslike_c}°C (${res.data.current.feelslike_f}°F) | Humidity ${res.data.current.humidity}% | Wind: ${res.data.current.wind_kph}km/h | Clouds: ${res.data.current.cloud}%`
+            }
+            return say
+        
+    }
+        catch(err) {
             log.error("Erro ao pegar clima de um usuário " + err)
-            await client.say(
-                channel,
-                `@${tags.username}, não consegui achar o clima dessa cidade FeelsBadMan`
-            )
-        })
+            let say = {
+                pt: "não consegui achar o clima deste lugar",
+                en: "i couldn't find the weather for this location"
+            }
+            return say
+        }
 }
 module.exports.config = {
     name: "weather",

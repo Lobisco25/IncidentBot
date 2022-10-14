@@ -3,12 +3,22 @@ exports.run = (client, args, channel, tags, message) => {
     const input = args.join(" ")
     const result = math.evaluate(input)
 
+    if (Number(input) == NaN) return;
     if (!args[0]) {
-        client.say(channel, "Algo deu errado! pajaDank")
-        return
+        let say = {
+        pt: "pajaDank você esqueceu de dar um input",
+        en: "pajaDank you forgot to give an input"
+        }
+        return say
     }
 
-    client.say(channel, `${tags.username}, ${result}`)
+    else {
+        let say = {
+            pt: result,
+            en: result
+        }
+        return say
+    }
 }
 
 module.exports.config = {

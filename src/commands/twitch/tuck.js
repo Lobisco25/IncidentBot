@@ -1,14 +1,23 @@
 exports.run = (client, args, channel, tags, message, user) => {
+    if(!args[0]) {
+        let say = {
+            pt: "você se colocou na cama :(",
+            en: "you tucked yourself to bed :("
+        } 
+        return say
+    }
     if (!args[1]) {
-        client.say(
-            channel,
-            `${tags.username}, você colocou ${args[0]} na cama :) 🛏 `
-        )
+        let say = {
+            pt: `você colocou ${args[0]} na cama :) 🛏 `,
+            en: `you tucked ${args[0]} to bed :) 🛏`
+        }
+        return say
     } else {
-        client.say(
-            channel,
-            `${tags.username}, você colocou ${args[0]} na cama ${args[1]} 👉 🛏 `
-        )
+        let say = {
+            pt: `você colocou ${args[0]} na cama ${args[1]} 👉 🛏 `,
+            en: `you tucked ${args[0]} to bed ${args[1]} 👉 🛏`
+        }
+        return say
     }
 }
 module.exports.config = {

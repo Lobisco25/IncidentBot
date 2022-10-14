@@ -25,10 +25,11 @@ exports.run = async (client, args, channel, tags, message) => {
         log.error("Erro ao iniciar eventos da 7tv no canal", channel, err)
     })
 
-    await client.say(
-        channel,
-        `Conectado com sucesso em ${args[0]} FeelsOkayMan`
-    )
+    let say = {
+        pt: `FeelsOkayMan Conectado com sucesso de ${channelTarget}`,
+        en: `FeelsOkayMan Sucessfully connected from ${channelTarget}`
+    }
+    return say
 }
 
 module.exports.config = {

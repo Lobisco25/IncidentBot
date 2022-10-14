@@ -12,10 +12,11 @@ exports.run = async (client, args, channel, tags, message, user) => {
     })
     const translation =  await translate(response.data.fact, {from: 'en', to: 'pt'})
 
-    await client.say(
-        channel,
-        `@${tags.username}, pajaScoots ${translation}`
-    )
+    let say = {
+        pt: `pajaScoots ${translation}`,
+        en: `pajaScoots ${response.data.fact}`
+    }
+    return say
 }
 module.exports.config = {
     name: "catfact",

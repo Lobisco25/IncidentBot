@@ -17,28 +17,75 @@ async function setAFKStatus(message, tags, type) {
 
 exports.run = async (client, args, channel, tags, message, user) => {
     const msg = args[0] === undefined ? "(Sem mensagem)" : `${args.join(" ")}`
+     
     await setAFKStatus(msg, tags, tags.source)
     var output = null
     const afkType = (type) => {
+        const emojis = {
+            afk: "🏃 💨",
+            brb: "⌛",
+            gn: "💤",
+            work: "💼",
+            study: "📚",
+            workout: "🏋🏻",
+            read: "📖",
+            food: "OpieOP",
+            fuck: "🤨",
+            shower: "😏🚿"
+        }
+        const msg = args[0] === undefined ? emojis[type] : `${args.join(" ")} ${emojis[type]}`
         const source = {
-            afk: `${tags.username} agora está AFK: ${msg}`,
-            brb: `${tags.username} volta já: ${msg}`,
-            gn: `${tags.username} foi dormir: ${msg}`,
-            code: `${tags.username} foi programar: ${msg}`,
-            work: `${tags.username} foi trabalhar: ${msg}`,
-            study: `${tags.username} foi estudar: ${msg}`,
-            workout: `${tags.username} foi malhar: ${msg}`,
-            read: `${tags.username} foi ler: ${msg}`,
-            food: `${tags.username} foi comer: ${msg}`,
-            fuck: `${tags.username} foi foder: ${msg}`,
-            shower: `${tags.username} foi tomar banho: ${msg}`,
+            afk: {
+                pt: `agora está AFK: ${msg}`,
+                en: `is now AFK: ${msg}`
+            },
+            brb: {
+                pt: `volta já: ${msg}`,
+                en: `will be right back: ${msg}`
+            },
+            gn: {
+                pt: `foi dormir: ${msg}`,
+                en: `is now sleeping ${msg}`
+            },
+            work: {
+                pt: `foi trabalhar: ${msg}`,
+                en: `is working`
+            },
+            study: {
+                pt: `foi estudar: ${msg}`,
+                en: `is now studying ${msg}`
+            },
+            workout: {
+                pt: `foi treinar: ${msg}`,
+                en: `is now working out: ${msg}`
+            },
+            read: {
+                pt: `foi ler: ${msg}`,
+                en: `went to read: ${msg}`
+            },
+            food: {
+                pt: `foi comer: ${msg}`,
+                en: `is now eating: ${msg}`
+            },
+            fuck: {
+                pt: `foi foder: ${msg}`,
+                en: `is now fucking: ${msg}`
+            },
+            shower: {
+                pt: `foi tomar banho: ${msg}`,
+                en: `is now taking a shower: ${msg}`
+            },
         }
         output = source[type]
         return output
     }
 
     afkType(tags.source)
-    await client.say(channel, output)
+    let say = {
+        pt: output.pt,
+        en: output.en
+    }
+    return say
 }
 
 module.exports.config = {

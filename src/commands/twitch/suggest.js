@@ -5,8 +5,11 @@ const log = require("../../handlers/logger")
 
 exports.run = async (client, args, channel, tags, message, user) => {
     if (!args[0]) {
-        await client.say(channel, "Você esqueceu a sugestão pajaDank")
-        return
+        let say = {
+            pt: "Mande uma sugestão para os devs do IncidentBot pajaH",
+            en: "Send a suggestion to IncidentBot's devs pajaH"
+        }
+        return say
     }
     await SuggestModel.create(
         {
@@ -14,8 +17,14 @@ exports.run = async (client, args, channel, tags, message, user) => {
             message: args.join(" "),
         },
         ((err, i) => {
-            if (err) log.error("Erro ao criar uma sugestão", err)
-            client.say(channel, "pajaH A sua sugestão foi anotada!")
+            if (err) {
+                log.error("Erro ao criar uma sugestão", err)
+                let say = {
+                    pt: "Erro ao salvar a sugestão pajaDent tente denovo...",
+                    en: "Error saving suggestion pajaDent try again..."
+                }
+                return say
+            }
 
             const embed = new MessageEmbed()
                 .setColor("#fc1303")
@@ -27,6 +36,12 @@ exports.run = async (client, args, channel, tags, message, user) => {
                 .send({ embeds: [embed] })
         })
     )
+    let say = {
+        pt: "Sua sugestão foi salva com sucesso pajaDank 👍🏼",
+        en: "Your suggestion was saved sucessfully pajaDank 👍🏼"
+
+    }
+    return say
 }
 
 module.exports.config = {

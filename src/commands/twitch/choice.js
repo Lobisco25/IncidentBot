@@ -23,7 +23,12 @@ exports.run = async (client, args, channel, tags, message, user) => {
         index = args.indexOf("ou")
     }
 
-    client.say(channel, `${tags.username}, ${args[random]}`)
+    let say = {
+        pt: args[random],
+        en: args[random]
+    }
+
+    return say
 }
 
 module.exports.config = {

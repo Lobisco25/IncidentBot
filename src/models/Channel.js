@@ -6,7 +6,8 @@ const ChannelSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    SevenTV_Events: Boolean
+    SevenTV_Events: Boolean,
+    lang: String
 })
 
 module.exports = mongoose.model("Channel", ChannelSchema)

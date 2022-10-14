@@ -11,7 +11,7 @@ fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
 
     const jsfile = files.filter((f) => f.split(".").pop() == "js")
     jsfile.forEach((f, i) => {
-        var pull = require(`../commands/twitch/${f}`)
+        let pull = require(`../commands/twitch/${f}`)
         pull.cooldownUsers = []
         client.commands[pull.config.name] = pull
     })
@@ -53,9 +53,10 @@ client.on("message", async (channel, tags, message, self) => {
     const prefix = (await getCustomPrefix(channel)) || defaultPrefix
 
     let args = message.slice(prefix.length).trim().split(/ +/g)
-    var cmd = args.shift().toLowerCase()
+    let cmd = args.shift().toLowerCase()
     tags.source = cmd
-    var command = client.commands[cmd] || getCommandByAlias(cmd)
+    let command = client.commands[cmd] || getCommandByAlias(cmd)
+    const channelDB = await ChannelModel.findOne({ twitch_name: channel })
 
     if (!command || !message.startsWith(prefix)) return
     if (command.cooldownUsers.includes(tags["user-id"])) return
@@ -67,11 +68,57 @@ client.on("message", async (channel, tags, message, self) => {
     )
         return
 
+    let chatResponse = await command.run(client, args, channel, tags)
+    let chatres = null
     try {
-        command.run(client, args, channel, tags, message)
+        switch (channelDB.lang) {
+            default:
+                switch (command.config.name) {
+                    default:
+                        chatres = chatResponse.pt
+                        break
+                    case ("news"):
+                        chatres = chatResponse.pt()
+                        break
+                }
+                break
+            case (null):
+                switch (command.config.name) {
+                    default:
+                        chatres = chatResponse.pt
+                        break
+                    case ("news"):
+                        chatres = chatResponse.pt()
+                        break
+                }
+            case ("en"):
+                switch (command.config.name) {
+                    default:
+                        chatres = chatResponse.en
+                        break
+                    case ("news"):
+                        chatres = chatResponse.en()
+                        break
+                }
+                break
+        }
+        let nome = null
+
+        switch (command.config.name) {
+            default:
+                nome = tags.username + ","
+                break
+            case ("eval"):
+                nome = ""
+                break
+            case ("afk"):
+                nome = tags.username
+        }
+
+        client.say(channel, `[DEV] ${nome} ${chatres}`)
     } catch (err) {
         log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
-        client.say(channel, "pajaAAAAAAAAAAA ocorreu um erro ao executar o comando")
+        client.say(channel, "pajaAAAAAAAAAAA error")
     }
 
     setUserCooldown(command, tags)
