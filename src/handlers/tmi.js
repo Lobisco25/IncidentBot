@@ -115,7 +115,7 @@ client.on("message", async (channel, tags, message, self) => {
                 nome = tags.username
         }
 
-        client.say(channel, `[DEV] ${nome} ${chatres}`)
+        client.say(channel, `${nome} ${chatres}`)
     } catch (err) {
         log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
         client.say(channel, "pajaAAAAAAAAAAA error")
