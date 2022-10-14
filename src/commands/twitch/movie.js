@@ -27,8 +27,8 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
 }
 module.exports.config = {
-    name: "filme",
+    name: "movie",
     description: "Retorna um filme aleatório",
-    aliases: ["rmovie", "randomfilme", "rfilme", "movie"],
+    aliases: ["rmovie", "randomfilme", "rfilme", "filme"],
     cooldown: 5000,
 }

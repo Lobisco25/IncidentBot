@@ -21,8 +21,8 @@ exports.run = async (client, args, channel, tags, message, user) => {
 
 }
 module.exports.config = {
-    name: "livro",
+    name: "book",
     description: "Retorna um livro aleatório",
-    aliases: ["book", "rlivro", "rbook", "randomlivro", "randombook"],
+    aliases: ["livro", "rlivro", "rbook", "randomlivro", "randombook"],
     cooldown: 5000,
 }
