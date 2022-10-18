@@ -118,7 +118,7 @@ client.on("PRIVMSG", async (msg) => {
                 nome = msg.displayName
         }
 
-        client.privmsg(msg.channelName, `[DEV] ${nome} ${chatres}`)
+        client.privmsg(msg.channelName, `${nome} ${chatres}`)
     } catch (err) {
         log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
         client.privmsg(msg.channelName, "pajaAAAAAAAAAAA error")
