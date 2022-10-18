@@ -1,7 +1,7 @@
 const twurple = require("../../services/twurple")
 const axios = require("axios")
 const FormData = require("form-data")
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     if (!args[0]) return
     const search = await twurple.streams.getStreamByUserName(args[0])
     if (!search) return

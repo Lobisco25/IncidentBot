@@ -6,7 +6,7 @@ async function fetchImage(url) {
     return result.data
 }
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     async function fetchImage(url, image_path) {
         const result = await axios({ url, responseType: "stream", })
         return result.data

@@ -19,19 +19,19 @@ const handleEvent = (e) => {
     const data = JSON.parse(e.data)
     switch (data.action) {
         case "ADD":
-            client.say(
+            client.privmsg(
                 data.channel,
                 `${data.actor} adicionou ${data.name} na 7TV`
             )
             break
         case "REMOVE":
-            client.say(
+            client.privmsg(
                 data.channel,
                 `${data.actor} removeu ${data.name} na 7TV`
             )
             break
         case "UPDATE":
-            client.say(
+            client.privmsg(
                 data.channel,
                 `${data.actor} mudou o nome de ${data.emote.name} para ${data.name} na 7TV`
             )

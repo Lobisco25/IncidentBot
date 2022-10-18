@@ -2,16 +2,15 @@ const axios = require("axios")
 const UserModel = require("../../models/User")
 const log = require("../../handlers/logger")
 
-async function getUserCity(tags) {
-    const result = await UserModel.findOne({
-        twitch_id: tags["user-id"],
-    }).catch((err) => log.error("Erro ao buscar cidade de usuário: " + err))
+async function getUserCity(msg) {
+    const result = await UserModel.findOne({twitch_id: msg.senderUsername})
+        .catch((err) => log.error("Erro ao buscar cidade de usuário: " + err))
     return result?.city
 }
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     try {
-    var city = args.length < 1 ? await getUserCity(tags) : args.join(" ")
+    var city = args.length < 1 ? await getUserCity(msg) : args.join(" ")
     if (!city) {
         let say = {
             pt: "nenhum lugar mencionado",

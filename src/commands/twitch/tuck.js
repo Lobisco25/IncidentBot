@@ -1,4 +1,4 @@
-exports.run = (client, args, channel, tags, message, user) => {
+exports.run = (client, msg, args, cmd) => {
     if(!args[0]) {
         let say = {
             pt: "você se colocou na cama :(",

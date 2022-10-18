@@ -14,7 +14,7 @@ async function fetchImage(url, image_path) {
 }
 
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     if (!args[0]) return
 
     const search = isNaN(args[0])

@@ -1,7 +1,6 @@
 const ChannelModel = require("../../models/Channel")
 
-exports.run = async (client, args, channel, tags, message, user) => {
-    if (!args[0]) return
+exports.run = async (client, msg, args, cmd) => {
     const channelTarget = args[0].toLowerCase()
 
     await ChannelModel.findOneAndUpdate(

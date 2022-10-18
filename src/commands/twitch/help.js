@@ -1,4 +1,4 @@
-exports.run = (client, args, channel, tags, message, user) => {
+exports.run = (client, msg, args, cmd) => {
     const commandsName = Object.keys(client.commands)
     var result = []
     commandsName.forEach(cmdName => {

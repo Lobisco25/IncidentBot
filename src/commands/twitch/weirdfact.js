@@ -2,7 +2,7 @@ const axios = require("axios")
 const cheerio = require("cheerio")
 const translate = require("translate-google")
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     const res = await axios.get("https://www.bestrandoms.com/random-weird-facts")
 
 

@@ -1,12 +1,14 @@
 const prettyMilliseconds = require("pretty-ms")
 const os = require('os');
-exports.run = async (client, args, channel, tags, message) => {
+exports.run = async (client, msg, args, cmd) => {
     var uptime = Math.floor(process.uptime() * 1000)
     const used = process.memoryUsage().heapUsed / 1024 / 1024
     const memoria = Math.round(used * 100) / 100
     const serverUptime = os.uptime() * 1000
 
-    let ping = Math.floor(Math.round(await client.ping() * 1000))
+    const asd = Date.now();
+    await client.ping();
+    let ping = Date.now() - asd
 
     let say = {
         pt: `PONG! pajaDink Ping: ${ping}ms | Uptime: ${prettyMilliseconds(uptime)} | Uptime do server: ${prettyMilliseconds(serverUptime)} | Memória: ${memoria}MB`,

@@ -1,6 +1,6 @@
 const axios = require("axios")
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     const isnan = isNaN(Number(args[1]))
     if (!args[0] || !args[1] || isnan) {
         return

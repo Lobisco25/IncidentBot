@@ -1,7 +1,7 @@
 const axios = require("axios")
 const cheerio = require("cheerio")
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     const res = await axios.get("https://www.bestrandoms.com/random-book-generator")
 
     const $ = await cheerio.load(res.data)

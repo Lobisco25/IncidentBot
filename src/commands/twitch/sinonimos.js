@@ -1,4 +1,4 @@
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     const axios = require("axios")
 
     const enRes = "This command is not available in non-portuguese chats."

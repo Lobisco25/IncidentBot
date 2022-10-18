@@ -1,5 +1,5 @@
 const UserModel = require("../../models/User")
-async function setAFKStatus(message, tags, type) {
+async function setAFKStatus(message, msg, type) {
     const query = {
         afk: {
             message: message,
@@ -8,19 +8,17 @@ async function setAFKStatus(message, tags, type) {
         },
     }
 
-    await UserModel.findOneAndUpdate({ twitch_id: tags["user-id"] }, query, {
+    await UserModel.findOneAndUpdate({ twitch_id: msg.senderUserID }, query, {
         upsert: true,
         new: true,
         setDefaultsOnInsert: true,
     })
 }
 
-exports.run = async (client, args, channel, tags, message, user) => {
-    const msg = args[0] === undefined ? "(Sem mensagem)" : `${args.join(" ")}`
-     
-    await setAFKStatus(msg, tags, tags.source)
+exports.run = async (client, msg, args, cmd) => {
+    console.log(msg.senderUserID)
     var output = null
-    const afkType = (type) => {
+    const afkType = async (type) => {
         const emojis = {
             afk: "🏃 💨",
             brb: "⌛",
@@ -33,54 +31,56 @@ exports.run = async (client, args, channel, tags, message, user) => {
             fuck: "🤨",
             shower: "😏🚿"
         }
-        const msg = args[0] === undefined ? emojis[type] : `${args.join(" ")} ${emojis[type]}`
+        const message = args[0] === undefined ? emojis[type] : `${args.join(" ")} ${emojis[type]}`
+        await setAFKStatus(message, msg, cmd)
         const source = {
             afk: {
-                pt: `agora está AFK: ${msg}`,
-                en: `is now AFK: ${msg}`
+                pt: `agora está AFK: ${message}`,
+                en: `is now AFK: ${message}`
             },
             brb: {
-                pt: `volta já: ${msg}`,
-                en: `will be right back: ${msg}`
+                pt: `volta já: ${message}`,
+                en: `will be right back: ${message}`
             },
             gn: {
-                pt: `foi dormir: ${msg}`,
-                en: `is now sleeping ${msg}`
+                pt: `foi dormir: ${message}`,
+                en: `is now sleeping: ${message}`
             },
             work: {
-                pt: `foi trabalhar: ${msg}`,
-                en: `is working`
+                pt: `foi trabalhar: ${message}`,
+                en: `is working: ${message}`
             },
             study: {
-                pt: `foi estudar: ${msg}`,
-                en: `is now studying ${msg}`
+                pt: `foi estudar: ${message}`,
+                en: `is now studying: ${message}`
             },
             workout: {
-                pt: `foi treinar: ${msg}`,
-                en: `is now working out: ${msg}`
+                pt: `foi treinar: ${message}`,
+                en: `is now working out: ${message}`
             },
             read: {
-                pt: `foi ler: ${msg}`,
-                en: `went to read: ${msg}`
+                pt: `foi ler: ${message}`,
+                en: `went to read: ${message}`
             },
             food: {
-                pt: `foi comer: ${msg}`,
-                en: `is now eating: ${msg}`
+                pt: `foi comer: ${message}`,
+                en: `is now eating: ${message}`
             },
             fuck: {
-                pt: `foi foder: ${msg}`,
-                en: `is now fucking: ${msg}`
+                pt: `foi foder: ${message}`,
+                en: `is now fucking: ${message}`
             },
             shower: {
-                pt: `foi tomar banho: ${msg}`,
-                en: `is now taking a shower: ${msg}`
+                pt: `foi tomar banho: ${message}`,
+                en: `is now taking a shower: ${message}`
             },
         }
         output = source[type]
         return output
     }
 
-    afkType(tags.source)
+
+    output = await afkType(cmd)
     let say = {
         pt: output.pt,
         en: output.en

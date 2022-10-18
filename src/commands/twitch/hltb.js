@@ -1,7 +1,7 @@
 const howLongToBeat = require('howlongtobeat');
 const hltb = new howLongToBeat.HowLongToBeatService();
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     try {
     if (!args[0]) {
         let say = {
@@ -25,8 +25,8 @@ exports.run = async (client, args, channel, tags, message, user) => {
     }
     else {
         let say = {
-            pt: `${emote} ${tags.username}, Jogo: ${res[0].name} | Gameplay Principal: ${res[0].gameplayMain}h | Gameplay com Extras: ${res[0].gameplayMainExtra}h | Tempo Para Platinar: ${res[0].gameplayCompletionist}h`,
-            en: `${emote} ${tags.username}, Game: ${res[0].name} | Main Gameplay: ${res[0].gameplayMain}h | Gameplay with Extras: ${res[0].gameplayMainExtra}h | Completionist: ${res[0].gameplayCompletionist}h`
+            pt: `${emote} Jogo: ${res[0].name} | Gameplay Principal: ${res[0].gameplayMain}h | Gameplay com Extras: ${res[0].gameplayMainExtra}h | Tempo Para Platinar: ${res[0].gameplayCompletionist}h`,
+            en: `${emote} Game: ${res[0].name} | Main Gameplay: ${res[0].gameplayMain}h | Gameplay with Extras: ${res[0].gameplayMainExtra}h | Completionist: ${res[0].gameplayCompletionist}h`
         }
         
     return say

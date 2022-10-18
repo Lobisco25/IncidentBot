@@ -1,10 +1,10 @@
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd)  => {
     if (!args[0] || args[0] === "ou" || !args[2]) {
-        client.say(
-            channel,
-            `FeelsBadMan Não deu para escolher tente "choice opção1 ou opção2"`
-        )
-        return
+        let say = {
+            pt: "pajaL isso é um comando de escolha aleatória, mande duas ou mais escolhas separadas por ou e o bot vai escolher uma delas para você!",
+            en: "pajaL this is a random choice command, send two or more choices separated by 'ou' and the bot will choose one of them for you!"
+        }
+        return say
     }
 
     function count(arr, value) {

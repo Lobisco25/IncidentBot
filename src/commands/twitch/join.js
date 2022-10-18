@@ -2,7 +2,7 @@ const ChannelModel = require("../../models/Channel")
 const log = require("../../handlers/logger")
 const sevenTvEvents = require('../../handlers/7tv.js')
 
-exports.run = async (client, args, channel, tags, message) => {
+exports.run = async (client, msg, args, cmd) => {
     if (!args[0]) return
     const channelTarget = args[0].toLowerCase()
 
@@ -22,7 +22,7 @@ exports.run = async (client, args, channel, tags, message) => {
     })
 
     await sevenTvEvents.initialize().catch(err => {
-        log.error("Erro ao iniciar eventos da 7tv no canal", channel, err)
+        log.error("Erro ao iniciar eventos da 7tv no canal", channelTarget, err)
     })
 
     let say = {

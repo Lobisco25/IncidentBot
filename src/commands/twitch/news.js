@@ -1,5 +1,5 @@
 const axios = require("axios")
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     async function getNews(lang) {
         let query = null
 

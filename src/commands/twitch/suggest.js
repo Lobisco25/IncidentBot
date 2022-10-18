@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 const discordClient = require("../../services/discord")
 const log = require("../../handlers/logger")
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     if (!args[0]) {
         let say = {
             pt: "Mande uma sugestão para os devs do IncidentBot pajaH",

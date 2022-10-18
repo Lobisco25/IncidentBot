@@ -1,46 +1,41 @@
-const tmi = require("tmi.js")
+const { ChatClient } = require("@kararty/dank-twitch-irc")
 const ChannelModel = require("../models/Channel")
 const mainChannel = process.env.MAIN_CHANNEL || "bytter_"
 const log = require("../handlers/logger")
 
-const client = new tmi.Client({
-    options: { debug: Boolean(process.env.TMI_DEBUG) },
-    identity: {
-        username: "IncidentBot",
-        password: process.env.TMI_TOKEN,
-    },
-    channels: [mainChannel],
+const client = new ChatClient({
+    username: "Incidentbot",
+    password: process.env.TMI_TOKEN
 })
 
 const joinChannels = async () => {
     const result = await ChannelModel.find({})
+    let channels = []
     result
         .map((c) => c.twitch_name)
         .forEach(async (channel) => {
-            await client
-                .join(channel)
-                .catch((err) => log.error(`Erro ao entrar no canal ${channel}`, err))
+            channels.push(channel)
         })
-    log.info(`Bot escutando em ${result.length} canais.`)
+    console.log(channels)
+    client.joinAll(channels).catch((err) => log.critical("Não foi possível entrar nos canais | " + err))
+    log.info(`Bot entrou em ${result.length} canais.`)
 }
 
 client
     .connect()
     .catch((err) => {
-        log.critical("Não foi possível criar client do tmi")
+        log.critical("Não foi possível criar client do tmi | " + err)
     })
     .then(() => {
         joinChannels()
     })
 
-client.on("connected", (adress, port) => {
-    client.ping().then(function (data) {
-        let ping = Math.floor(Math.round(data * 1000))
-        client.say(mainChannel, `pajaDespair fui reinciado (${ping}ms)`)
-        log.info(`Bot conectado ao tmi ${ping}ms`)
-    })
+client.on("ready", async () => {
+    const asd = Date.now();
+    await client.ping();
+    let ping = Date.now() - asd
+    client.privmsg(mainChannel, `pajaDespair fui reinciado (${ping}ms)`)
+    log.info(`Bot conectado ao tmi | ${ping}ms`)
 })
 
 module.exports = client
-
-

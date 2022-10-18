@@ -5,7 +5,7 @@ require("./handlers/discord") // discord handler
 require("./services/discord.js")
 require("./handlers/afk.js")
 const axios = require("axios")
-const client = require("./services/tmi")
+require("./services/tmi")
 
     if(Boolean(process.env.IS_PROD) === true) {
         setInterval(() => {

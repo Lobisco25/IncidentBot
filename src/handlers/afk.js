@@ -1,35 +1,78 @@
 const client = require("../services/tmi")
 const UserModel = require("../models/User")
+const ChannelModel = require("../models/Channel")
 const prettyMilliseconds = require("pretty-ms")
 
-client.on("message", async (channel, tags, message, self) => {
-    const user = await UserModel.findOne({ twitch_id: tags["user-id"] })
+client.on("PRIVMSG", async (msg) => {
+    const channelDB = await ChannelModel.findOne({ twitch_name: msg.channelName })
+    const user = await UserModel.findOne({ twitch_id: msg.senderUserID.toString() })
     if (!user) return
     if (!user.afk?.time) return
     
     const time = prettyMilliseconds(Date.now() - user.afk.time)
-    var output = null
+    let output = null
+
+    const username = msg.senderUsername
+    const message = user.afk.message
 
     const afkType = (type) => {
         const source = {
-            brb: `${tags.username} voltou: ${user.afk.message} (${time})`,
-            gn: `${tags.username} acordou: ${user.afk.message} (${time})`,
-            afk: `${tags.username} voltou de seu AFK: ${user.afk.message} (${time})`,
-            workout: `${tags.username} acabou de malhar: ${user.afk.message} (${time})`,
-            code: `${tags.username} terminou de programar: ${user.afk.message} (${time})`,
-            work: `${tags.username} voltou do trabalho: ${user.afk.message} (${time})`,
-            study: `${tags.username} terminou de estudar: ${user.afk.message} (${time})`,
-            read: `${tags.username} terminou de ler: ${user.afk.message} (${time})`,
-            food: `${tags.username} está com a barriga cheia: ${user.afk.message} (${time})`,
-            fuck: `${tags.username} terminou a sua foda: ${user.afk.message} (${time})`,
-            shower: `${tags.username} acaba de se banhar: ${user.afk.message} (${time})`,
+            brb: {
+                pt: `${username} voltou: ${message} (${time})`,
+                en: `${username} is back: ${message} {${time}}`
+            },
+            gn: {
+                pt: `${username} acordou: ${message} (${time})`,
+                en: `${username} woke up: ${message} (${time})`
+            },
+            afk: {
+                pt: `${username} voltou de seu AFK: ${message} (${time})`,
+                en: `${username} is no longer AFK: ${message} (${time})`
+            },
+            workout: {
+                pt: `${username} acabou de malhar: ${message} (${time})`,
+                en: `${username} roberto just finished working out: ${message} (${time})`
+            },
+            work: {
+                pt: `${username} voltou do trabalho: ${message} (${time})`,
+                en: `${username} finished their work: ${message} (${time})`
+            },
+            study: {
+                pt: `${username} terminou de estudar: ${message} (${time})`,
+                en: `${username} finished studying: ${message} (${time})`
+            },
+            read: {
+                pt: `${username} terminou de ler: ${message} (${time})`,
+                en: `${username} finished their reading session: ${message} (${time})`
+            },
+            food: {
+                pt: `${username} está com a barriga cheia: ${message} (${time})`,
+                en: `${username} is done eating: ${message} (${time})`
+            },
+            fuck: {
+                pt: `${username} terminou a sua foda: ${message} (${time})`,
+                en: `${username} finished their fucking session: ${message} (${time})`
+            },
+            shower: {
+                pt: `${username} acaba de se banhar: ${message} (${time})`,
+                en: `${message} finished showering: ${message} (${time})`
+            },
         }
         output = source[type]
         return output
     }
-
+    let say = null
+    const response = afkType(user.afk._type)
     afkType(user.afk._type)
-    await client.say(channel, output)
+    switch (channelDB.lang) {
+        default: 
+            say = response.en 
+            break
+        case ("pt"):
+            say = response.pt
+            break
+    }
+    await client.privmsg(msg.channelName, say)
 
     user.afk = undefined
     user.save()

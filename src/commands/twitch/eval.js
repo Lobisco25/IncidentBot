@@ -1,6 +1,6 @@
 const log = require("../../handlers/logger")
 
-exports.run = async (client, args, channel, tags, message, user) => {
+exports.run = async (client, msg, args, cmd) => {
     try {
         log.debug(`Executando eval: ${args.join(" ")}`)
         const evaled = await eval(args.join(" "))

@@ -1,5 +1,5 @@
 const math = require('mathjs')
-exports.run = (client, args, channel, tags, message) => {
+exports.run = (client, msg, args, cmd) => {
     const input = args.join(" ")
     const result = math.evaluate(input)
 

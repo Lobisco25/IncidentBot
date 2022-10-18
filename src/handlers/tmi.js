@@ -17,8 +17,8 @@ fs.readdir(__dirname + "/../commands/twitch", (err, files) => {
     })
 })
 
-async function getCustomPrefix(channel) {
-    const result = await ChannelModel.findOne({ twitch_name: channel }).catch(
+async function getCustomPrefix(msg) {
+    const result = await ChannelModel.findOne({ twitch_name: msg.channelName }).catch(
         (err) => {
             log.error("Ocorreu um erro ao buscar prefixo do canal: " + err)
         }
@@ -26,12 +26,12 @@ async function getCustomPrefix(channel) {
     return result?.customPrefix
 }
 
-function setUserCooldown(c, tags) {
-    client.commands[c.config.name].cooldownUsers.push(tags["user-id"])
+function setUserCooldown(c, msg) {
+    client.commands[c.config.name].cooldownUsers.push(msg.senderUserID)
     setTimeout(() => {
         client.commands[c.config.name].cooldownUsers = client.commands[
             c.config.name
-        ].cooldownUsers.filter((i) => i !== tags["user-id"])
+        ].cooldownUsers.filter((i) => i !== msg.senderUserID)
     }, c.config.cooldown)
 }
 
@@ -47,28 +47,31 @@ function getCommandByAlias(alias) {
     return result
 }
 
-client.on("message", async (channel, tags, message, self) => {
-    if (self) return
-    channel = channel.replace("#", "") // Remove o padrão dos canais começarem com #
-    const prefix = (await getCustomPrefix(channel)) || defaultPrefix
+client.on("PRIVMSG", async (msg) => {
 
-    let args = message.slice(prefix.length).trim().split(/ +/g)
+    msg.isBroadcaster = msg.badgesRaw.startsWith(`broadcaster/`)
+	msg.isVip = !!msg.ircTags?.vip
+
+	msg.isSelf = msg.senderUserID === "795277041"
+	msg.userPing = msg.isSelf ? `` : `@${msg.senderUsername}, `
+
+    if(msg.isSelf) return
+
+    const prefix = (await getCustomPrefix(msg)) || defaultPrefix
+
+    let args = msg.messageText.slice(prefix.length).trim().split(/ +/g)
     let cmd = args.shift().toLowerCase()
-    tags.source = cmd
     let command = client.commands[cmd] || getCommandByAlias(cmd)
-    const channelDB = await ChannelModel.findOne({ twitch_name: channel })
+    const channelDB = await ChannelModel.findOne({ twitch_name: msg.channelName })
 
-    if (!command || !message.startsWith(prefix)) return
-    if (command.cooldownUsers.includes(tags["user-id"])) return
+    if (!command || !msg.messageText.startsWith(prefix)) return
+    if (command.cooldownUsers.includes(msg.senderUserID)) return
     if (
-        (command.config.adminOnly &&
-            !["feridinha", "bytter_", "lobisco25"].includes(tags.username)) ||
-        (command.config.streamerOnly &&
-            ![tags["user-id"]].includes(tags["room-id"]))
-    )
+        (command.config.adminOnly && !["feridinha", "bytter_", "lobisco25"].includes(msg.senderUsername)) ||
+         (command.config.streamerOnly && ![msg.channelID].includes(msg.senderUserID)))
         return
 
-    let chatResponse = await command.run(client, args, channel, tags)
+    let chatResponse = await command.run(client, msg, args, cmd)
     let chatres = null
     try {
         switch (channelDB.lang) {
@@ -106,20 +109,20 @@ client.on("message", async (channel, tags, message, self) => {
 
         switch (command.config.name) {
             default:
-                nome = tags.username + ","
+                nome = msg.displayName + ","
                 break
             case ("eval"):
                 nome = ""
                 break
             case ("afk"):
-                nome = tags.username
+                nome = msg.displayName
         }
 
-        client.say(channel, `${nome} ${chatres}`)
+        client.privmsg(msg.channelName, `[DEV] ${nome} ${chatres}`)
     } catch (err) {
         log.error(`Ocorreu um erro ao rodar um comando: ${err}`)
-        client.say(channel, "pajaAAAAAAAAAAA error")
+        client.privmsg(msg.channelName, "pajaAAAAAAAAAAA error")
     }
 
-    setUserCooldown(command, tags)
+    setUserCooldown(command, msg)
 })
