@@ -1,7 +1,7 @@
 const { exec } = require("child_process");
 
 exports.run = async (client, msg, args, cmd) => {
-    await client.say(channel, "Restarting ApuApustaja TeaTime (git pull -> pnpm i)")
+    await client.privmsg(msg.channelName, "Restarting ApuApustaja TeaTime (git pull -> pnpm i)")
     await exec("git pull")
     await exec("pnpm i")
     await process.exit()
