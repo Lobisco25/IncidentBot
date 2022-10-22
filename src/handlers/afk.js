@@ -57,6 +57,10 @@ client.on("PRIVMSG", async (msg) => {
                 pt: `${username} acaba de se banhar: ${message} (${time})`,
                 en: `${message} finished showering: ${message} (${time})`
             },
+            poop: {
+                pt: `${message} terminou a cagada: ${message} (${time})`,
+                en: `${message} finished shitting himself: ${message} (${time})`
+            }
         }
         output = source[type]
         return output

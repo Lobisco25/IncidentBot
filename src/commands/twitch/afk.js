@@ -29,7 +29,8 @@ exports.run = async (client, msg, args, cmd) => {
             read: "📖",
             food: "OpieOP",
             fuck: "🤨",
-            shower: "😏🚿"
+            shower: "😏🚿",
+            poop: "🚽"
         }
         const message = args[0] === undefined ? emojis[type] : `${args.join(" ")} ${emojis[type]}`
         await setAFKStatus(message, msg, cmd)
@@ -74,6 +75,10 @@ exports.run = async (client, msg, args, cmd) => {
                 pt: `foi tomar banho: ${message}`,
                 en: `is now taking a shower: ${message}`
             },
+            poop: {
+                pt: `foi dar um cagão: ${message}`,
+                en: `is now shitting himself: ${message}`
+            }
         }
         output = source[type]
         return output
