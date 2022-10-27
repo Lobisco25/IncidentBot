@@ -10,14 +10,14 @@ Um bot da twitch criado por Lobisco25, Bytter_ e Feridinha
 
 - [**Node.js**](https://nodejs.dev/)
 - [**Mongoose**](https://www.npmjs.com/package/mongoose)
-- [**Tmi.js**](https://tmijs.com/)
+- [**Dank-twitch-irc**](https://kararty.github.io/dank-twitch-irc/)
 - [**Twurple**](https://twurple.js.org/)
 - [**Discord**](https://discord.com/developers/docs/getting-started#creating-an-app)
 
 
 ## ⚙️ Configure as variáveis de ambiente (.env)
 
-- TMI_TOKEN= Seu token do tmi.js
+- TMI_TOKEN= Seu token do [**TMI**](https://twitchapps.com/tmi/)
 - DISCORD_TOKEN= Seu token do discord
 - MONGODB_PASSWORD= O endereço do mongodb
 - TWITCH_CLIENT_ID= Client id do bot
@@ -27,6 +27,6 @@ Um bot da twitch criado por Lobisco25, Bytter_ e Feridinha
 - WEATHER_TOKEN= Token do [**Weatherapi**](https://www.weatherapi.com/)
 - NEWS_TOKEN= Token do [**Newsdata**](https://newsdata.io/)
 - UPTIME_ENDPOINT= Endpoint do serviço dse uptime
-- BOT_UPTIME= Id do push para a api do uptime do bot inteiro
-- IS_PROD= Se estiver no server de produção, coloque como true, caso contrário, coloque como false
+- BOT_UPTIME= Id do push para a api do uptime do bot 
+- IS_PROD= caso existir, manda um ping para o serviço de uptime (boletinho)
 - IMAGE_SERVICE_PASSWORD= Senha para upload de imagens no [**i.lobis.co**](https://github.com/lobisco25/i.lobis.co)

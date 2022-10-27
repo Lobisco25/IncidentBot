@@ -51,7 +51,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "user",
-    description: "Pega as informações de um usuário da Twitch.",
+    description: "Retorna as informações do usuário especificado na Twitch",
     aliases: ["uid", "cli"],
     cooldown: 2000
 }

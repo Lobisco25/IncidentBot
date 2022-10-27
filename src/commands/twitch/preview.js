@@ -34,6 +34,6 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "preview",
-    description: "",
-    aliases: ["thumbnail"],
+    description: "Retorna o preview da live do streamer especificado com um link próprio",
+    aliases: ["thumbnail", "thumb"]
 }

@@ -95,8 +95,7 @@ exports.run = async (client, msg, args, cmd) => {
 
 module.exports.config = {
     name: "afk",
-    description:
-        "Avisa ao chat que você vai ficar longe ou algo desse tipo eu n sei como as pessoa realmente usam o afk",
-    aliases: ["gn","study","code","workout","shower","brb","work","read","food","fuck", "poop"],
+    description: "Avise ao chat que você ira sair, e cronometre o seu tempo de AFK",
+    aliases: ["gn", "study", "code", "workout", "shower", "brb", "work", "read", "food", "fuck", "poop"],
     cooldown: 2000,
 }

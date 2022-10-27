@@ -32,7 +32,7 @@ exports.run = async (client, msg, args, cmd) => {
 
 module.exports.config = {
     name: "dog",
-    description: "Manda a foto de um cachorro aleatório",
+    description: "Retorna a foto de um cachorro aleatório",
     aliases: ["randomdog", "rdog"],
     cooldown: 6000
 }

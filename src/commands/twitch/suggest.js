@@ -46,7 +46,7 @@ exports.run = async (client, msg, args, cmd) => {
 
 module.exports.config = {
     name: "suggest",
-    description: "Manda uma sugestão para o bot",
+    description: "Manda uma sugestão para os devs do bot",
     aliases: ["sg"],
     cooldown: 5000,
 }

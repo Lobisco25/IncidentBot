@@ -43,7 +43,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "doesnotexist",
-    description: "command",
+    description: "Retorna a imagem de uma pessoa ou de um gato que não existem",
     aliases: ["dne"],
     cooldown: 5000
 }

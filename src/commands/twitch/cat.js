@@ -29,7 +29,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "cat",
-    description: "Manda a foto de um gato aleatório",
+    description: "Retorna a foto de um gato aleatório",
     aliases: ["cataas", "randomcat", "rcat"],
     cooldown: 6000
 }

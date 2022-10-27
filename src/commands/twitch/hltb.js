@@ -39,6 +39,6 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: 'hltb',
-    description: 'command',
+    description: 'Retorna o tempo necessário para completar o jogo especificado',
     aliases: ['howlongtobeat']
 }

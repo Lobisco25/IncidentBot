@@ -52,7 +52,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "weather",
-    description: "Pega o clima de uma cidade",
+    description: "Retorna o clima do lugar especificado",
     aliases: [""],
     cooldown: 3000
 }

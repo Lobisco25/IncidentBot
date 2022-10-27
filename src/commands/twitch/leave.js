@@ -16,7 +16,7 @@ exports.run = async (client, msg, args, cmd)=> {
 }
 module.exports.config = {
     name: "leave",
-    description: "command",
-    aliases: [""],
+    description: "Sai do canal especificado.",
+    aliases: ["part"],
     adminOnly: true,
 }

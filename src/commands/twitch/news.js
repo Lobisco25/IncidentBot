@@ -45,7 +45,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "news",
-    description: "As noticias do mundo",
+    description: "Retorna uma notícia (random ou correspondente a query)",
     aliases: ["noticias"],
     cooldown: 5000,
 }

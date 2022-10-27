@@ -14,7 +14,7 @@ exports.run = (client, args, msg) => {
 }
 module.exports.config = {
     name: "adminhelp",
-    description: "manda os comandos de admin",
+    description: "Retorna os comandos de admin",
     aliases: ["admin", "admincommands"],
     adminOnly: true,
 }

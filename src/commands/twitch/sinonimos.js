@@ -32,6 +32,6 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "sinonimos",
-    description: "Puxa uma sinônimos de uma palavra especifica do Dicio.com.br",
+    description: "Retorna os sinônimos de uma palavra especifica do Dicio.com.br",
     aliases: ["sino", "sinônimos"],
 }

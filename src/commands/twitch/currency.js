@@ -55,7 +55,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "currency",
-    description: "As moedas convertidas em real",
+    description: "Retornas uma quantidade da moeda especificada em real",
     aliases: [],
     cooldown: 5000,
 }

@@ -18,7 +18,7 @@ exports.run = async (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "ping",
-    description: "Pinga o TMI e fala o uptime e o tanto de ram utilizada",
+    description: "Retorna informações técnicas sobre o bot",
     aliases: ["pong"],
     cooldown: 5000,
 }

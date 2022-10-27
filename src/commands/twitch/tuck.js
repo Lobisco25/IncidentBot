@@ -22,6 +22,6 @@ exports.run = (client, msg, args, cmd) => {
 }
 module.exports.config = {
     name: "tuck",
-    description: "Coloca o usuário especificado na cama",
+    description: "Coloca um usuário especificado na cama",
     aliases: ["bytter"],
 }

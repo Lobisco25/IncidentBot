@@ -9,14 +9,14 @@ exports.run = (client, msg, args, cmd) => {
     
     let say = {
         pt: `pajaCool Os comandos são: ${result.join(", ")} | Status do bot: https://status.boletinho.com/status/lobisco`,
-        en: `pajaCool Commands:  ${result.join(", ")} | Bot statuss https://status.boletinho.com/status/lobisco`
+        en: `pajaCool Commands:  ${result.join(", ")} | Bot status https://status.boletinho.com/status/lobisco`
     }
     
     return say
 }
 module.exports.config = {
     name: "help",
-    description: "Mostra todos os comandos do bot",
+    description: "Retornaolha  todos os comandos do bot",
     aliases: ["commands"],
     cooldown: 2000
 }

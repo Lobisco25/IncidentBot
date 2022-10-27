@@ -33,7 +33,7 @@ exports.run = async (client, msg, args, cmd)  => {
 
 module.exports.config = {
     name: "choice",
-    description: "Escolhe alguma coisa",
+    description: "Escolhe um das opções dadas (separado por 'ou')",
     aliases: ["escolha"],
     cooldown: 5000,
 }

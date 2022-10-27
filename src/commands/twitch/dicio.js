@@ -36,6 +36,6 @@ try {
 }
 module.exports.config = {
     name: "dicio",
-    description: "Puxa uma palavra especifica do Dicio.com.br",
+    description: "Retorna a palavra especifica do Dicio.com.br",
     aliases: ["dicionario"],
 }

@@ -8,17 +8,21 @@ const client = new ChatClient({
     password: process.env.TMI_TOKEN
 })
 
+
+
+
+
 const joinChannels = async () => {
-    const result = await ChannelModel.find({})
+    const channelDB = await ChannelModel.find({})
     let channels = []
-    result
+    channelDB
         .map((c) => c.twitch_name)
         .forEach(async (channel) => {
             channels.push(channel)
         })
     console.log(channels)
     client.joinAll(channels).catch((err) => log.critical("Não foi possível entrar nos canais | " + err))
-    log.info(`Bot entrou em ${result.length} canais.`)
+    log.info(`Bot entrou em ${channelDB.length} canais.`)
 }
 
 client
@@ -37,5 +41,6 @@ client.on("ready", async () => {
     client.privmsg(mainChannel, `pajaDespair fui reinciado (${ping}ms)`)
     log.info(`Bot conectado ao tmi | ${ping}ms`)
 })
+
 
 module.exports = client
