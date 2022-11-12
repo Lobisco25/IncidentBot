@@ -34,6 +34,8 @@ client
         joinChannels()
     })
 
+    client.on(`NOTICE`, async error => console.log(error))
+
 client.on("ready", async () => {
     const asd = Date.now();
     await client.ping();

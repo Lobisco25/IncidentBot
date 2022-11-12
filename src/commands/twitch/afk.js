@@ -16,8 +16,7 @@ async function setAFKStatus(message, msg, type) {
 }
 
 exports.run = async (client, msg, args, cmd) => {
-    console.log(msg.senderUserID)
-    var output = null
+    let output = null
     const afkType = async (type) => {
         const emojis = {
             afk: "🏃 💨",

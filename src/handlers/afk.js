@@ -5,7 +5,7 @@ const prettyMilliseconds = require("pretty-ms")
 
 client.on("PRIVMSG", async (msg) => {
     const channelDB = await ChannelModel.findOne({ twitch_name: msg.channelName })
-    const user = await UserModel.findOne({ twitch_id: msg.senderUserID.toString() })
+    const user = await UserModel.findOne({ twitch_id: msg.senderUserID })
     if (!user) return
     if (!user.afk?.time) return
     
