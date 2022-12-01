@@ -1,4 +1,5 @@
 const express = require("express")
+const log = require("./logger")
 const app = express()
 const port = 9000
 
@@ -30,5 +31,5 @@ app.get("/api/command/:cmd", (req, res) => {
 
 
 app.listen(port, () => {
-    console.log(`escuta ${port}`)
+    log.info(`Api escutando em ${port}`)
 })

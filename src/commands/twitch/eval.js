@@ -4,6 +4,8 @@ exports.run = async (client, msg, args, cmd) => {
     try {
     const evaled = await eval(`(async () => { ${args.join(" ")} })()`)
 
+    console.log(evaled.toString)
+
         if(typeof evaled === 'string') {
             console.log(evaled)
             let say = {

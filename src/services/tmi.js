@@ -20,7 +20,6 @@ const joinChannels = async () => {
         .forEach(async (channel) => {
             channels.push(channel)
         })
-    console.log(channels)
     client.joinAll(channels).catch((err) => log.critical("Não foi possível entrar nos canais | " + err))
     log.info(`Bot entrou em ${channelDB.length} canais.`)
 }
