@@ -67,7 +67,7 @@ client.on("PRIVMSG", async (msg) => {
     if (!command || !msg.messageText.startsWith(prefix)) return
     if (command.cooldownUsers.includes(msg.senderUserID)) return
     if (
-        (command.config.adminOnly && !["feridinha", "bytter_", "lobisco25"].includes(msg.senderUsername)) ||
+        (command.config.adminOnly && !["lobisco25"].includes(msg.senderUsername)) ||
          (command.config.streamerOnly && ![msg.channelID].includes(msg.senderUserID)))
         return
 

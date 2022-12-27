@@ -8,10 +8,6 @@ const client = new ChatClient({
     password: process.env.TMI_TOKEN
 })
 
-
-
-
-
 const joinChannels = async () => {
     const channelDB = await ChannelModel.find({})
     let channels = []
@@ -24,8 +20,7 @@ const joinChannels = async () => {
     log.info(`Bot entrou em ${channelDB.length} canais.`)
 }
 
-client
-    .connect()
+client.connect()
     .catch((err) => {
         log.critical("Não foi possível criar client do tmi | " + err)
     })
@@ -33,7 +28,7 @@ client
         joinChannels()
     })
 
-    client.on(`NOTICE`, async error => console.log(error))
+client.on(`NOTICE`, async error => console.log(error))
 
 client.on("ready", async () => {
     const asd = Date.now();
