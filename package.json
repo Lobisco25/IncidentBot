@@ -1,0 +1,27 @@
+{
+  "name": "incidentbot",
+  "version": "2.0.0",
+  "description": "Utility bot for Twitch",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lobisco25/incidentbot.git"
+  },
+  "author": "Lobisco25",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lobisco25/incidentbot/issues"
+  },
+  "homepage": "https://github.com/lobisco25/incidentbot#readme",
+  "dependencies": {
+    "@kararty/dank-twitch-irc": "^5.0.0",
+    "colors": "^1.4.0",
+    "knex": "^2.3.0",
+    "mysql": "^2.18.1",
+    "parse-ms": "2.1.0",
+    "pretty-ms": "7.0.1"
+  }
+}
