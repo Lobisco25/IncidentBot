@@ -49,9 +49,4 @@ client.on("PRIVMSG", async (msg) => {
     client.privmsg(msg.channelName, res[user[0].afk_type])
 
     await db("afk").where({twitch_id: msg.senderUserID}).del()
-
-    
-
-
-
 })

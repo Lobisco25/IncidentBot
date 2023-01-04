@@ -26,7 +26,8 @@ const emojis = {
 
 exports.run = async (client, msg, args, cmd) => {
     // comma: afk's default ping doesn't have a comma for the default afk response (src/handlers/tmi.js:86)
-    if(args.length > 200) return ", afk message too long (MAX 200)"
+    console.log(args.join(" ").length)
+    if(args.join(" ").length > 200) return ", afk message too long (MAX 200)"
 
 
     const message = !args[0] ? " " + emojis[cmd] : `: ${args.join(" ")} ${emojis[cmd]}`

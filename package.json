@@ -18,7 +18,9 @@
   "homepage": "https://github.com/lobisco25/incidentbot#readme",
   "dependencies": {
     "@kararty/dank-twitch-irc": "^5.0.0",
+    "axios": "^1.2.2",
     "colors": "^1.4.0",
+    "form-data": "^4.0.0",
     "knex": "^2.3.0",
     "mysql": "^2.18.1",
     "parse-ms": "2.1.0",
