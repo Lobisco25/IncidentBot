@@ -1,5 +1,4 @@
 const config = require("../../config");
-
 const db = require("knex")({
     client: "mysql",
     version: "15.1",
@@ -11,8 +10,4 @@ const db = require("knex")({
         database: config.db.database
     }
 })
-
-
-
-
 module.exports = db

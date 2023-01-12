@@ -11,7 +11,7 @@ const client = module.exports = new ChatClient({
 
 const joinChannels = async () => {
     let channels = []
-    const channelsTable = await db("users")
+    const channelsTable = await db("channels")
 
     channelsTable.map((c) => c.twitch_name)
         .forEach(async (channel) => channels.push(channel))
@@ -27,7 +27,6 @@ client._ping = async () => {
     await client.ping()
     return `${Date.now() - asd}ms`
 }
-
 client.connect()
     .catch((err) => {
         log.critical(`Couldn't connect to TMI: ${err}`)
@@ -35,9 +34,8 @@ client.connect()
     .then(() => {
         joinChannels()
     })
-
 client.on("ready", async () => {
-    client.privmsg(config.mainChannel, `pajaDespair reconnected (${await client._ping()})`)
+    client.privmsg(config.mainChannel, `${config.restartEmote} reconnected (${await client._ping()})`)
     log.info(`Bot connected to TMI (${await client._ping()})`)
 })
 
