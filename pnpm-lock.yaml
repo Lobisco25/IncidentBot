@@ -11,6 +11,7 @@ specifiers:
   pretty-ms: 7.0.1
   socket.io: ^4.5.4
   socket.io-client: ^4.5.4
+  uuid: ^9.0.0
   ws: ^8.12.0
 
 dependencies:
@@ -24,6 +25,7 @@ dependencies:
   pretty-ms: 7.0.1
   socket.io: 4.5.4
   socket.io-client: 4.5.4
+  uuid: 9.0.0
   ws: 8.12.0
 
 packages:
@@ -621,6 +623,11 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+    dev: false
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /vary/1.1.2:

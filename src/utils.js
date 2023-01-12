@@ -3,6 +3,7 @@ const prettyms = require("pretty-ms")
 const axios = require("axios")
 const FormData = require("form-data");
 const config = require('../config');
+const uuid = require('uuid').v4;
 
 const utils = {}
 
@@ -67,5 +68,10 @@ utils.get7TV_id = async (username) => {
     const res7tv = result7tv.data 
     console.log(res7tv.user.id)
     return res7tv.user.id
+}
+
+utils.generateID = (length) => { 
+    let id = uuid().substring(0, length);
+    return id
 }
 module.exports = utils
