@@ -62,12 +62,16 @@ utils.getUser = async (username) => {
 }
 
 utils.get7TV_id = async (username) => { 
-    const resultivr = await axios.get(`https://api.ivr.fi/v2/twitch/user?login=${username}`)
+    try {
+        const resultivr = await axios.get(`https://api.ivr.fi/v2/twitch/user?login=${username}`)
     const resivr = resultivr.data
     const result7tv = await axios.get(`https://7tv.io/v3/users/twitch/${resivr[0].id}`)
     const res7tv = result7tv.data 
-    console.log(res7tv.user.id)
     return res7tv.user.id
+    }
+    catch {
+        return null
+    }
 }
 
 utils.generateID = (length) => { 

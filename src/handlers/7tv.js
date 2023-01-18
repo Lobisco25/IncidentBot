@@ -6,7 +6,7 @@ let ws = null
 const subscribeChannels = async () => {
     ws = new WebSocket("wss://events.7tv.io/v3")
     ws.on("open", async () => {
-        const ids = await db("channels").where({ "7tv_events": "true" }).select("7tv_id")
+        const ids = await db("channels").where({ seventv_events: 1 }).select("seventv_id")
         const subscribe = []
         ids.forEach(async (id) => {
             subscribe.push({
@@ -26,7 +26,7 @@ const subscribeChannels = async () => {
 const handleMessages = async (event) => {
     const r = JSON.parse(event.data)
     if (r.op !== 0) return
-    const channelDB = await db("channels").where({ "7tv_id": r.d.body.id }).select("twitch_name")
+    const channelDB = await db("channels").where({ seventv_id: r.d.body.id }).select("twitch_name")
     const channel = channelDB[0].twitch_name
     const editor = r.d.body.actor.username === channel ? "owner" : r.d.body.actor.display_name
     let text = null
