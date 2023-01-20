@@ -1,18 +1,27 @@
 const utils = require("../utils")
 exports.run = async (client, msg, args, cmd) => {
-    const user = !args[0] || !args[1] ? msg.senderUsername : args[0]
-    const channel = !args[0] ? msg.channelName : !args[1] ? args[0] : args[1]
+    const user = args[0] ?? msg.senderUsername
+    const channel = args[1] ?? msg.channelName
+
     const res = await utils.http.get(`https://api.ivr.fi/v2/twitch/subage/${user}/${channel}`)
 
     if (res.statusCode === 400) return "channel or user not found"
 
     if (res.channel.statusHidden) return `the user ${user} has hidden their status`
 
-    if(!res.cumulative) return `${user} - ${channel} | they were never subscribed to this channel`
+    const metadata = [
+        res.cumulative
+            ? `subscribed for ${res.cumulative.months} months`
+            : "they were never subscribed to this channel",
+        res.cumulative.endsAt
+        ? `sub ends in: ${utils.formatMS(new Date(res.cumulative.end) - Date.now())}`
+        : "Permanent sub",
+        res?.meta
+        && `type: tier ${res.meta.tier} ${res.meta.type}`,
+        res?.meta?.giftMeta && `gifter: ${res.meta.giftMeta.gifter.displayName}`
+    ].filter(Boolean).join(" | ")
 
-    if(res.streak === null) return `${user} - ${channel} | they were subscribed for ${res.cumulative.months} months | sub ended in: ${res.cumulative.end}`
-
-    else return `${user} - ${channel} | subscribed for ${res.cumulative.months} months | sub ends in: ${utils.formatMS(new Date(res.cumulative.end) - Date.now())} | type: tier ${res.meta.tier} ${res.meta.type} ${res.meta.giftMeta ? `| gifter: ${res.meta.giftMeta.gifter.displayName}` : '' }`
+    return `${user} - ${channel} | ${metadata}`
 }
 module.exports.config = {
     name: 'sub',
