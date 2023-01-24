@@ -1,6 +1,6 @@
-const db = require("../services/db")
-const log = require("../log")
-const utils = require("../utils")
+import db from "../services/db"
+import log from "../log"
+import utils from "../utils"
 const setAFK = async (message, msg, cmd) => {
     await db("afk").insert({
         twitch_id: msg.senderUserID,
@@ -11,7 +11,7 @@ const setAFK = async (message, msg, cmd) => {
     })
     log.debug(`User entering afk state (${cmd}): ${msg.senderUsername}`)
 }
-exports.run = async (client, msg, args, cmd) => {
+export const run = async (client, msg, args, cmd) => {
     const emojis = {
         afk: {
             emotes: ["ppPoof", "peepoLeave", "docLeave"],
@@ -58,7 +58,7 @@ exports.run = async (client, msg, args, cmd) => {
     if (args.join(" ").length > 200) return ", afk message too long (MAX 200)"
 
     const asd = emojis[cmd]
-    const message = !args[0] ? ` ${await utils.getEmote(msg, asd.emotes, asd.emoji)}` : `: ${args.join(" ")} ${await utils.getEmote(msg.channelID, asd[emotes], asd[emojis])}`
+    const message = !args[0] ? ` ${await utils.getEmote(msg, asd.emotes, asd.emoji)}` : `: ${args.join(" ")} ${await utils.getEmote(msg.channelID, asd.emotes, asd[emojis])}`
     setAFK(args.join(" "), msg, cmd)
     const res = {
         afk: `is now AFK${message}`,
@@ -74,8 +74,9 @@ exports.run = async (client, msg, args, cmd) => {
     }
     return res[cmd]
 }
-module.exports.config = {
+export let config = {
     name: 'afk',
     description: '',
     aliases: ['brb', 'gn', 'work', 'study', 'workout', 'read', 'food', 'shower', 'poop']
 }
+export let cooldownUsers = []

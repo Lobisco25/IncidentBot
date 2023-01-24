@@ -1,10 +1,10 @@
-const db = require("../services/db")
-const utils = require("../utils")
-exports.run = async (client, msg, args, cmd) => {
+import db from "../services/db"
+import utils from "../utils"
+export const run = async (client, msg, args, cmd) => {
     if (!args[0]) return "no argument provided"
     const suggestion = args.join(" ")
     const arg = args[0].toLowerCase()
-    const id = utils.generateID(4)
+    let id = utils.generateID(4)
     const checkID = async () => {
         const suggestion = await db("suggestions").where({ id: id }).select("*")
         if (suggestion.length > 0) {
@@ -73,9 +73,10 @@ exports.run = async (client, msg, args, cmd) => {
         case "list": return list()
     }
 }
-module.exports.config = {
+export let config = {
     name: 'suggest',
     description: '',
     aliases: ['suggestion'],
     cooldown: 10000
 }
+export let cooldownUsers = []

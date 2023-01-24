@@ -1,10 +1,9 @@
-const { ChatClient } = require("@kararty/dank-twitch-irc")
-const db = require("./db.js")
-const log = require("../log")
-const config = require("../../config")
-const utils = require("../utils")
+import { ChatClient } from "@kararty/dank-twitch-irc"
+import db from "./db"
+import log from "../log"
+import config from "../../config"
 
-const client = module.exports = new ChatClient({
+const client = new ChatClient({
     username: config.botName,
     password: config.tmiToken
 })
@@ -22,7 +21,7 @@ const joinChannels = async () => {
     log.info(`Connected to ${channels.length} channels`)    
 }
 
-client._ping = async () => {
+const ping = async () => {
     let asd = Date.now()
     await client.ping()
     return `${Date.now() - asd}ms`
@@ -35,8 +34,8 @@ client.connect()
         joinChannels()
     })
 client.on("ready", async () => {
-    client.privmsg(config.mainChannel, `${config.restartEmote} reconnected (${await client._ping()})`)
-    log.info(`Bot connected to TMI (${await client._ping()})`)
+    client.privmsg(config.mainChannel, `${config.restartEmote} reconnected (${await ping()})`)
+    log.info(`Bot connected to TMI (${await ping()})`)
 })
 
-module.exports = client
+export default client

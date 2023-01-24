@@ -1,4 +1,4 @@
-require("colors")
+import "colors"
 
 const log = console.log
 
@@ -19,10 +19,10 @@ const error = (...args) => {
 }
 
 const critical = (...args) => {
-    log("!![CRITICAL]!!".red.bgYellow.bold.underline, args.join(" "))
+    log("!![CRITICAL]!!".red.bgYellow.bold, args.join(" "))
 }
 
-module.exports = {
+export default {
     info,
     debug,
     warn,

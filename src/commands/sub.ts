@@ -1,5 +1,5 @@
-const utils = require("../utils")
-exports.run = async (client, msg, args, cmd) => {
+import utils from "../utils"
+export const run = async (client, msg, args, cmd) => {
     const user = args[0] ?? msg.senderUsername
     const channel = args[1] ?? msg.channelName
 
@@ -13,9 +13,9 @@ exports.run = async (client, msg, args, cmd) => {
         res.cumulative
             ? `subscribed for ${res.cumulative.months} months`
             : "they were never subscribed to this channel",
-        res.cumulative.endsAt
-        ? `sub ends in: ${utils.formatMS(new Date(res.cumulative.end) - Date.now())}`
-        : "Permanent sub",
+        // res.cumulative.endsAt 
+        // ? `sub ends in: ${utils.formatMS(new Date(res.cumulative.end) - Date.now())}`
+        // : "Permanent sub",
         res?.meta
         && `type: tier ${res.meta.tier} ${res.meta.type}`,
         res?.meta?.giftMeta && `gifter: ${res.meta.giftMeta.gifter.displayName}`
@@ -23,9 +23,10 @@ exports.run = async (client, msg, args, cmd) => {
 
     return `${user} - ${channel} | ${metadata}`
 }
-module.exports.config = {
+export let config = {
     name: 'sub',
     description: '',
     aliases: ['subage', 'sa'],
     cooldown: 5000
 }
+export let cooldownUsers = []

@@ -1,5 +1,6 @@
-const config = require("../../config");
-const db = require("knex")({
+import config from "../../config"
+import knex from "knex"
+const db = knex({
     client: "mysql",
     version: "15.1",
     connection: {
@@ -10,4 +11,4 @@ const db = require("knex")({
         database: config.db.database
     }
 })
-module.exports = db
+export default db

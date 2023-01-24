@@ -1,15 +1,15 @@
-const client = require("../services/tmi")
-const log = require("../log")
-const prettyms = require("pretty-ms")
-const db = require("../services/db")
-const utils = require("../utils")
+import client from "../services/tmi"
+import log from "../log"
+import prettyMilliseconds from "pretty-ms"
+import db from "../services/db"
+import utils from "../utils"
 client.on("PRIVMSG", async (msg) => {
     const user = await db("afk")
         .where({ twitch_id: msg.senderUserID })
         .select("twitch_id", "afk_type", "afk_message", "afk_time")
 
     if (user.length === 0) return
-    const time = prettyms(Date.now() - Number(user[0].afk_time))
+    const time = prettyMilliseconds(Date.now() - Number(user[0].afk_time))
     const emojis = {
         afk: {
             emotes: ["ppPoof", "peepoLeave", "docLeave"],

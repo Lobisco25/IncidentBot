@@ -1,7 +1,7 @@
-const db = require("../services/db")
-const client = require("../services/tmi")
-const WebSocket = require("ws")
-const log = require("../log")
+import db from "../services/db"
+import client from "../services/tmi"
+import WebSocket from "ws"
+import log from "../log"
 let ws = null
 const subscribeChannels = async () => {
     ws = new WebSocket("wss://events.7tv.io/v3")
@@ -23,7 +23,7 @@ const subscribeChannels = async () => {
         log.info("7TV WebSocket connected in " + ids.length + " channels")
     })
 }
-const handleMessages = async (event) => {
+const handleMessages = async (event: { data: string }) => {
     const r = JSON.parse(event.data)
     if (r.op !== 0) return
     const channelDB = await db("channels").where({ seventv_id: r.d.body.id }).select("twitch_name")
@@ -47,7 +47,7 @@ const handleMessages = async (event) => {
 }
 
 const addListener = async () => { 
-    ws.addEventListener("message", async (event) => handleMessages(event))
+    ws.addEventListener("message", async (event: any) => handleMessages(event))
 }
 const majorInit = async () => {
     await subscribeChannels()
@@ -57,4 +57,4 @@ const init = async () => {
     ws.close()
     await majorInit()
 }
-module.exports = { majorInit, init }
+export { majorInit, init }

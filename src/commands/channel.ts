@@ -1,7 +1,7 @@
-const db = require("../services/db")
-const seventv = require("../handlers/7tv")
-const utils = require("../utils")
-exports.run = async (client, msg, args, cmd) => {
+import db from "../services/db"
+import { init as seventv } from "../handlers/7tv"
+import utils from "../utils"
+export const run = async (client, msg, args, cmd) => {
     const channelDB = await db("channels").where({twitch_name: args[1]}).select("*")
     const joinChannel = async () => {
         if(channelDB.length)
@@ -43,7 +43,7 @@ exports.run = async (client, msg, args, cmd) => {
         const seventvEvents = channelDB[0].seventv_events ^ 1
 
         await db("channels").where({twitch_name: args[1]}).update({ seventv_events: seventvEvents, seventv_id: seventvId})
-        seventv.init()
+        seventv()
         return `channel 7tv events updated to ${seventvEvents === 1 ? "enabled" : "disabled"}`
     }
     switch(args[0].toLowerCase()) {
@@ -60,10 +60,11 @@ exports.run = async (client, msg, args, cmd) => {
             return "invalid argument"
     }
 }
-module.exports.config = {
+export let config = {
     name: 'channel',
     description: '',
     aliases: [''],
     cooldown: 5000,
     devOnly: true
 }
+export let cooldownUsers = []
