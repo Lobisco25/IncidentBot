@@ -59,7 +59,7 @@ export const run = async (client, msg, args, cmd) => {
         const suggestions = pendingSuggestions.length + approvedSuggestions.length + rejectedSuggestions.length
         if (suggestions == 0) return "you don't have any suggestions"
         switch (args[1]) {
-            default: return `You have ${suggestions} suggestions, which ${approvedSuggestions.length} were approved, ${rejectedSuggestions.length} were rejected and ${pendingSuggestions.length} are still pending. use rejected, approved or pending argument to get the ids of each one`
+            default: return `You have ${suggestions} suggestions, ${approvedSuggestions.length} were approved, ${rejectedSuggestions.length} were rejected and ${pendingSuggestions.length} are still pending. use rejected, approved or pending argument to get the ids of each one`
             case "approved": return `approved suggestions (${approvedSuggestions.length}): ${approvedSuggestions.map(s => s.id).join(", ")}`
             case "rejected": return `rejected suggestions (${rejectedSuggestions.length}): ${rejectedSuggestions.map(s => s.id).join(", ")}`
             case "pending": return `pending suggestions (${pendingSuggestions.length}): ${pendingSuggestions.map(s => s.id).join(", ")}`

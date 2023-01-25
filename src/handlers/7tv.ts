@@ -13,9 +13,10 @@ const subscribeChannels = async () => {
                 "op": 35,
                 "d": {
                     "type": "emote_set.update",
-                    "condition": { "object_id": id["7tv_id"] }
+                    "condition": { "object_id": id["seventv_id"] }
                 }
             })
+            console.log(id)
         })
         subscribe.forEach(async (sub) => {
             ws.send(JSON.stringify(sub))
@@ -25,6 +26,7 @@ const subscribeChannels = async () => {
 }
 const handleMessages = async (event: { data: string }) => {
     const r = JSON.parse(event.data)
+    console.log(r)
     if (r.op !== 0) return
     const channelDB = await db("channels").where({ seventv_id: r.d.body.id }).select("twitch_name")
     const channel = channelDB[0].twitch_name
@@ -32,17 +34,18 @@ const handleMessages = async (event: { data: string }) => {
     let text = null
     if (r.d.body.pushed) {
         const emote = r.d.body.pushed[0].value.name
-        text = `${emote} added on ${channel} by ${editor}`
+        text = `emote ${emote} added by ${editor}`
     }
     if (r.d.body.updated) {
         const emote = r.d.body.updated[0].old_value.name
         const alias = r.d.body.updated[0].value.name
-        text = `${emote} renamed to ${alias} on ${channel} by ${editor}`
+        text = `emote ${emote} renamed to ${alias} by ${editor}`
     }
     if (r.d.body.pulled) {
         const emote = r.d.body.pulled[0].old_value.name
-        text = `${emote} removed on ${channel} by ${editor}`
+        text = `emote ${emote} removed by ${editor}`
     }
+    log.debug(text)
     await client.privmsg(await channel, `(7TV) -> ${text}`)
 }
 

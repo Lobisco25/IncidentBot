@@ -1,7 +1,7 @@
 import utils from "../utils"
 import _config from "../../config"
 export const run = async (client, msg, args, cmd) => {
-    const arg = args[0] === undefined ? " " : args[0].toLowerCase
+    const arg = args[0] === undefined ? " " : args[0].toLowerCase()
 
     const defaultCase = await utils.http.get("https://api.api-ninjas.com/v1/facts?limit=1", { "X-Api-Key": _config.apis.apiNinjas })
     const cat = await utils.http.get("https://catfact.ninja/fact", {
@@ -13,11 +13,12 @@ export const run = async (client, msg, args, cmd) => {
         "X-RapidAPI-Host": "numbersapi.p.rapidapi.com",
         "X-RapidAPI-Key": _config.apis.rapidKey
     })
+    console.log(arg)
     switch (arg) {
-        default: return defaultCase[0].fact
         case "cats": case "cat": return cat.fact
         case "dogs": case "dog": return dog.facts
         case "numbers": case "number":  return numbers.text
+        default: return defaultCase[0].fact
     }
 }
 export let config = {

@@ -57,7 +57,7 @@ client.on("PRIVMSG", async (msg) => {
     const username = msg.senderUsername
     const asd = emojis[user[0].afk_type]
     const message = user[0].afk_message === null
-        ? ` ${await utils.getEmote(msg, asd.emotes, asd.emoji)}`
+        ? ` ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`
         : `: ${user[0].afk_message} ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`
     const res = {
         afk: `${username} is no longer AFK${message} (${time})`,

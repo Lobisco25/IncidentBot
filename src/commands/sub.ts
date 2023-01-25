@@ -1,7 +1,7 @@
 import utils from "../utils"
 export const run = async (client, msg, args, cmd) => {
-    const user = args[0] ?? msg.senderUsername
-    const channel = args[1] ?? msg.channelName
+    const user = args[1] ?? msg.senderUsername
+    const channel = args[0] ?? msg.channelName
 
     const res = await utils.http.get(`https://api.ivr.fi/v2/twitch/subage/${user}/${channel}`)
 
@@ -9,19 +9,15 @@ export const run = async (client, msg, args, cmd) => {
 
     if (res.channel.statusHidden) return `the user ${user} has hidden their status`
 
-    const metadata = [
-        res.cumulative
-            ? `subscribed for ${res.cumulative.months} months`
-            : "they were never subscribed to this channel",
-        // res.cumulative.endsAt 
-        // ? `sub ends in: ${utils.formatMS(new Date(res.cumulative.end) - Date.now())}`
-        // : "Permanent sub",
-        res?.meta
-        && `type: tier ${res.meta.tier} ${res.meta.type}`,
-        res?.meta?.giftMeta && `gifter: ${res.meta.giftMeta.gifter.displayName}`
-    ].filter(Boolean).join(" | ")
+    if (!res.cumulative) return `the user ${user} has never been subscribed to this channel`
 
-    return `${user} - ${channel} | ${metadata}`
+    if (!res.meta && res.cumulative) return `the user ${user} is not currently subscribed to this channel, but used to be subscribed for ${res.cumulative.months} months`
+
+    const subEnd = res.meta.endsAt ? "sub ends in " + utils.formatMS(new Date(res.cumulative.end).valueOf() - Date.now().valueOf()) : "Permanent sub"
+
+    const gifter = res?.meta?.giftMeta ? `| gifter: ${res.meta.giftMeta.gifter.displayName}` : " "
+
+    return `${user} - ${channel} | subscribed for ${res.cumulative.months} months | ${subEnd} | type: tier ${res.meta.tier} ${res.meta.type} ${gifter}`
 }
 export let config = {
     name: 'sub',
