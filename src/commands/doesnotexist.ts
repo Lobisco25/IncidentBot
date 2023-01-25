@@ -1,6 +1,6 @@
 import utils from "../utils"
 export const run = async (client, msg, args, cmd) => {
-    switch(args[0].toLowerCase() ?? "asd") {
+    switch(args[0] === undefined ? " " : args[0].toLowerCase()) {
         case "cat": return await utils.upload("https://thiscatdoesnotexist.com")
         case "art": case "artwork": return await utils.upload("https://thisartworkdoesnotexist.com/")
         case "pepe": return await utils.upload(`http://www.thispepedoesnotexist.co.uk/out/pepe%20(${utils.random(9761)}).png`)

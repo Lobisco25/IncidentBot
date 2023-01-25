@@ -39,7 +39,7 @@ utils.http.get = async (url: string, headers: any, params: any) => {
 
 utils.formatMS = (asd: number, options: prettyMilliseconds.Options) => { return prettyMilliseconds(asd, options) }
 
-utils.getEmote = async (channel: any, emotes: any[], emoji: any) => {
+utils.getEmote = async (channel: string, emotes: string[], emoji: string) => {
     const result = await axios.get(`https://7tv.io/v3/users/twitch/${channel}`)
     const res = result.data
     const AvailableEmotes = []
@@ -56,7 +56,7 @@ utils.getEmote = async (channel: any, emotes: any[], emoji: any) => {
     return emote()
 }
 
-utils.getUser = async (username: any) => {
+utils.getUser = async (username: string) => {
     const result = await axios.get(`https://api.ivr.fi/v2/twitch/user?login=${username}`)
     const res = result.data 
     return res[0]

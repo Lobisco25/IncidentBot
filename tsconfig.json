@@ -2,5 +2,6 @@
     "compilerOptions": {
         "target": "ESNext",
         "esModuleInterop": true,
+        "module": "CommonJS",
     }
 }

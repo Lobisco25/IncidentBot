@@ -58,7 +58,7 @@ export const run = async (client, msg, args, cmd) => {
     if (args.join(" ").length > 200) return ", afk message too long (MAX 200)"
 
     const asd = emojis[cmd]
-    const message = !args[0] ? ` ${await utils.getEmote(msg, asd.emotes, asd.emoji)}` : `: ${args.join(" ")} ${await utils.getEmote(msg.channelID, asd.emotes, asd[emojis])}`
+    const message = !args[0] ? ` ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}` : `: ${args.join(" ")} ${await utils.getEmote(msg.channelID, asd.emotes, asd[emojis])}`
     setAFK(args.join(" "), msg, cmd)
     const res = {
         afk: `is now AFK${message}`,
