@@ -16,7 +16,6 @@ const subscribeChannels = async () => {
                     "condition": { "object_id": id["seventv_id"] }
                 }
             })
-            console.log(id)
         })
         subscribe.forEach(async (sub) => {
             ws.send(JSON.stringify(sub))
@@ -26,7 +25,6 @@ const subscribeChannels = async () => {
 }
 const handleMessages = async (event: { data: string }) => {
     const r = JSON.parse(event.data)
-    console.log(r)
     if (r.op !== 0) return
     const channelDB = await db("channels").where({ seventv_id: r.d.body.id }).select("twitch_name")
     const channel = channelDB[0].twitch_name
@@ -45,7 +43,6 @@ const handleMessages = async (event: { data: string }) => {
         const emote = r.d.body.pulled[0].old_value.name
         text = `emote ${emote} removed by ${editor}`
     }
-    log.debug(text)
     await client.privmsg(await channel, `(7TV) -> ${text}`)
 }
 

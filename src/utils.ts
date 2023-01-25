@@ -52,7 +52,6 @@ utils.getEmote = async (channel: string, emotes: string[], emoji: string) => {
         if(!AvailableEmotes.length) return emoji
         else return AvailableEmotes[asd]
     }
-    console.log(emote())
     return emote()
 }
 
@@ -84,5 +83,9 @@ utils.ping = async () => {
     let asd = Date.now()
     await client.ping()
     return `${Date.now() - asd}ms`
+}
+utils.formatDate = async (date: Date) => {
+    const options:any = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options)
 }
 export default utils
