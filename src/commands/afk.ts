@@ -1,65 +1,67 @@
-import db from "../services/db"
-import log from "../log"
-import utils from "../utils"
+import db from "../services/db";
+import log from "../log";
+import utils from "../utils";
 const setAFK = async (message, msg, cmd) => {
     await db("afk").insert({
         twitch_id: msg.senderUserID,
         twitch_name: msg.senderUsername,
         afk_type: cmd,
         afk_message: !message ? null : message,
-        afk_time: Date.now().toString()
-    })
-    log.debug(`User entering afk state (${cmd}): ${msg.senderUsername}`)
-}
+        afk_time: Date.now().toString(),
+    });
+    log.debug(`User entering afk state (${cmd}): ${msg.senderUsername}`);
+};
 export const run = async (client, msg, args, cmd) => {
     const emojis = {
         afk: {
             emotes: ["ppPoof", "peepoLeave", "docLeave"],
-            emoji: "🏃💨"
+            emoji: "🏃💨",
         },
         brb: {
             emotes: ["ppSlide", "ppHop", "ppCircle"],
-            emoji: "⌛"
+            emoji: "⌛",
         },
         gn: {
             emotes: ["Bedge", "GoodNight", "ResidentCD"],
-            emoji: "💤"
+            emoji: "💤",
         },
         work: {
             emotes: ["Workge", "ApuBusiness"],
-            emoji: "💼 "
+            emoji: "💼 ",
         },
         study: {
             emotes: ["5Head", "NOTES", "peepoDetective", "peepoDebugger", "peepoNerd"],
-            emoji: "📚"
+            emoji: "📚",
         },
         workout: {
             emotes: ["GIGACHAD", "pajaSubs", "GachiPls"],
-            emoji: "🏋🏻"
+            emoji: "🏋🏻",
         },
         read: {
             emotes: ["READING", "PepegaReading", "BASEG"],
-            emoji:  "📖"
+            emoji: "📖",
         },
         food: {
             emotes: ["peepoFat", "Tasty", "PogTasty", "CatTasty"],
-            emoji: "OpieOP"
+            emoji: "OpieOP",
         },
         shower: {
             emotes: ["peepoShower"],
-            emoji: "🚿"
+            emoji: "🚿",
         },
         poop: {
             emotes: ["peepoPooPoo"],
-            emoji: "🚽"
-        }
-    }
+            emoji: "🚽",
+        },
+    };
     // comma: afk's default ping doesn't have a comma for the default afk response (src/handlers/tmi.js:86)
-    if (args.join(" ").length > 200) return ", afk message too long (MAX 200)"
+    if (args.join(" ").length > 200) return ", afk message too long (MAX 200)";
 
-    const asd = emojis[cmd]
-    const message = !args[0] ? ` ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}` : `: ${args.join(" ")} ${await utils.getEmote(msg.channelID, asd.emotes, asd[emojis])}`
-    setAFK(args.join(" "), msg, cmd)
+    const asd = emojis[cmd];
+    const message = !args[0]
+        ? ` ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`
+        : `: ${args.join(" ")} ${await utils.getEmote(msg.channelID, asd.emotes, asd[emojis])}`;
+    setAFK(args.join(" "), msg, cmd);
     const res = {
         afk: `is now AFK${message}`,
         brb: `will be right back${message}`,
@@ -71,12 +73,15 @@ export const run = async (client, msg, args, cmd) => {
         food: `is now eating${message}`,
         shower: `is now taking a shower${message}`,
         poop: `is now taking a shit${message}`,
-    }
-    return res[cmd]
-}
+    };
+    return res[cmd];
+};
 export let config = {
-    name: 'afk',
-    description: '',
-    aliases: ['brb', 'gn', 'work', 'study', 'workout', 'read', 'food', 'shower', 'poop']
-}
-export let cooldownUsers = []
+    name: "afk",
+    description: "let people know you are going afk",
+    aliases: ["brb", "gn", "work", "study", "workout", "read", "food", "shower", "poop"],
+    permission: "viewers",
+    longDescription: "sets you as afk ('away from keyboard'). several aliases exist for different occasions, you can check them in this page",
+    cooldown: 5000,
+};
+export let cooldownUsers = [];
