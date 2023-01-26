@@ -12,7 +12,19 @@ export const run = async (client, msg, args, cmd) => {
 }
 export let config = {
     name: 'doesnotexist',
-    description: 'command',
-    aliases: ['dne']
+    description: 'displays something that does not exist',
+    aliases: ['dne'],
+    permission: "viewers",
+    longDescription: `sends a random image of something that does not exist in chat, that can be a cat, a person, a waifu (NaM), a sneaker, a night sky or a piece of art.
+        websites used: 
+        https://thiscatdoesnotexist.com, 
+        https://thisartworkdoesnotexist.com/, 
+        http://www.thispepedoesnotexist.co.uk/, 
+        https://www.thiswaifudoesnotexist.net/, 
+        https://thissneakerdoesnotexist.com/, 
+        https://thisnightskydoesnotexist.appspot.com/, 
+        https://thispersondoesnotexist.com/
+    `,
+    cooldown: 5000
 }
 export let cooldownUsers = []

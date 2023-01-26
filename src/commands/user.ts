@@ -7,13 +7,16 @@ export const run = async (client, msg, args, cmd) => {
 
     const createDate = new Date(res.createdAt);
 
-    return `${banned} ${res.displayName} - ${res.id} | color: ${res.chatColor} | created: ${await utils.formatDate(createDate)} | bio: ${res.bio} | followers: ${res.followers} | follows: ${res.follows}`
-
+    return `${banned} ${res.displayName} - ${res.id} | color: ${res.chatColor} | created: ${await utils.formatDate(createDate)} | bio: ${
+        res.bio
+    } | followers: ${res.followers} | follows: ${res.follows}`;
 };
 export let config = {
-	name: "user",
-	description: "",
-	aliases: [""],
-	cooldown: 5000,
+    name: "user",
+    description: "display info about a user",
+    aliases: [""],
+    cooldown: 5000,
+    permission: "viewers",
+    longDescription: "displays info about a twitch user, including the user id, the creation date, the bio, the followers and the follows. website used: https://api.ivr.fi"
 };
 export let cooldownUsers = [];

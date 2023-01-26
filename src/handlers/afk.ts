@@ -1,64 +1,61 @@
-import client from "../services/tmi"
-import log from "../log"
-import prettyMilliseconds from "pretty-ms"
-import db from "../services/db"
-import utils from "../utils"
+import client from "../services/tmi";
+import log from "../log";
+import prettyMilliseconds from "pretty-ms";
+import db from "../services/db";
+import utils from "../utils";
 client.on("PRIVMSG", async (msg) => {
-    const user = await db("afk")
-        .where({ twitch_id: msg.senderUserID })
-        .select("twitch_id", "afk_type", "afk_message", "afk_time")
+    const user = await db("afk").where({ twitch_id: msg.senderUserID }).select("twitch_id", "afk_type", "afk_message", "afk_time");
 
-    if (user.length === 0) return
-    const time = prettyMilliseconds(Date.now() - Number(user[0].afk_time))
+    if (user.length === 0) return;
+    const time = prettyMilliseconds(Date.now() - Number(user[0].afk_time));
     const emojis = {
         afk: {
             emotes: ["ppPoof", "peepoLeave", "docLeave"],
-            emoji: "🏃💨"
+            emoji: "🏃💨",
         },
         brb: {
             emotes: ["ppSlide", "ppHop", "ppCircle"],
-            emoji: "⌛"
+            emoji: "⌛",
         },
         gn: {
             emotes: ["Bedge", "GoodNight", "ResidentCD"],
-            emoji: "💤"
-
+            emoji: "💤",
         },
         work: {
             emotes: ["Workge", "ApuBusiness"],
-            emoji: "💼"
+            emoji: "💼",
         },
         study: {
             emotes: ["5Head", "NOTES", "peepoDetective", "peepoDebugger", "peepoNerd"],
-            emoji: "📚"
+            emoji: "📚",
         },
         workout: {
             emotes: ["GIGACHAD", "pajaSubs", "GachiPls"],
-            emoji: "🏋🏻"
+            emoji: "🏋🏻",
         },
         read: {
             emotes: ["READING", "PepegaReading", "BASEG"],
-            emoji:  "📖"
+            emoji: "📖",
         },
         food: {
             emotes: ["peepoFat", "Tasty", "PogTasty", "CatTasty"],
-            emoji: "OpieOP"
+            emoji: "OpieOP",
         },
         shower: {
             emotes: ["peepoShower"],
-            emoji: "🚿"
+            emoji: "🚿",
         },
         poop: {
             emotes: ["peepoPooPoo"],
-            emoji: "🚽"
-        }
-
-    }
-    const username = msg.senderUsername
-    const asd = emojis[user[0].afk_type]
-    const message = user[0].afk_message === null
-        ? ` ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`
-        : `: ${user[0].afk_message} ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`
+            emoji: "🚽",
+        },
+    };
+    const username = msg.senderUsername;
+    const asd = emojis[user[0].afk_type];
+    const message =
+        user[0].afk_message === null
+            ? ` ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`
+            : `: ${user[0].afk_message} ${await utils.getEmote(msg.channelID, asd.emotes, asd.emoji)}`;
     const res = {
         afk: `${username} is no longer AFK${message} (${time})`,
         brb: `${username} is back${message} (${time})`,
@@ -69,10 +66,10 @@ client.on("PRIVMSG", async (msg) => {
         read: `${username} finished their reading session${message} (${time})`,
         food: `${username} is now heavier${message} (${time})`,
         shower: `${username} is now clean${message} (${time})`,
-        poop: `${username} finished pooping${message} (${time})`
-    }
-    log.debug(`User exiting afk state ${user[0].afk_type}: ${msg.senderUsername}`)
-    client.privmsg(msg.channelName, res[user[0].afk_type])
-    
-    await db("afk").where({ twitch_id: msg.senderUserID }).del()
-})
+        poop: `${username} finished pooping${message} (${time})`,
+    };
+    log.debug(`User exiting afk state ${user[0].afk_type}: ${msg.senderUsername}`);
+    client.privmsg(msg.channelName, res[user[0].afk_type]);
+
+    await db("afk").where({ twitch_id: msg.senderUserID }).del();
+});
