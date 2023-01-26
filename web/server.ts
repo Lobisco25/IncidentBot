@@ -6,7 +6,7 @@ import utils from "../src/utils";
 import commitCount from "git-commit-count";
 import db from "../src/services/db";
 import log from "../src/log";
-const app = express();
+const app: any = express();
 
 app.use(express.static(path.join(__dirname + "/public")));
 
