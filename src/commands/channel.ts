@@ -8,7 +8,7 @@ export const run = async (client, msg, args, cmd) => {
         await db("channels").insert({
             twitch_name: args[1],
             custom_prefix: args[2],
-            "seventv_events": "false",
+            "seventv_events": 0,
         });
 
         client.join(args[1]);
