@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+body {
+    background-color: #101010;
+    font-family: "Inter", sans-serif;
+}
+
+header {
+    color: white;
+    text-align: center;
+}
+
+header h1 {
+    display: inline-block;
+}
+
+header h1 a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+header h1 a:hover {
+    color: #b8b5b5
+}
+
+.info {
+    color: white;
+    text-align: center;
+}
+
+.info h2 {
+    margin: 5px;
+}
+
+
+.info a {
+    color: white;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.info a:hover {
+    color: #b8b5b5
+}
+
+.stats {
+    color: white;
+    text-align: center;
+}
+
+.commands  {
+    color: white;
+    text-align: center;
+}
+
+.commands h2 {
+    display: inline-block;
+}
+
+.commands table {
+    padding: 2px auto;
+    width: 100%;
+    color: white;
+    border-collapse: collapse !important;
+}
+
+.commands table tr th {
+    height: 40px;
+    background-color: #131313;
+}
+
+.commands table tr td {
+    height: 40px;
+    background-color: #0e0d0d;
+}
+
+.commands table tr th, .commands table tr td {
+    padding: 2px 5px;
+    border: 1px solid white;
+}
+
+.commands table tr td a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.commands table tr td a:hover {
+    color: #b8b5b5
+}
