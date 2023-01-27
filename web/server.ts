@@ -195,13 +195,17 @@ app.get("/commands/:cmd", (req, res) => {
               <td>${cmd.config.aliases.join(", ")}</td>
             </tr>
             <tr>
+                <th>cooldown</th>
+                <td>${cmd.config.cooldown ? `${cmd.config.cooldown / 1000} seconds` : "none"}</td>
+            </tr>
+            <tr>
                 <th>description</th>
                 <td>${cmd.config.description ?? "none"}</td>
             </tr>
             <tr>
                 <th>long description</th>
                 <td>${cmd.config.longDescription ?? "none"}</td>
-            <tr>
+            </tr>
                 <th>permission</th>
                 <td>${cmd.config.permission}</td>
             </tr>
@@ -212,5 +216,5 @@ app.get("/commands/:cmd", (req, res) => {
 });
 
 app.listen(config.port || 3000, () => {
-    log.info(`Server is running on port ${config.port || 3000}`);
+    log.info(`web instance is running on port ${config.port || 3000}`);
 });
