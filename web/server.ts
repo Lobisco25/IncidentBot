@@ -42,11 +42,6 @@ header h1 a:hover {
     text-align: center;
 }
 
-.info h2 {
-    margin: 5px;
-}
-
-
 .info a {
     color: white;
     text-decoration: underline;
@@ -57,10 +52,16 @@ header h1 a:hover {
     color: #b8b5b5
 }
 
+.info h2 {
+    margin: 2px;
+
+}
+
 .stats {
     color: white;
     text-align: center;
 }
+
 
 .commands  {
     color: white;
@@ -117,19 +118,17 @@ app.get("/", async (req, res) => {
         <header><h1><a href="/bot">incidentbot</a></h1></header>
         <div class="info">
             <h2>info</h2><br>
-            this is the website for incidentbot, a twitch bot made by <a href="https://lobis.co">lobisco</a><br>
-            you can find a list of commands <a href="/bot/commands">here</a>
+            <p>this is the website for incidentbot, a twitch bot made by <a href="https://lobis.co">lobisco</a></p>
+            <p>you can find a list of commands <a href="/bot/commands">here</a></p>
         </div>
         <div class="stats">
             <h2>stats</h2>
-            <ul>
-                <li>uptime: ${utils.uptime}</li>
-                <li>memory usage: ${utils.usage}</li>
-                <li>server: ${utils.osUptime}</li>
-                <li>total commits: ${commitCount()}</li>
-                <li>${channelDB.length} channels in total</li>
-                <li>${seventvChannelDB.length} channels with 7tv events</li>
-            </ul>
+                <p>uptime: ${utils.uptime}</p>
+                <p>memory usage: ${utils.usage}</p>
+                <p>server: ${utils.osUptime}</p>
+                <p>total commits: ${commitCount()}</l>
+                <p>${channelDB.length} channels in total</p>
+                <p>${seventvChannelDB.length} channels with 7tv events</p>
         </div>
     </body>
         `);
