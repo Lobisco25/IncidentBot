@@ -8,10 +8,10 @@ import client from "./services/tmi";
 
 let utils: any = {};
 
-utils.uptime = prettyMilliseconds(Math.floor(process.uptime() * 1000), { colonNotation: true });
+utils.uptime = prettyMilliseconds(Math.floor(process.uptime() * 1000));
 
 utils.usage = `${Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100}MB`;
-utils.osUptime = prettyMilliseconds(os.uptime() * 1000, { colonNotation: true });
+utils.osUptime = prettyMilliseconds(os.uptime() * 1000);
 
 utils.upload = async (url: any) => {
     const result = await axios({ url, responseType: "stream" });
