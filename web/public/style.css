@@ -49,43 +49,43 @@ header h1 a:hover {
     text-align: center;
 }
 
-.commands  {
+.table  {
     color: white;
     text-align: center;
 }
 
-.commands h2 {
+.table h2 {
     display: inline-block;
 }
 
-.commands table {
+.table table {
     padding: 2px auto;
     width: 100%;
     color: white;
     border-collapse: collapse !important;
 }
 
-.commands table tr th {
+.table table tr th {
     height: 40px;
     background-color: #131313;
 }
 
-.commands table tr td {
+.table table tr td {
     height: 40px;
     background-color: #0e0d0d;
 }
 
-.commands table tr th, .commands table tr td {
+.table table tr th, .table table tr td {
     padding: 2px 5px;
     border: 1px solid white;
 }
 
-.commands table tr td a {
+.table table tr td a {
     color: white;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.commands table tr td a:hover {
+.table table tr td a:hover {
     color: #b8b5b5
 }

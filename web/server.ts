@@ -63,46 +63,65 @@ header h1 a:hover {
 }
 
 
-.commands  {
+.table  {
     color: white;
     text-align: center;
 }
 
-.commands h2 {
+.table h2 {
     display: inline-block;
 }
 
-.commands table {
+.table table {
     padding: 2px auto;
     width: 100%;
     color: white;
     border-collapse: collapse !important;
 }
 
-.commands table tr th {
+.table table tr th {
     height: 40px;
     background-color: #131313;
 }
 
-.commands table tr td {
+.table table tr td {
     height: 40px;
     background-color: #0e0d0d;
 }
 
-.commands table tr th, .commands table tr td {
+.table table tr th, .table table tr td {
     padding: 2px 5px;
     border: 1px solid white;
 }
 
-.commands table tr td a {
+.table table tr td a {
     color: white;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.commands table tr td a:hover {
+.table table tr td a:hover {
     color: #b8b5b5
 }`;
+
+
+app.get("/404", (req, res) => {
+    res.send(`
+    <head>
+        <title>404 - incidentbot</title>
+        <style>
+            ${css}
+        </style>
+    </head>
+    <body>
+        <header><h1><a href="/bot">incidentbot</a></h1></header>
+        <div class="info">
+            <h2>404</h2>
+            <p>the page you are looking for does not exist</p>
+        </div>
+    </body>
+    `);
+});
 
 app.get("/", async (req, res) => {
     const channelDB = await db("channels").select("*");
@@ -144,7 +163,7 @@ app.get("/commands", (req, res) => {
     </head>
     <body>
     <header><h1><a href="/bot">incidentbot</a></h1></header>
-    <div class="commands">
+    <div class="table">
         <h2>commands</h2>
         <table>
             <tr>
@@ -183,7 +202,7 @@ app.get("/commands/:cmd", (req, res) => {
     </head>
     <body>
     <header><h1><a href="/bot">incidentbot</a></h1></header>
-    <div class="commands">
+    <div class="table">
         <h2>-${cmd.config.name}</h2>
         <table>
             <tr>
@@ -214,6 +233,55 @@ app.get("/commands/:cmd", (req, res) => {
     </body>
     `);
 });
+
+app.get("/suggestion/:id", async (req, res) => { 
+    const id = req.params.id;
+    if (!id) return res.redirect("/bot/404");
+    const suggestion = await db("suggestions").where({ id: id }).first();
+    if (!suggestion) return res.redirect("/bot/404");
+    res.send(`
+    <head>
+        <title>suggestion ${suggestion.id}</title>
+        <style>
+        ${css}
+         </style>
+    </head>
+    <body>
+    <header><h1><a href="/bot">incidentbot</a></h1></header>
+    <div class="table">
+        <table>
+            <tr>
+                <th>id</th>
+                <td>${suggestion.id}</td>
+            </tr>
+            <tr>
+                <th>user</th>
+                <td>${suggestion.user}</td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td>${suggestion.desc}</td>
+            </tr>
+            <tr>
+                <th>status</th>
+                <td>${suggestion.status}</td>
+            </tr>
+            <tr>
+                <th>created at</th>
+                <td>${suggestion.date}</td>
+            </tr>
+            <tr>
+                <th> dev's comment </th>
+                <td>${suggestion.comment ?? "none"}</td>
+            </tr>
+        </table>
+    </div>
+    </body>
+    `);
+
+
+});
+
 
 app.listen(config.port || 3000, () => {
     log.info(`web instance is running on port ${config.port || 3000}`);
