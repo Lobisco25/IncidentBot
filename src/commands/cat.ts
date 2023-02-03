@@ -1,6 +1,6 @@
 import utils from "../utils";
 export const run = async (client, msg, args, cmd) => {
-    return "pajaH " + (await utils.upload("https://cataas.com/cat"));
+    return "pajaH " + (await utils.upload("https://source.unsplash.com/random/?cat"));
 };
 export let config = {
     name: "cat",
