@@ -139,15 +139,19 @@ app.get("/", async (req, res) => {
             <h2>info</h2><br>
             <p>this is the website for incidentbot, a twitch bot made by <a href="https://lobis.co">lobisco</a></p>
             <p>you can find a list of commands <a href="/bot/commands">here</a></p>
+            <p>you can find a list of channels with incidentbot <a href="/bot/channels">here</a></p>
         </div>
         <div class="stats">
             <h2>stats</h2>
+            <p>ping to TMI: ${await utils.ping()}</p>
+            <p>running with ${Object.keys(commands).length} commands</p>
+            <p>${channelDB.length} channels in total</p>
+            <p>${seventvChannelDB.length} channels with 7tv events</p>
+                <p>running with node ${process.version}</p>
                 <p>uptime: ${utils.uptime}</p>
                 <p>memory usage: ${utils.usage}</p>
                 <p>server: ${utils.osUptime}</p>
-                <p>total commits: ${commitCount()}</l>
-                <p>${channelDB.length} channels in total</p>
-                <p>${seventvChannelDB.length} channels with 7tv events</p>
+                <p>total commits: ${commitCount()}</p>
         </div>
     </body>
         `);
@@ -234,6 +238,44 @@ app.get("/commands/:cmd", (req, res) => {
     `);
 });
 
+app.get("/channels", async (req, res) => {
+    const channels = await db("channels").select("*");
+    res.send(`
+    <head>
+        <title>channels</title>
+        <style>
+        ${css}
+         </style>
+    </head>
+    <body>
+    <header><h1><a href="/bot">incidentbot</a></h1></header>
+    <div class="table">
+        <h2>channels</h2>
+        <h3> running on ${channels.length} channels</h3>
+        <table>
+            <tr>
+                <th>name</th>
+                <th>custom prefix</th>
+                <th>7tv events</th>
+            </tr>
+            ${channels
+                .map((c) => {
+                    return `
+                <tr>
+                    <td>${c.twitch_name}</td>
+                    <td>${c.custom_prefix ?? "none"}</td>
+                    <td>${c.seventv_events ? "enabled" : "disabled"}</td>
+                </tr>
+                `;
+                })
+                .join("")}
+        </table>
+    </div>
+    </body>
+    `);
+});
+
+
 app.get("/suggestion/:id", async (req, res) => { 
     const id = req.params.id;
     if (!id) return res.redirect("/bot/404");
@@ -278,8 +320,6 @@ app.get("/suggestion/:id", async (req, res) => {
     </div>
     </body>
     `);
-
-
 });
 
 

@@ -2,6 +2,8 @@ import { ChatClient } from "@kararty/dank-twitch-irc"
 import db from "./db"
 import log from "../log"
 import config from "../../config"
+import reconnectPhrases from "../data/reconnectphrases.json"
+import utils from "../utils"
 
 const client = new ChatClient({
     username: config.botName,
@@ -26,6 +28,9 @@ const ping = async () => {
     await client.ping()
     return `${Date.now() - asd}ms`
 }
+
+const reconnected = reconnectPhrases[utils.random(reconnectPhrases.length)]
+
 client.connect()
     .catch((err) => {
         log.critical(`Couldn't connect to TMI: ${err}`)
@@ -34,7 +39,7 @@ client.connect()
         joinChannels()
     })
 client.on("ready", async () => {
-    client.privmsg(config.mainChannel, `${config.restartEmote} reconnected (${await ping()})`)
+    client.privmsg(config.mainChannel, `${config.restartEmote} ${reconnected} (${await ping()})`)
     log.info(`Bot connected to TMI (${await ping()})`)
 })
 
