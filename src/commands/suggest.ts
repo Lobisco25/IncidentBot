@@ -93,5 +93,7 @@ export let config = {
     cooldown: 10000,
     permission: "viewers",
     longDescription: "in this command, you can suggest something to the developer, you can also check, delete, update and list your suggestions with the suggestion's id",
+    usage: "suggest <suggestion> | suggest check <id> | suggest delete <id> | suggest update <id> <new suggestion> | suggest list <approved/rejected/pending>",
+    whisper: true,
 };
 export let cooldownUsers = [];

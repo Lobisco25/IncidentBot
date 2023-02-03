@@ -8,6 +8,7 @@ export let config = {
     aliases: ["prev", "thumbnail"],
     cooldown: 5000,
     permission: "viewers",
-    longDescription: "displays the preview of a the given twitch stream"
+    longDescription: "displays the preview of a the given twitch stream",
+    whisper: true,
 };
 export let cooldownUsers = [];

@@ -64,5 +64,6 @@ export let config = {
     cooldown: 5000,
     permission: "dev",
     longDescription: "dev-only command for changing settings of channels, like adding/removing channels, setting custom prefixes, enabling/disabling 7tv events and others",
+    whisper: true
 };
 export let cooldownUsers = [];

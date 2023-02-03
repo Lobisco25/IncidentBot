@@ -91,4 +91,23 @@ utils.formatDate = async (date: Date) => {
     const options: any = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
     return date.toLocaleDateString("en-US", options);
 };
+
+utils.checkStatusCode = (url: string) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(url)
+            .then((res) => {
+                resolve(res.status);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+utils.checkImageServer = async () => {
+    const result = await axios.get("https://i.lobis.co/");
+    if(result.status === 200) return true;
+    else return false;
+};
 export default utils;

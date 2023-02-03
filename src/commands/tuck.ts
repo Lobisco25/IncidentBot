@@ -11,5 +11,6 @@ export let config = {
     aliases: [""],
     cooldown: 5000,
     permission: "viewers",
+    whisper: false
 };
 export let cooldownUsers = [];

@@ -17,6 +17,7 @@ export let config = {
     aliases: [""],
     cooldown: 5000,
     permission: "viewers",
-    longDescription: "displays info about a twitch user, including the user id, the creation date, the bio, the followers and the follows. website used: https://api.ivr.fi"
+    longDescription: "displays info about a twitch user, including the user id, the creation date, the bio, the followers and the follows. website used: https://api.ivr.fi",
+    whisper: true,
 };
 export let cooldownUsers = [];

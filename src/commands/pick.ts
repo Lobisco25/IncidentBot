@@ -9,5 +9,6 @@ export let config = {
     aliases: ["select", "choose", "choice"],
     cooldown: 5000,
     permission: "viewers",
+    whisper: true,
 };
 export let cooldownUsers = [];

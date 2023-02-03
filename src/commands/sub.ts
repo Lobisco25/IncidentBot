@@ -1,5 +1,8 @@
 import utils from "../utils";
 export const run = async (client, msg, args, cmd) => {
+
+    if(!args[0] && msg.platform === "whispers") return "when in whispers, you must provide a channel name"
+
     const user = args[1] ?? msg.senderUsername;
     const channel = args[0] ?? msg.channelName;
 
@@ -28,6 +31,7 @@ export let config = {
     aliases: ["subage", "sa"],
     cooldown: 5000,
     permission: "viewers",
-    longDescription: "displays the subscription information of an user in a channel, including the sub end date, the sub type and the gifter. website used: https://api.ivr.fi/"
+    longDescription: "displays the subscription information of an user in a channel, including the sub end date, the sub type and the gifter. website used: https://api.ivr.fi/",
+    whisper: true,
 };
 export let cooldownUsers = [];

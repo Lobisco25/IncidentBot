@@ -46,5 +46,6 @@ export let config = {
         https://numbersapi.p.rapidapi.com/
         https://api.api-ninjas.com/
         `,
+        whisper: true
 };
 export let cooldownUsers = [];
