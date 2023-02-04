@@ -10,7 +10,6 @@ export const run = async (client, msg, args, cmd) => {
             args: args,
             cmd: cmd,
             utils: utils,
-            config: _config,
             db: db,
         };
         let script;
