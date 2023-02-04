@@ -79,7 +79,7 @@ client.on("WHISPER", async (msg: any) => {
     // message sending handler
     try {
         let chatRes = await command.run(client, msg, args, cmd);
-        // name format handling}
+        // name format handling
         twitch.whisper(msg.senderUserID, `${chatRes === undefined ? "command executed" : chatRes}`);
         await db("commands").where("name", command.config.name).increment("uses", 1);
     } catch (err) {
