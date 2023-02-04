@@ -1,9 +1,11 @@
 import { exec } from 'child_process'
 export const run = async (client, msg, args, cmd) => {
     await client.privmsg(msg.channelName, "pulling + restarting...")
+    await exec("git reset --hard")
     await exec("git pull")
     await exec("pnpm i")
-    process.exit()
+
+    await process.exit()
 }
 export let config = {
 name: 'restart',
