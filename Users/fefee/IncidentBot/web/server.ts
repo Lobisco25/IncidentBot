@@ -42,11 +42,6 @@ header h1 a:hover {
     text-align: center;
 }
 
-.info h2 {
-    margin: 5px;
-}
-
-
 .info a {
     color: white;
     text-decoration: underline;
@@ -57,51 +52,86 @@ header h1 a:hover {
     color: #b8b5b5
 }
 
+.info h2 {
+    margin: 2px;
+
+}
+
 .stats {
     color: white;
     text-align: center;
 }
 
-.commands  {
+
+.table  {
     color: white;
     text-align: center;
 }
 
-.commands h2 {
+.table h2 {
     display: inline-block;
 }
 
-.commands table {
+.table table {
     padding: 2px auto;
     width: 100%;
     color: white;
     border-collapse: collapse !important;
 }
 
-.commands table tr th {
+.table table tr th {
     height: 40px;
     background-color: #131313;
 }
 
-.commands table tr td {
+.table table tr td {
     height: 40px;
     background-color: #0e0d0d;
 }
 
-.commands table tr th, .commands table tr td {
+.table table tr th, .table table tr td {
     padding: 2px 5px;
     border: 1px solid white;
 }
 
-.commands table tr td a {
+.table table tr td a {
     color: white;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
-.commands table tr td a:hover {
+.table table tr td a:hover {
     color: #b8b5b5
-}`;
+}
+
+.table table tr td .note {
+    color: #686767;
+    text-align: right;
+}
+
+
+`;
+
+
+
+
+app.get("/404", (req, res) => {
+    res.send(`
+    <head>
+        <title>404 - incidentbot</title>
+        <style>
+            ${css}
+        </style>
+    </head>
+    <body>
+        <header><h1><a href="/bot">incidentbot</a></h1></header>
+        <div class="info">
+            <h2>404</h2>
+            <p>the page you are looking for does not exist</p>
+        </div>
+    </body>
+    `);
+});
 
 app.get("/", async (req, res) => {
     const channelDB = await db("channels").select("*");
@@ -117,19 +147,21 @@ app.get("/", async (req, res) => {
         <header><h1><a href="/bot">incidentbot</a></h1></header>
         <div class="info">
             <h2>info</h2><br>
-            this is the website for incidentbot, a twitch bot made by <a href="https://lobis.co">lobisco</a><br>
-            you can find a list of commands <a href="/bot/commands">here</a>
+            <p>this is the website for incidentbot, a twitch bot made by <a href="https://lobis.co">lobisco</a></p>
+            <p>you can find a list of commands <a href="/bot/commands">here</a></p>
+            <p>you can find a list of channels with incidentbot <a href="/bot/channels">here</a></p>
         </div>
         <div class="stats">
             <h2>stats</h2>
-            <ul>
-                <li>uptime: ${utils.uptime}</li>
-                <li>memory usage: ${utils.usage}</li>
-                <li>server: ${utils.osUptime}</li>
-                <li>total commits: ${commitCount()}</li>
-                <li>${channelDB.length} channels in total</li>
-                <li>${seventvChannelDB.length} channels with 7tv events</li>
-            </ul>
+            <p>ping to TMI: ${await utils.ping()}</p>
+            <p>running with ${Object.keys(commands).length} commands</p>
+            <p>${channelDB.length} channels in total</p>
+            <p>${seventvChannelDB.length} channels with 7tv events</p>
+                <p>running with node ${process.version}</p>
+                <p>uptime: ${utils.uptime}</p>
+                <p>memory usage: ${utils.usage}</p>
+                <p>server: ${utils.osUptime}</p>
+                <p>total commits: ${commitCount()}</p>
         </div>
     </body>
         `);
@@ -145,7 +177,7 @@ app.get("/commands", (req, res) => {
     </head>
     <body>
     <header><h1><a href="/bot">incidentbot</a></h1></header>
-    <div class="commands">
+    <div class="table">
         <h2>commands</h2>
         <table>
             <tr>
@@ -172,9 +204,10 @@ app.get("/commands", (req, res) => {
     `);
 });
 
-app.get("/commands/:cmd", (req, res) => {
+app.get("/commands/:cmd", async (req, res) => {
     const cmd = commands[req.params.cmd];
     if (!cmd) return res.send("command not found");
+    const commandsDB = await db("commands").where({ name: cmd.config.name });
     res.send(`
     <head>
         <title>command ${cmd.config.name}</title>
@@ -184,25 +217,33 @@ app.get("/commands/:cmd", (req, res) => {
     </head>
     <body>
     <header><h1><a href="/bot">incidentbot</a></h1></header>
-    <div class="commands">
+    <div class="table">
         <h2>-${cmd.config.name}</h2>
-        <table>
+        ${commandsDB[0].disabled === 1 ? `<p style="color: red">this command has been temporarily disabled</p>` : ""}  
+        <table>    
             <tr>
                 <th>name</th>
                 <td>${cmd.config.name}</td>               
             </tr>
             <tr>
                 <th>aliases</th>
-              <td>${cmd.config.aliases.join(", ")}</td>
+              <td>${cmd.config.aliases.join(", ") ?? "none"}</td>
+            </tr>
+            <tr>
+                <th>cooldown</th>
+                <td>${cmd.config.cooldown ? `${cmd.config.cooldown / 1000} seconds` : "none"}</td>
             </tr>
             <tr>
                 <th>description</th>
                 <td>${cmd.config.description ?? "none"}</td>
             </tr>
             <tr>
+                <th>usage</th>
+                <td>${cmd.config.usage ?? "none"} <note class="note">{} = required / [] = optional</note></td>
+            <tr>
                 <th>long description</th>
                 <td>${cmd.config.longDescription ?? "none"}</td>
-            <tr>
+            </tr>
                 <th>permission</th>
                 <td>${cmd.config.permission}</td>
             </tr>
@@ -212,6 +253,91 @@ app.get("/commands/:cmd", (req, res) => {
     `);
 });
 
+app.get("/channels", async (req, res) => {
+    const channels = await db("channels").select("*");
+    res.send(`
+    <head>
+        <title>channels</title>
+        <style>
+        ${css}
+         </style>
+    </head>
+    <body>
+    <header><h1><a href="/bot">incidentbot</a></h1></header>
+    <div class="table">
+        <h2>channels</h2>
+        <h3> running on ${channels.length} channels</h3>
+        <table>
+            <tr>
+                <th>name</th>
+                <th>custom prefix</th>
+                <th>7tv events</th>
+            </tr>
+            ${channels
+                .map((c) => {
+                    return `
+                <tr>
+                    <td>${c.twitch_name}</td>
+                    <td>${c.custom_prefix ?? "none"}</td>
+                    <td>${c.seventv_events ? "enabled" : "disabled"}</td>
+                </tr>
+                `;
+                })
+                .join("")}
+        </table>
+    </div>
+    </body>
+    `);
+});
+
+
+app.get("/suggestion/:id", async (req, res) => { 
+    const id = req.params.id;
+    if (!id) return res.redirect("/bot/404");
+    const suggestion = await db("suggestions").where({ id: id }).first();
+    if (!suggestion) return res.redirect("/bot/404");
+    res.send(`
+    <head>
+        <title>suggestion ${suggestion.id}</title>
+        <style>
+        ${css}
+         </style>
+    </head>
+    <body>
+    <header><h1><a href="/bot">incidentbot</a></h1></header>
+    <div class="table">
+        <table>
+            <tr>
+                <th>id</th>
+                <td>${suggestion.id}</td>
+            </tr>
+            <tr>
+                <th>user</th>
+                <td>${suggestion.user}</td>
+            </tr>
+            <tr>
+                <th>description</th>
+                <td>${suggestion.desc}</td>
+            </tr>
+            <tr>
+                <th>status</th>
+                <td>${suggestion.status}</td>
+            </tr>
+            <tr>
+                <th>created at</th>
+                <td>${suggestion.date}</td>
+            </tr>
+            <tr>
+                <th> dev's comment </th>
+                <td>${suggestion.comment ?? "none"}</td>
+            </tr>
+        </table>
+    </div>
+    </body>
+    `);
+});
+
+
 app.listen(config.port || 3000, () => {
-    log.info(`Server is running on port ${config.port || 3000}`);
+    log.info(`web instance is running on port ${config.port || 3000}`);
 });

@@ -1,5 +1,6 @@
 import utils from "../utils"
 export const run = async (client, msg, args, cmd) => {
+    if(!(await utils.checkImageServer())) return "image server offline, try again later"
     switch(args[0] === undefined ? " " : args[0].toLowerCase()) {
         case "cat": return await utils.upload("https://thiscatdoesnotexist.com")
         case "art": case "artwork": return await utils.upload("https://thisartworkdoesnotexist.com/")
@@ -25,6 +26,9 @@ export let config = {
         https://thisnightskydoesnotexist.appspot.com/, 
         https://thispersondoesnotexist.com/
     `,
-    cooldown: 5000
+    cooldown: 5000,
+    whisper: true,
+    usage: "doesnotexist [cat|art|pepe|waifu|sneaker|night|person]",
+    namePattern: `{name}, `
 }
 export let cooldownUsers = []

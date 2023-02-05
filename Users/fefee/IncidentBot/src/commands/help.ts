@@ -5,6 +5,11 @@ export let config = {
 name: 'help',
 description: '',
 aliases: [''],
-cooldown: 5000
+cooldown: 5000,
+whisper: true,
+permission: 'viewers',
+usage: 'help [command]',
+namePattern: `{name}, `
+
 }
 export let cooldownUsers = []

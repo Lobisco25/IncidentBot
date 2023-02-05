@@ -46,5 +46,8 @@ export let config = {
         https://numbersapi.p.rapidapi.com/
         https://api.api-ninjas.com/
         `,
+        whisper: true,
+        usage: "fact [cat|dog|number]",
+        namePattern: `{name}, `
 };
 export let cooldownUsers = [];

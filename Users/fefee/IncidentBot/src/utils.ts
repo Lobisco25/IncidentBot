@@ -8,10 +8,10 @@ import client from "./services/tmi";
 
 let utils: any = {};
 
-utils.uptime = prettyMilliseconds(Math.floor(process.uptime() * 1000), { colonNotation: true });
+utils.uptime = prettyMilliseconds(Math.floor(process.uptime() * 1000), { secondsDecimalDigits: 0 });
 
 utils.usage = `${Math.round((process.memoryUsage().heapUsed / 1024 / 1024) * 100) / 100}MB`;
-utils.osUptime = prettyMilliseconds(os.uptime() * 1000, { colonNotation: true });
+utils.osUptime = prettyMilliseconds(os.uptime() * 1000, { secondsDecimalDigits: 0 });
 
 utils.upload = async (url: any) => {
     const result = await axios({ url, responseType: "stream" });
@@ -90,5 +90,24 @@ utils.ping = async () => {
 utils.formatDate = async (date: Date) => {
     const options: any = { weekday: "short", year: "numeric", month: "short", day: "numeric" };
     return date.toLocaleDateString("en-US", options);
+};
+
+utils.checkStatusCode = (url: string) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(url)
+            .then((res) => {
+                resolve(res.status);
+            })
+            .catch((err) => {
+                reject(err);
+            });
+    });
+};
+
+utils.checkImageServer = async () => {
+    const result = await axios.get("https://i.lobis.co/");
+    if(result.status === 200) return true;
+    else return false;
 };
 export default utils;

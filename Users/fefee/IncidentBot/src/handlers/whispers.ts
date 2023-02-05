@@ -3,6 +3,7 @@ import config from "../../config";
 import client from "../services/tmi";
 import db from "../services/db";
 import log from "../log";
+import twitch from "../services/twitch";
 
 let commands = {};
 
@@ -41,20 +42,8 @@ function setUserCooldown(c: ICommand, msg: any) {
     commands[c.config.name].cooldownUsers.push(userId);
 
     setTimeout(() => {
-        commands[c.config.name].cooldownUsers = commands[
-            c.config.name
-        ].cooldownUsers.filter((i) => i !== msg.senderUserID)
+        commands[c.config.name].cooldownUsers = commands[c.config.name].cooldownUsers.filter((i) => i !== msg.senderUserID);
     }, c.config.cooldown);
-}
-
-async function getPrefix(msg) {
-    const result = await db("channels")
-        .where({ twitch_name: msg.channelName })
-        .select("custom_prefix")
-        .catch((err) => {
-            log.error(`Could not get custom channel prefix: ${err}`);
-        });
-    return result[0]?.custom_prefix;
 }
 
 function getCommandByAlias(alias) {
@@ -70,44 +59,36 @@ function getCommandByAlias(alias) {
 }
 
 // main function
-client.on("PRIVMSG", async (msg: any) => {
-    //msg extra variables
-    msg.isBroadcaster = msg.badgesRaw.startsWith("broadcaster/");
-    msg.isVip = !!msg.ircTags?.vip;
-    msg.isSelf = msg.senderUserID === config.botID;
+client.on("WHISPER", async (msg: any) => {
+    // essential variables
     msg.isDev = msg.senderUsername === config.dev;
-    msg.platform = "chat";
-
-    if (msg.isSelf) return;
+    msg.platform = "whispers";
 
     // variables
-    const prefix = (await getPrefix(msg)) || config.prefix;
+    const prefix = config.prefix;
     let args = msg.messageText.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
     let command = commands[cmd] || getCommandByAlias(cmd);
     // essential ifs
     if (!command || !msg.messageText.startsWith(prefix)) return;
     if (command.cooldownUsers.includes(msg.senderUserID)) return;
+    if (!command.config.whisper) return twitch.whisper(msg.senderUserID, "This command is not available in whispers");
     let permission = command.config.permission;
-    if (permission == "mods" && !(msg.isMod || msg.isDev)) return;
-    if (permission === "owners" && !(msg.isBroadcaster || msg.isDev)) return;
     if (permission === "dev" && !msg.isDev) return;
 
     // message sending handler
     try {
-        const commandsDB = await db("commands").where("name", command.config.name)
-        // name format handling
+        const commandsDB = await db("commands").where("name", command.config.name);
 
-        const namePattern = command.config.namePattern.replace("{name}", msg.displayName);
-        
-        if(commandsDB[0].disabled === 1) return client.privmsg(msg.channelName, `${namePattern} this command has been temporarily disabled`)
+        if (commandsDB[0].disabled === 1) return client.privmsg(msg.channelName, `this command has been temporarily disabled`);
         let chatRes = await command.run(client, msg, args, cmd);
-        client.privmsg(msg.channelName, `${namePattern} ${chatRes === undefined ? "command executed" : chatRes}`);
+        // name format handling
+        twitch.whisper(msg.senderUserID, `${chatRes === undefined ? "command executed" : chatRes}`);
         await db("commands").where("name", command.config.name).increment("uses", 1);
     } catch (err) {
         log.error(`Could not run the command ${command.config.name}: ${err}`);
     }
-    setUserCooldown(command, msg)
+    setUserCooldown(command, msg);
 });
 
 export default commands;

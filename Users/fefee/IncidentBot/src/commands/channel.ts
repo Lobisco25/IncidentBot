@@ -8,7 +8,7 @@ export const run = async (client, msg, args, cmd) => {
         await db("channels").insert({
             twitch_name: args[1],
             custom_prefix: args[2],
-            "7tv_events": "false",
+            "seventv_events": 0,
         });
 
         client.join(args[1]);
@@ -64,5 +64,8 @@ export let config = {
     cooldown: 5000,
     permission: "dev",
     longDescription: "dev-only command for changing settings of channels, like adding/removing channels, setting custom prefixes, enabling/disabling 7tv events and others",
+    whisper: true,
+    usage: "channel {join|leave|prefix|7tv} {channel} [argument]",
+    namePattern: ""
 };
 export let cooldownUsers = [];
