@@ -2,6 +2,7 @@ import db from "../services/db";
 import client from "../services/tmi";
 import WebSocket from "ws";
 import log from "../log";
+import config from "../../config";
 let ws = null;
 const subscribeChannels = async () => {
     ws = new WebSocket("wss://events.7tv.io/v3");
@@ -23,6 +24,9 @@ const subscribeChannels = async () => {
         log.info("7TV WebSocket connected in " + ids.length + " channels");
     });
 };
+
+const dev = config.devEnv ? "[DEV]" : "";
+
 const handleMessages = async (event: { data: string }) => {
     const r = JSON.parse(event.data);
     if (r.op !== 0) return;
@@ -43,7 +47,7 @@ const handleMessages = async (event: { data: string }) => {
         const emote = r.d.body.pulled[0].old_value.name;
         text = `emote ${emote} removed by ${editor}`;
     }
-    await client.privmsg(await channel, `(7TV) -> ${text}`);
+    await client.privmsg(await channel, `${dev} (7TV) -> ${text}`);
 };
 
 const addListener = async () => {

@@ -93,6 +93,12 @@ client.on("PRIVMSG", async (msg: any) => {
 
     // message sending handler
     try {
+
+        const dev = config.devEnv ? "[DEV]" : "";
+
+        const commandDB = await db("commands").where({ name: command.config.name });
+        if(commandDB[0].disabled) return client.privmsg(msg.channelName, `${dev} ${msg.senderUsername}, this command is temporarily disabled, try again later`);
+
         let chatRes = await command.run(client, msg, args, cmd);
         // name format handling
 
@@ -105,7 +111,8 @@ client.on("PRIVMSG", async (msg: any) => {
                 nome = "";
                 break;
         }
-        client.privmsg(msg.channelName, `${nome} ${chatRes === undefined ? "command executed" : chatRes}`);
+        
+        client.privmsg(msg.channelName, `${dev} ${nome} ${chatRes === undefined ? "command executed" : chatRes}`);
         await db("commands").where("name", command.config.name).increment("uses", 1);
     } catch (err) {
         log.error(`Could not run the command ${command.config.name}: ${err}`);

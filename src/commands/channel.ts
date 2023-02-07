@@ -8,7 +8,7 @@ export const run = async (client, msg, args, cmd) => {
         await db("channels").insert({
             twitch_name: args[1],
             custom_prefix: args[2],
-            "seventv_events": 0,
+            seventv_events: 0,
         });
 
         client.join(args[1]);
@@ -25,7 +25,16 @@ export const run = async (client, msg, args, cmd) => {
         if (!channelDB) return "channel not found in the database";
         if (!args[2]) return "no argument provided";
 
-        await db("channels").where({ twitch_name: args[1] }).update({ custom_prefix: args[2] });
+        const prefix = (() => {
+            switch (args[2]) {
+                case "-":
+                    return null;
+                default:
+                    return args[2];
+            }
+        })();
+
+        await db("channels").where({ twitch_name: args[1] }).update({ custom_prefix: prefix });
 
         return "channel prefix updated";
     };
@@ -37,9 +46,7 @@ export const run = async (client, msg, args, cmd) => {
 
         const seventvEvents = channelDB[0].seventv_events ^ 1;
 
-        await db("channels")
-            .where({ twitch_name: args[1] })
-            .update({ seventv_events: seventvEvents, seventv_id: seventvId });
+        await db("channels").where({ twitch_name: args[1] }).update({ seventv_events: seventvEvents, seventv_id: seventvId });
         seventv();
         return `channel 7tv events updated to ${seventvEvents === 1 ? "enabled" : "disabled"}`;
     };
@@ -63,7 +70,8 @@ export let config = {
     aliases: [""],
     cooldown: 5000,
     permission: "dev",
-    longDescription: "dev-only command for changing settings of channels, like adding/removing channels, setting custom prefixes, enabling/disabling 7tv events and others",
-    whisper: true
+    longDescription:
+        "dev-only command for changing settings of channels, like adding/removing channels, setting custom prefixes, enabling/disabling 7tv events and others",
+    whisper: true,
 };
 export let cooldownUsers = [];

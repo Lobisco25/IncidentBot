@@ -64,6 +64,8 @@ client.on("WHISPER", async (msg: any) => {
     msg.isDev = msg.senderUsername === config.dev;
     msg.platform = "whispers";
 
+    const dev = config.devEnv ? "[DEV]" : "";
+
     // variables
     const prefix = config.prefix;
     let args = msg.messageText.slice(prefix.length).trim().split(/ +/g);
@@ -72,7 +74,7 @@ client.on("WHISPER", async (msg: any) => {
     // essential ifs
     if (!command || !msg.messageText.startsWith(prefix)) return;
     if (command.cooldownUsers.includes(msg.senderUserID)) return;
-    if(!command.config.whisper) return twitch.whisper(msg.senderUserID, "This command is not available in whispers");
+    if(!command.config.whisper) return twitch.whisper(msg.senderUserID, dev + " This command is not available in whispers");
     let permission = command.config.permission;
     if (permission === "dev" && !msg.isDev) return;
 
@@ -80,7 +82,7 @@ client.on("WHISPER", async (msg: any) => {
     try {
         let chatRes = await command.run(client, msg, args, cmd);
         // name format handling
-        twitch.whisper(msg.senderUserID, `${chatRes === undefined ? "command executed" : chatRes}`);
+        twitch.whisper(msg.senderUserID, `${dev} ${chatRes === undefined ? "command executed" : chatRes}`);
         await db("commands").where("name", command.config.name).increment("uses", 1);
     } catch (err) {
         log.error(`Could not run the command ${command.config.name}: ${err}`);
