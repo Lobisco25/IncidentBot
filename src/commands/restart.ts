@@ -1,7 +1,8 @@
 import { exec } from 'child_process'
+import _config from "../../config"
 export const run = async (client, msg, args, cmd) => {
+    if(_config.devEnv) return "can't restart in dev environment"
     await client.privmsg(msg.channelName, "pulling + restarting...")
-    await exec("git reset --hard")
     await exec("git pull")
     await exec("pnpm i")
 

@@ -16,19 +16,19 @@ export let config = {
     description: 'displays something that does not exist',
     aliases: ['dne'],
     permission: "viewers",
-    longDescription: `sends a random image of something that does not exist in chat, that can be a cat, a person, a waifu (NaM), a sneaker, a night sky or a piece of art.
-        websites used: 
-        https://thiscatdoesnotexist.com, 
-        https://thisartworkdoesnotexist.com/, 
-        http://www.thispepedoesnotexist.co.uk/, 
-        https://www.thiswaifudoesnotexist.net/, 
-        https://thissneakerdoesnotexist.com/, 
-        https://thisnightskydoesnotexist.appspot.com/, 
-        https://thispersondoesnotexist.com/
-    `,
+    longDescription: `sends a random image of something that does not exist in chat, that can be a cat, a person, a waifu (NaM), a sneaker, a night sky or a piece of art.`,
     cooldown: 5000,
     whisper: true,
     namePattern: "{name}, ",
-    usage: "doesnotexist [cat|art|pepe|waifu|sneaker|night]"
+    usage: "doesnotexist [cat|art|pepe|waifu|sneaker|night]",
+    websites: [
+        "https://thiscatdoesnotexist.com",
+        "https://thisartworkdoesnotexist.com/",
+        "http://www.thispepedoesnotexist.co.uk/",
+        "https://www.thiswaifudoesnotexist.net/",
+        "https://thissneakerdoesnotexist.com/",
+        "https://thisnightskydoesnotexist.appspot.com/",
+        "https://thispersondoesnotexist.com/"
+    ]
 }
 export let cooldownUsers = []

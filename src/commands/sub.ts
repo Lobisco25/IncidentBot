@@ -31,9 +31,10 @@ export let config = {
     aliases: ["subage", "sa"],
     cooldown: 5000,
     permission: "viewers",
-    longDescription: "displays the subscription information of an user in a channel, including the sub end date, the sub type and the gifter. website used: https://api.ivr.fi/",
+    longDescription: "displays the subscription information of an user in a channel, including the sub end date, the sub type and the gifter.",
     whisper: true,
     namePattern: "",
     usage: "sub [channel] [user]",
+    websites: ["https://api.ivr.fi/"]
 };
 export let cooldownUsers = [];

@@ -16,12 +16,15 @@ export const run = async (client, msg, args, cmd) => {
 export let config = {
     name: "cat",
     description: "Displays a random cat",
-    aliases: ["catass", "randomcat", "rcat"],
+    aliases: ["randomcat", "rcat"],
     permission: "viewers",
-    longDescription: "Displays in chat a photo of a random irl cat, taken from https://cataas.com/",
+    longDescription: "Displays in chat a photo of a random irl cat, taken from the nsplash library and the website Cat as a Service",
     cooldown: 5000,
     whisper: true,
     namePattern: "{name}, ",
-    usage: "cat [unsplash|gif]"
+    usage: "cat [unsplash|gif]",
+    websites: ["https://cataas.com/", "https://unsplash.com/"]
+
+
 };
 export let cooldownUsers = [];

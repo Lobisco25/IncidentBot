@@ -17,10 +17,11 @@ export let config = {
     aliases: ["rdog", "randomdog"],
     cooldown: 5000,
     permission: "viewers",
-    longDescription: "Displays in chat a photo of a random irl dog, taken from the unsplash library https://unsplash.com",
+    longDescription: "Displays in chat a photo of a random irl dog, taken from the Unsplash library and the website Dog CEO",
     whisper: true,
     namePattern: "{name}, ",
-    usage: "dog"
+    usage: "dog",
+    websites: ["https://dog.ceo/", "https://unsplash.com/"]
 
 };
 export let cooldownUsers = [];

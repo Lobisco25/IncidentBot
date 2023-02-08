@@ -36,15 +36,15 @@ export let config = {
     aliases: ["facts", "rfacts", "randomfacts"],
     cooldown: 5000,
     permission: "viewers",
-    longDescription: `Displays in chat a random fact, from a cat, a dog, a number or a random fact
-        websites used:
-        https://catfact.ninja/
-        https://dog-api.kinduff.com/
-        https://numbersapi.p.rapidapi.com/
-        https://api.api-ninjas.com/
-        `,
+    longDescription: `Displays in chat a random fact, from a cat, a dog, a number or a random fact`,
     whisper: true,
     namePattern: "{name}, ",
     usage: "fact [cat|dog|number]",
+    websites: [
+        "https://catfact.ninja/",
+        "https://dog-api.kinduff.com/",
+        "https://numbersapi.p.rapidapi.com/",
+        "https://api.api-ninjas.com/",
+    ],
 };
 export let cooldownUsers = [];

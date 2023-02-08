@@ -235,6 +235,10 @@ app.get("/commands/:cmd", (req, res) => {
                 <th>permission</th>
                 <td>${cmd.config.permission}</td>
             </tr>
+            ${cmd.config.websites ? `<tr>
+                <th>websites used</th>
+                <td>${cmd.config.websites.map((w) => `<a href="${w}">${w}</a>`).join(", ")}</td>
+            </tr>` : ""}
         </table>
     </div>
     </body>
