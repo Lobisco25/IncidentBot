@@ -23,7 +23,7 @@ export const run = async (client, msg, args, cmd) => {
 
     const gifter = res?.meta?.giftMeta ? `| gifter: ${res.meta.giftMeta.gifter.displayName}` : " ";
 
-    return `${user} - ${channel} | subscribed for ${res.cumulative.months} months | ${subEnd} | type: tier ${res.meta.tier} ${res.meta.type} ${gifter}`;
+    return `@${user} - ${channel} | subscribed for ${res.cumulative.months} months | ${subEnd} | type: tier ${res.meta.tier} ${res.meta.type} ${gifter}`;
 };
 export let config = {
     name: "sub",
@@ -33,5 +33,7 @@ export let config = {
     permission: "viewers",
     longDescription: "displays the subscription information of an user in a channel, including the sub end date, the sub type and the gifter. website used: https://api.ivr.fi/",
     whisper: true,
+    namePattern: "",
+    usage: "sub [channel] [user]",
 };
 export let cooldownUsers = [];

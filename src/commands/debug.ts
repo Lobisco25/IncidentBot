@@ -32,7 +32,11 @@ export let config = {
     description: "",
     aliases: ["js", "ts", "eval"],
     cooldown: 5000,
+    descritipion: "dev-only command for debugging",
     whisper: true,
     permission: "dev",
+    namePattern: "",
+    longDescription: "dev-only command for debugging javascript code",
+    usage: "debug <code>",
 };
 export let cooldownUsers = [];

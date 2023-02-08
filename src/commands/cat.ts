@@ -2,7 +2,16 @@ import utils from "../utils";
 export const run = async (client, msg, args, cmd) => {
     console.log(await utils.checkImageServer())
     if(!(await utils.checkImageServer())) return "image server offline, try again later"
-    return "pajaH " + (await utils.upload("https://source.unsplash.com/random/?cat"));
+
+    let url;
+
+    switch(args[0]) {
+        case "unsplash": url = "https://source.unsplash.com/random/?cat"; break;
+        case "gif": url = "https://cataas.com/cat/gif"; break;
+        default: url = "https://cataas.com/cat"; break;
+    }
+
+    return `${await utils.getEmote(msg.channelID, ["peepoHappy", "pajaH", "SoCute"], "🐱")} ${await utils.upload(url)}`;
 };
 export let config = {
     name: "cat",
@@ -11,6 +20,8 @@ export let config = {
     permission: "viewers",
     longDescription: "Displays in chat a photo of a random irl cat, taken from https://cataas.com/",
     cooldown: 5000,
-    whisper: true
+    whisper: true,
+    namePattern: "{name}, ",
+    usage: "cat [unsplash|gif]"
 };
 export let cooldownUsers = [];

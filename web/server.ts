@@ -1,6 +1,6 @@
 import express from "express";
 import config from "../config";
-import commands from "../src/handlers/tmi";
+import client from "../src/services/tmi"
 import path from "path";
 import utils from "../src/utils";
 import commitCount from "git-commit-count";
@@ -144,7 +144,7 @@ app.get("/", async (req, res) => {
         <div class="stats">
             <h2>stats</h2>
             <p>ping to TMI: ${await utils.ping()}</p>
-            <p>running with ${Object.keys(commands).length} commands</p>
+            <p>running with ${Object.keys(client.commands).length} commands</p>
             <p>${channelDB.length} channels in total</p>
             <p>${seventvChannelDB.length} channels with 7tv events</p>
                 <p>running with node ${process.version}</p>
@@ -176,13 +176,13 @@ app.get("/commands", (req, res) => {
                 <th>permission</th>
             </tr>
             <tr>
-            ${Object.keys(commands)
+            ${Object.keys(client.commands)
                 .map((c) => {
                     return `
                 <tr>
-                    <td><a href="commands/${commands[c].config.name}"> ${commands[c].config.name}<a/></td>
-                    <td>${commands[c].config.description}</td>
-                    <td>${commands[c].config.permission}</td>
+                    <td><a href="commands/${client.commands[c].config.name}"> ${client.commands[c].config.name}<a/></td>
+                    <td>${client.commands[c].config.description}</td>
+                    <td>${client.commands[c].config.permission}</td>
                 </tr>
                 `;
                 })
@@ -195,7 +195,7 @@ app.get("/commands", (req, res) => {
 });
 
 app.get("/commands/:cmd", (req, res) => {
-    const cmd = commands[req.params.cmd];
+    const cmd = client.commands[req.params.cmd];
     if (!cmd) return res.send("command not found");
     res.send(`
     <head>
@@ -225,6 +225,9 @@ app.get("/commands/:cmd", (req, res) => {
                 <th>description</th>
                 <td>${cmd.config.description ?? "none"}</td>
             </tr>
+            |<tr>
+                <th>usage</th>
+                <td>${cmd.config.usage ?? "not defined"}</td>
             <tr>
                 <th>long description</th>
                 <td>${cmd.config.longDescription ?? "none"}</td>

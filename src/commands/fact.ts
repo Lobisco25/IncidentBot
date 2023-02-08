@@ -11,13 +11,10 @@ export const run = async (client, msg, args, cmd) => {
         "X-CSRF-TOKEN": _config.apis.catFacts,
     });
     const dog = await utils.http.get("https://dog-api.kinduff.com/api/facts");
-    const numbers = await utils.http.get(
-        `https://numbersapi.p.rapidapi.com/${!args[1] ? "random" : args[1]}/trivia?json=true`,
-        {
-            "X-RapidAPI-Host": "numbersapi.p.rapidapi.com",
-            "X-RapidAPI-Key": _config.apis.rapidKey,
-        }
-    );
+    const numbers = await utils.http.get(`https://numbersapi.p.rapidapi.com/${!args[1] ? "random" : args[1]}/trivia?json=true`, {
+        "X-RapidAPI-Host": "numbersapi.p.rapidapi.com",
+        "X-RapidAPI-Key": _config.apis.rapidKey,
+    });
     console.log(arg);
     switch (arg) {
         case "cats":
@@ -46,6 +43,8 @@ export let config = {
         https://numbersapi.p.rapidapi.com/
         https://api.api-ninjas.com/
         `,
-        whisper: true
+    whisper: true,
+    namePattern: "{name}, ",
+    usage: "fact [cat|dog|number]",
 };
 export let cooldownUsers = [];

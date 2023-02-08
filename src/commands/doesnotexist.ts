@@ -27,6 +27,8 @@ export let config = {
         https://thispersondoesnotexist.com/
     `,
     cooldown: 5000,
-    whisper: true
+    whisper: true,
+    namePattern: "{name}, ",
+    usage: "doesnotexist [cat|art|pepe|waifu|sneaker|night]"
 }
 export let cooldownUsers = []

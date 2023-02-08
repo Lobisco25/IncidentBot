@@ -10,5 +10,7 @@ export let config = {
     permission: "viewers",
     longDescription: "displays the preview of a the given twitch stream",
     whisper: true,
+    namePattern: "{name}, ",
+    usage: "preview [twitch username]",
 };
 export let cooldownUsers = [];

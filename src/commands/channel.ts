@@ -73,5 +73,7 @@ export let config = {
     longDescription:
         "dev-only command for changing settings of channels, like adding/removing channels, setting custom prefixes, enabling/disabling 7tv events and others",
     whisper: true,
+    namePattern: "",
+    usage: "channel {join|leave|prefix|7tv} {channel} [argument]",
 };
 export let cooldownUsers = [];

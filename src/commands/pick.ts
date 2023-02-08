@@ -10,5 +10,7 @@ export let config = {
     cooldown: 5000,
     permission: "viewers",
     whisper: true,
+    namePattern: "{name}, ",
+    usage: "pick [arguments]",
 };
 export let cooldownUsers = [];

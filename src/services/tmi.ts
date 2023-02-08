@@ -5,7 +5,7 @@ import config from "../../config";
 import reconnectPhrases from "../data/reconnectphrases.json";
 import utils from "../utils";
 
-const client = new ChatClient({
+const client:any = new ChatClient({
     username: config.botName,
     password: config.tmiToken,
 });

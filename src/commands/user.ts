@@ -19,5 +19,7 @@ export let config = {
     permission: "viewers",
     longDescription: "displays info about a twitch user, including the user id, the creation date, the bio, the followers and the follows. website used: https://api.ivr.fi",
     whisper: true,
+    namePattern: "{name}, ",
+    usage: "user [twitch username]",
 };
 export let cooldownUsers = [];

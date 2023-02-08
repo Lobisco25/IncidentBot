@@ -23,5 +23,7 @@ export let config = {
     aliases: [""],
     cooldown: 5000,
     permission: "dev",
+    namePattern: "",
+    usage: "set [command]",
 };
 export let cooldownUsers = [];

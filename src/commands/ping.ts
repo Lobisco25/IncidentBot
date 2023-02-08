@@ -12,5 +12,7 @@ export let config = {
     longDescription: "pings the bot, checking if it's online and displaying some technical info, like the ping, the uptime, the os uptime and the usage",
     cooldown: 5000,
     whisper: true,
+    namePattern: "{name}, ",
+    usage: "ping",
 };
 export let cooldownUsers = [];

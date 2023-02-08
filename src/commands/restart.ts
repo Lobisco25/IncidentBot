@@ -13,6 +13,8 @@ description: 'simple donk command for restarting the bot',
 aliases: [''],
 cooldown: 5000,
 permission: "dev",
-whisper: true
+whisper: true,
+namePattern: '',
+usage: 'restart',
 }
 export let cooldownUsers = []

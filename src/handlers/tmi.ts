@@ -4,7 +4,7 @@ import client from "../services/tmi";
 import db from "../services/db";
 import log from "../log";
 
-let commands = {};
+client.commands = {};
 
 // get files
 readdir("../incidentbot/src/commands", (err, files) => {
@@ -13,7 +13,7 @@ readdir("../incidentbot/src/commands", (err, files) => {
     const jsfile = files.filter((f) => f.split(".").pop() == "ts");
     jsfile.forEach(async (f) => {
         let pull = await import(`./../commands/${f}`);
-        commands[pull.config.name] = pull;
+        client.commands[pull.config.name] = pull;
         const r = await db("commands").where({ name: pull.config.name });
         if (r.length !== 0) return;
         else await db("commands").insert({ name: pull.config.name, uses: 1 });
@@ -36,10 +36,10 @@ interface ICommand {
 
 function setUserCooldown(c: ICommand, msg: any) {
     const userId = msg.senderUsername == config.dev ? "12345" : msg.senderUserID;
-    commands[c.config.name].cooldownUsers.push(userId);
+    client.commands[c.config.name].cooldownUsers.push(userId);
 
     setTimeout(() => {
-        commands[c.config.name].cooldownUsers = commands[
+        client.commands[c.config.name].cooldownUsers = client.commands[
             c.config.name
         ].cooldownUsers.filter((i) => i !== msg.senderUserID)
     }, c.config.cooldown);
@@ -57,9 +57,9 @@ async function getPrefix(msg) {
 
 function getCommandByAlias(alias) {
     var result = null;
-    Object.keys(commands).every((c) => {
-        if (commands[c].config.aliases.includes(alias)) {
-            result = commands[c];
+    Object.keys(client.commands).every((c) => {
+        if (client.commands[c].config.aliases.includes(alias)) {
+            result = client.commands[c];
             return false;
         }
         return true;
@@ -82,7 +82,7 @@ client.on("PRIVMSG", async (msg: any) => {
     const prefix = (await getPrefix(msg)) || config.prefix;
     let args = msg.messageText.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
-    let command = commands[cmd] || getCommandByAlias(cmd);
+    let command = client.commands[cmd] || getCommandByAlias(cmd);
     // essential ifs
     if (!command || !msg.messageText.startsWith(prefix)) return;
     if (command.cooldownUsers.includes(msg.senderUserID)) return;
@@ -101,23 +101,12 @@ client.on("PRIVMSG", async (msg: any) => {
 
         let chatRes = await command.run(client, msg, args, cmd);
         // name format handling
-
-        let nome = "";
-        switch (command.config.name) {
-            default:
-                nome = msg.displayName + ",";
-                break;
-            case "eval":
-                nome = "";
-                break;
-        }
+        let name = command.config.namePattern.replace("{name}", msg.senderUsername);
         
-        client.privmsg(msg.channelName, `${dev} ${nome} ${chatRes === undefined ? "command executed" : chatRes}`);
+        client.privmsg(msg.channelName, `${dev} ${name} ${chatRes === undefined ? "command executed" : chatRes}`);
         await db("commands").where("name", command.config.name).increment("uses", 1);
     } catch (err) {
         log.error(`Could not run the command ${command.config.name}: ${err}`);
     }
     setUserCooldown(command, msg)
 });
-
-export default commands;

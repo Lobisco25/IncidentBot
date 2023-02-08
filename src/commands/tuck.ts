@@ -11,6 +11,8 @@ export let config = {
     aliases: [""],
     cooldown: 5000,
     permission: "viewers",
-    whisper: false
+    whisper: false,
+    namePattern: "{name}, ",
+    usage: "tuck [user] [emote]",
 };
 export let cooldownUsers = [];
