@@ -2,6 +2,7 @@ import utils from "../utils";
 import _config from "../../config";
 import db from "../services/db";
 import vm from "vm";
+import os from "os";
 export const run = async (client, msg, args, cmd) => {
     try {
         const context = {
@@ -11,6 +12,8 @@ export const run = async (client, msg, args, cmd) => {
             cmd: cmd,
             utils: utils,
             db: db,
+            process: process,
+            os: os,
         };
         let script;
 
