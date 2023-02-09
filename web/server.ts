@@ -37,6 +37,20 @@ header h1 a:hover {
     color: #b8b5b5
 }
 
+.code {
+    margin-left: 3px;
+}
+
+.code a {
+    color: #b8b5b5;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+}
+
+.code a:hover {
+    color: white;
+}
+
 .info {
     color: white;
     text-align: center;
@@ -102,7 +116,18 @@ header h1 a:hover {
 
 .table table tr td a:hover {
     color: #b8b5b5
-}`;
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.navigation a:hover {
+    color: #b8b5b5
+}
+    `;
+
 
 
 app.get("/404", (req, res) => {
@@ -166,6 +191,7 @@ app.get("/commands", (req, res) => {
        </style>
     </head>
     <body>
+    <p class="navigation"> <a href="/bot"> &lt; back</a></p>
     <header><h1><a href="/bot">incidentbot</a></h1></header>
     <div class="table">
         <h2>commands</h2>
@@ -182,7 +208,7 @@ app.get("/commands", (req, res) => {
                 <tr>
                     <td><a href="commands/${client.commands[c].config.name}"> ${client.commands[c].config.name}<a/></td>
                     <td>${client.commands[c].config.description}</td>
-                    <td>${client.commands[c].config.permission}</td>
+                    <td>${client.commands[c].config.permission ?? "viewers"}</td>
                 </tr>
                 `;
                 })
@@ -196,6 +222,7 @@ app.get("/commands", (req, res) => {
 
 app.get("/commands/:cmd", (req, res) => {
     const cmd = client.commands[req.params.cmd];
+    const code = `https://github.com/Lobisco25/IncidentBot/blob/master/src/commands/${cmd.config.name}.ts`
     if (!cmd) return res.send("command not found");
     res.send(`
     <head>
@@ -205,6 +232,7 @@ app.get("/commands/:cmd", (req, res) => {
        </style>
     </head>
     <body>
+    <p class="navigation"> <a href="/bot/commands"> < commands</a></p>
     <header><h1><a href="/bot">incidentbot</a></h1></header>
     <div class="table">
         <h2>-${cmd.config.name}</h2>
@@ -215,7 +243,7 @@ app.get("/commands/:cmd", (req, res) => {
             </tr>
             <tr>
                 <th>aliases</th>
-              <td>${cmd.config.aliases.join(", ")}</td>
+              <td>${cmd.config.aliases.join(", ") ?? "none"}</td>
             </tr>
             <tr>
                 <th>cooldown</th>
@@ -233,7 +261,7 @@ app.get("/commands/:cmd", (req, res) => {
                 <td>${cmd.config.longDescription ?? "none"}</td>
             </tr>
                 <th>permission</th>
-                <td>${cmd.config.permission}</td>
+                <td>${cmd.config.permission ?? "viewers"}</td>
             </tr>
             ${cmd.config.websites ? `<tr>
                 <th>websites used</th>
@@ -241,7 +269,7 @@ app.get("/commands/:cmd", (req, res) => {
             </tr>` : ""}
         </table>
     </div>
-    </body>
+    <p class="code"><a href="${code}">source code</a></body>
     `);
 });
 

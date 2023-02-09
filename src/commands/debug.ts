@@ -29,10 +29,9 @@ export const run = async (client, msg, args, cmd) => {
 };
 export let config = {
     name: "debug",
-    description: "",
+    description: "dev-only command for running code",
     aliases: ["js", "ts", "eval"],
     cooldown: 5000,
-    descritipion: "dev-only command for debugging",
     whisper: true,
     permission: "dev",
     namePattern: "",

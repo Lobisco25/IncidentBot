@@ -33,7 +33,7 @@ export const run = async (client, msg, args, cmd) => {
 }
 export let config = {
     name: "help",
-    description: "",
+    description: "command to check the bot's commands and their functionalities",
     aliases: ["commands", "cmds", "cmdhelp", "commandhelp"],
     cooldown: 5000,
     whisper: true,

@@ -19,7 +19,7 @@ export const run = async (client, msg, args, cmd) => {
 };
 export let config = {
     name: "set",
-    description: "",
+    description: "dev only command to set stuff in the database",
     aliases: [""],
     cooldown: 5000,
     permission: "dev",
