@@ -18,7 +18,7 @@ export let config = {
     description: "Displays a random cat",
     aliases: ["randomcat", "rcat"],
     permission: "viewers",
-    longDescription: "Displays in chat a photo of a random irl cat, taken from the nsplash library and the website Cat as a Service",
+    longDescription: "Displays in chat a photo of a random irl cat, taken from the Unsplash library and the website Cat as a Service",
     cooldown: 5000,
     whisper: true,
     namePattern: "{name}, ",
